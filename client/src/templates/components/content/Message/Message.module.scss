@@ -1,0 +1,26 @@
+.containerMessage{
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: #2c6ed5;
+}
+.blockMessage{
+  display: flex;
+  max-width: 680px;
+  width: 100%;
+  padding: 15px 30px;
+  flex-direction: column;
+  background: #fff;
+  box-sizing: border-box;
+}
+.blockMessage__text{
+  font-size: 25px;
+  margin-bottom: 30px;
+}
+.linkBack{
+  margin-left: auto;
+  cursor: pointer;
+  text-decoration: none;
+  color: grey;
+}

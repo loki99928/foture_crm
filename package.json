@@ -1,0 +1,19 @@
+{
+  "name": "crm",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "server": "npm run start:dev --prefix server",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\"  \"npm run client\"",
+    "test client": "npm run test --prefix client"
+  },
+  "dependencies": {
+    "concurrently": "^6.4.0",
+    "cross-env": "^7.0.3"
+  },
+  "devDependencies": {},
+  "main": "index.js",
+  "author": "Babanin_DV <loki99928@yandex.ru>",
+  "license": "MIT"
+}

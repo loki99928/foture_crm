@@ -1,0 +1,14 @@
+body{
+  font-family: Roboto, Arial, "Helvetica Neue", sans-serif;
+}
+p, h1, h2, h3, h4{
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'passion one';
+  src: local('passion one'), url(../fonts/passion_one.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'raleway';
+  src: local('raleway'), url(../fonts/raleway.woff2) format('woff2');
+}
