@@ -14,11 +14,11 @@ let  UserConfirmationPage: React.FC = () => {
         if (userId === undefined) return;
         let result = dispatch(ConfirmUserApi(userId)) as unknown as Promise<IResponseServer>
         result.then((res) => {
-            navigate('/message', {
-                state: {
-                    type: 'confirmUser',
-                    message: res.error,
-                } })
+            // navigate('/message', {
+            //     state: {
+            //         type: 'confirmUser',
+            //         message: res.error,
+            //     } })
         })
     })
 

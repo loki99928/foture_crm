@@ -24,7 +24,7 @@ const MineApp = () => {
                 <Route path="/registration" element={<RegisterPage/>}/>
                 <Route path="/message" element={<MessagePageContainer/>}/>
                 <Route path="/forget" element={<ForgetPasswordPage/>}/>
-                <Route path="/user_confirmation/:userId" element={<UserConfirmationPage/>} />
+                <Route path="/confirm/:userId" element={<UserConfirmationPage/>} />
                 <Route path="/new_password/:token" element={<NewPasswordPage/>} />
                 <Route path='*' element={<ErrorPage />}/>
             </Routes>

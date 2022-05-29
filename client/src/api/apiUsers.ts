@@ -37,7 +37,7 @@ export const usersApi = {
                 console.log(res)
                 return {
                     status: res.data.status,
-                    error: res.data.error,
+                    error: res.data.message[0],
                 }
             })
     },
@@ -84,7 +84,8 @@ export const usersApi = {
      * @returns {*}
      */
     confirmUser(userId: string) {
-        return instance.post<IResponseServer>('confirm/', {userId: userId}).then(res => {
+        return instance.get<IResponseServer>('confirm/'+userId).then(res => {
+            console.log(res)
             return {
                 status: res.data.status,
                 errors: res.data.error
