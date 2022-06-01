@@ -51,10 +51,7 @@ const Auth: React.FC = () => {
         const res = await dispatch(AuthUserApi(values)) as unknown as IApiUserLoginResponse
 
         if (res.status !== ResultStatusCodeEnum.Success){
-            let listError = res.error;
-            // for (const listErrorKey in listError) {
-            //     setFieldError(listErrorKey, listError[listErrorKey])
-            // }
+            setFieldError('mainError', res.message)
         }
         setSubmitting(false);
     }

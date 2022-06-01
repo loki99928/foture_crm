@@ -38,7 +38,7 @@ const Forget: React.FC = () => {
                     type: 'forgetPassword'
                 } })
         } else {
-            let listError = response.error;
+            let listError = response.message;
             // for (const listErrorKey in listError) {
             //     setFieldError(listErrorKey, listError[listErrorKey])
             // }

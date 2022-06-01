@@ -7,7 +7,7 @@ export enum ResultStatusCodeEnum {
 
 export interface IResponseServer {
     status: ResultStatusCodeEnum
-    error: string
+    message: string
 }
 
 
@@ -25,10 +25,7 @@ export interface IApiUserLoginData {
     mainError: any
 }
 export interface IApiUserLoginResponse extends IResponseServer{
-    email: string
-    usersId: string
-    accessToken: string
-    refreshToken: string
+    accessToken?: string
 }
 
 // Forget

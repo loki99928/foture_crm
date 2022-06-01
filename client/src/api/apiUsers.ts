@@ -2,13 +2,13 @@ import axios from "axios";
 import {
     IApiUserLoginData,
     IApiUserLoginResponse,
-    IApiUsersForgetData,
-    IApiUsersRegisterData,
-    IResponseServer,
     IApiUsersChangeTokenNewPasswordResponse,
     IApiUsersCreateNewPasswordData,
     IApiUsersCreateNewPasswordResponse,
-    IApiUsersGetResponse
+    IApiUsersForgetData,
+    IApiUsersGetResponse,
+    IApiUsersRegisterData,
+    IResponseServer
 } from "../types/ApiUsersTypes";
 
 const instance = axios.create({
@@ -26,18 +26,16 @@ export const usersApi = {
     register(data: IApiUsersRegisterData) {
         return instance.post<IResponseServer>('register/', data)
             .then(res => {
-                console.log(res)
                 return {
-                    status: res.data.status,
-                    error: res.data.error,
+                    status: res.status,
+                    message: res.data.message,
                 }
             })
             .catch((e) => {
                 let res = e.response
-                console.log(res)
                 return {
-                    status: res.data.status,
-                    error: res.data.message[0],
+                    status: res.status,
+                    message: res.data.message[0],
                 }
             })
     },
@@ -49,17 +47,22 @@ export const usersApi = {
      * @returns {*}
      */
     authorize(data: IApiUserLoginData) {
-        return instance.post<IApiUserLoginResponse>('authorize/', data).then(res => {
-            console.log(res)
-            return {
-                status: res.data.status,
-                error: res.data.error,
-                email: res.data.email,
-                usersId: res.data.usersId,
-                accessToken: res.data.accessToken,
-                refreshToken: res.data.refreshToken,
-            }
-        })
+        return instance.post<IApiUserLoginResponse>('authorize/', data)
+            .then(res => {
+                return {
+                    status: res.status,
+                    message: res.data.message,
+                    accessToken: res.data.accessToken
+                }
+            })
+            .catch((e) => {
+                let res = e.response
+                return {
+                    status: res.status,
+                    message: res.data.message[0],
+                    accessToken: undefined,
+                }
+            })
     },
 
     /**
@@ -72,7 +75,7 @@ export const usersApi = {
         return instance.post<IResponseServer>('forget/', data).then(res => {
             return {
                 status: res.data.status,
-                errors: res.data.error,
+                message: res.data.message,
             }
         })
     },
@@ -84,13 +87,20 @@ export const usersApi = {
      * @returns {*}
      */
     confirmUser(userId: string) {
-        return instance.get<IResponseServer>('confirm/'+userId).then(res => {
-            console.log(res)
-            return {
-                status: res.data.status,
-                errors: res.data.error
-            }
-        })
+        return instance.get<IResponseServer>('confirm/' + userId)
+            .then(res => {
+                return {
+                    status: res.data.status,
+                    message: res.data.message
+                }
+            })
+            .catch((e) => {
+                let res = e.response
+                return {
+                    status: res.data.status,
+                    message: res.data.message,
+                }
+            })
     },
 
     /**

@@ -1,8 +1,9 @@
-import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import * as bcrypt from "bcrypt";
+import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 
 @Entity({name:'own_user'})
-export class User extends BaseEntity{
-
+export class UserEntity extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number
 
@@ -16,4 +17,35 @@ export class User extends BaseEntity{
         nullable: false
     })
     password: string
+
+    @Column()
+    hashUser: string
+
+    /**
+     * number of password reset requests
+     */
+    @Column({
+        default: 0
+    })
+    attemptsNumber: number
+
+    /**
+     * number of password reset requests
+     */
+    @Column({
+        default: false
+    })
+    confirm: boolean
+
+    @BeforeInsert()
+    async setHashUser(){
+        this.hashUser = getAlphaNumericRandom(20)
+    }
+
+    @BeforeInsert()
+    async setPassword(password: string){
+        const salt = bcrypt.genSalt()
+        this.password = await bcrypt.hash(password || this.password, await salt)
+    }
+    // todo-dv нужно сделать время жизни записи
 }

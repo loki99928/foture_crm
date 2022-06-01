@@ -39,7 +39,6 @@ const Register: React.FC = () => {
         let {setSubmitting, setFieldError} = formikEvent
         setSubmitting(true);
         const res = await dispatch(RegisterUserApi(values)) as unknown as IResponseServer
-        console.log(res)
         switch (res.status) {
             case ResultStatusCodeEnum.Created:
                 navigate('/message', {
@@ -61,7 +60,7 @@ const Register: React.FC = () => {
                 }
             })
         } else {
-            setFieldError('mainError',  res.error)
+            setFieldError('mainError',  res.message)
         }
         setSubmitting(false);
     }

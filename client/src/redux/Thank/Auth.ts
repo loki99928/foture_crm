@@ -41,7 +41,7 @@ export const AuthUserApi = (data: IApiUserLoginData): ThunkType => async (dispat
     let result = await usersApi.authorize(data)
     if (result.accessToken !== undefined) {
         setCookieJWT(result.accessToken, data.remember)
-        dispatch(actions.setUserData(result.usersId, result.email))
+        // dispatch(actions.setUserData(result.usersId, result.email))
         dispatch(actions.toggleIsAuth(true))
     }
     return result
