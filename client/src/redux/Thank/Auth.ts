@@ -75,10 +75,12 @@ export const getUser = (): ThunkType => async (dispatch) => {
     }
 }
 export const validatePasswordToken = (token: string | undefined): ThunkType => async (dispatch) => {
-    if (token === undefined) return;
+    console.log(token);
+    if (token === undefined) return
     let result = await authApi.changeTokenNewPassword(token)
-    dispatch(actions.toggleIsLoad())
-    return result
+    console.log(result)
+    // dispatch(actions.toggleIsLoad())
+    // return result
 }
 /**
  * Создание нового пароля

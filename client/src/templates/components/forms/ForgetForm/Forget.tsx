@@ -25,23 +25,23 @@ const Forget: React.FC = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const initialValues = {email: ''}
+    const initialValues = {email: '', mainError: null}
 
     async function handleForgetUser(values: IApiUsersForgetData, formikEvent: FormikType) {
         let {setSubmitting, setFieldError} = formikEvent
         setSubmitting(false)
         const response = await dispatch(ForgetUserApi(values)) as unknown as IResponseServer
 
-        if (response.status === ResultStatusCodeEnum.Success){
+        if (response.status === ResultStatusCodeEnum.Created){
             navigate('/message', {
                 state: {
                     type: 'forgetPassword'
                 } })
         } else {
-            let listError = response.message;
-            // for (const listErrorKey in listError) {
-            //     setFieldError(listErrorKey, listError[listErrorKey])
-            // }
+            console.log(response)
+            if (response.message){
+                setFieldError('mainError', response.message)
+            }
         }
         setSubmitting(true)
     }
@@ -85,6 +85,12 @@ const Forget: React.FC = () => {
                                 name="email"
                                 htmlFor="email"
                             />
+                            {
+                                errors.mainError &&
+                                <div className={cn(s.formTextError, s.formServer__error)}>
+                                    {errors.mainError}
+                                </div>
+                            }
                             <FormikControlBtn
                                 control="submit"
                                 label="Send"

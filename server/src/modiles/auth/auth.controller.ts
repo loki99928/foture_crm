@@ -1,7 +1,8 @@
 import {Body, Controller, Get, Param, Post} from '@nestjs/common';
-import {AuthService, IAuthorizeUserResponse, IRegisterUserResponse} from "./auth.service";
+import {AuthService, IAuthorizeUserResponse, IConfirmUserResponse, IRegisterUserResponse} from "./auth.service";
 import {UserRegisterRequestDto} from "./dto/register-user.req.dto";
 import {UserAuthorizeDto} from "./dto/authorize-user.dto";
+import {UserForgetDto} from "./dto/forget-user.dto";
 
 @Controller('auth')
 export class AuthController {
@@ -33,8 +34,8 @@ export class AuthController {
     }
 
     @Post('/forget')
-    forget(){
-        return this.authService.forget()
+    async forget(@Body() UserData: UserForgetDto): Promise<IConfirmUserResponse>{
+        return this.authService.forget(UserData)
     }
 
     /**

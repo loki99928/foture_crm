@@ -47,9 +47,8 @@ export interface IApiUsersCreateNewPasswordResponse {
 
 // changeTokenNewPassword
 export interface IApiUsersChangeTokenNewPasswordResponse {
-    statusCode: ResultStatusCodeEnum
-    errors: {[key: string]: string}
-    email: string
+    statusCode?: ResultStatusCodeEnum
+    message?: string
 }
 
 // get

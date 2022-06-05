@@ -37,6 +37,14 @@ export class UserEntity extends BaseEntity{
     })
     confirm: boolean
 
+    /**
+     * Half-day password change request time
+     */
+    @Column({
+        default: null
+    })
+    lastModifiedTime: Date
+
     @BeforeInsert()
     async setHashUser(){
         this.hashUser = getAlphaNumericRandom(20)

@@ -8,6 +8,8 @@ import * as bcrypt from "bcrypt";
 import {JwtService} from "@nestjs/jwt";
 import {UserEntity} from "../user/user.entity";
 import {UserAuthorizeDto} from "./dto/authorize-user.dto";
+import {UserForgetDto} from "./dto/forget-user.dto";
+import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 
 export interface IRegisterUserResponse {
     message: string[]
@@ -17,11 +19,22 @@ export interface IAuthorizeUserResponse {
     accessToken: string
     message: string[]
 }
+export interface IConfirmUserResponse {
+    message: string[]
+}
 
 @Injectable()
 export class AuthService {
 
     private readonly logger = new MyLogger();
+
+    // number of password recovery attempts
+    private attempts
+    // max number of password recovery attempts
+    private maxAttempts = 15
+    // max time change
+    private readonly maxTimeHasGone = 15
+
 
     constructor(
         @InjectRepository(UserEntity)
@@ -94,8 +107,38 @@ export class AuthService {
         }
     }
 
-    forget() {
-        return 'this.authService.forget()'
+    /**
+     * user password recovery
+     *
+     * @param dto UserForgetDto
+     */
+    async forget(dto: UserForgetDto): Promise<IConfirmUserResponse> {
+        try {
+            let currentUser = await this.UserRepository.findOneBy({email: dto.email})
+            if (!currentUser) throw new HttpException(['User is not find'], HttpStatus.BAD_REQUEST);
+
+            let timeHasGone = (Date.now() - currentUser.lastModifiedTime.getTime()) / 1000 / 60
+
+            if (currentUser.attemptsNumber >= this.maxAttempts && Math.ceil(timeHasGone) < this.maxTimeHasGone) {
+                throw new HttpException([`The number of password recovery attempts has been exceeded. try again in ${15 - Math.ceil(timeHasGone)} minutes`], HttpStatus.BAD_REQUEST);
+            }
+
+            this.attempts = currentUser.attemptsNumber + 1
+            if (currentUser.attemptsNumber >= this.maxAttempts && Math.ceil(timeHasGone) >= this.maxTimeHasGone) this.attempts = 0
+
+            let hashUser = getAlphaNumericRandom(20)
+
+            let newUser = await this.UserRepository.update(currentUser.id, {attemptsNumber: this.attempts, lastModifiedTime: new Date(), hashUser})
+
+            currentUser.hashUser = hashUser
+            await this.sendMailForgetUser(currentUser)
+
+            return {
+                message: ['Message sent to your email']
+            }
+        } catch (e) {
+            throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -127,15 +170,32 @@ export class AuthService {
     }
 
     // todo-dv нужно перенести отправку почты в отдельный файл
-    async sendMailRegisterUser(temporaryUser: UserRegisterRequestDto) {
+    async sendMailForgetUser(user: UserRegisterRequestDto) {
         return await this.mailerService
             .sendMail({
-                to: temporaryUser.email,
+                to: user.email,
+                subject: 'Восстановление пароля',
+                from: 'sd213dddd@gmail.com',
+                template: 'forgetUserEmail',
+                context: {
+                    url: process.env.PRODUCTION_LINK + '/new_password/' + user.hashUser,
+                },
+            })
+            .catch((e) => {
+                throw new HttpException({message: ['Mail sending error']}, HttpStatus.UNPROCESSABLE_ENTITY);
+            });
+    }
+
+    // todo-dv нужно перенести отправку почты в отдельный файл
+    async sendMailRegisterUser(user: UserRegisterRequestDto) {
+        return await this.mailerService
+            .sendMail({
+                to: user.email,
                 subject: 'Подтверждение регистрации',
                 from: 'sd213dddd@gmail.com',
                 template: 'registerUserEmail',
                 context: {
-                    url: process.env.PRODUCTION_LINK + '/confirm/' + temporaryUser.hashUser,
+                    url: process.env.PRODUCTION_LINK + '/confirm/' + user.hashUser,
                 },
             })
             .catch((e) => {

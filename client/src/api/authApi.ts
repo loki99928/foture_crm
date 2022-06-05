@@ -49,7 +49,6 @@ export const authApi = {
     authorize(data: IApiUserLoginData) {
         return instance.post<IApiUserLoginResponse & IApiErrorResponse>('authorize/', data)
             .then(res => {
-                console.log(res)
                 return {
                     status: res.status,
                     message: res.data.message,
@@ -57,8 +56,7 @@ export const authApi = {
                     accessToken: res.data.accessToken
                 }
             })
-            .catch((e:AxiosError<IApiErrorResponse>): IApiUserLoginResponse  => {
-                let res = e.response
+            .catch((e: AxiosError<IApiErrorResponse>): IApiUserLoginResponse => {
                 return {
                     message: e.response?.data.message?.shift()
                 }
@@ -72,12 +70,18 @@ export const authApi = {
      * @returns {*}
      */
     forget(data: IApiUsersForgetData) {
-        return instance.post<IResponseServer>('forget/', data).then(res => {
-            return {
-                status: res.data.status,
-                message: res.data.message,
-            }
-        })
+        return instance.post<IResponseServer>('forget/', data)
+            .then(res => {
+                return {
+                    status: res.status,
+                    message: res.data.message,
+                }
+            })
+            .catch((e: AxiosError<IApiErrorResponse>): IResponseServer => {
+                return {
+                    message: e.response?.data.message?.shift()
+                }
+            })
     },
 
     /**
@@ -110,13 +114,18 @@ export const authApi = {
      * @returns {*}
      */
     changeTokenNewPassword(token: string) {
-        return instance.post<IApiUsersChangeTokenNewPasswordResponse>('changeTokenNewPassword/', {token: token}).then(res => {
-            return {
-                status: res.data.statusCode,
-                errors: res.data.errors,
-                email: res.data.email,
-            }
-        })
+        return instance.post<IApiUsersChangeTokenNewPasswordResponse & IApiErrorResponse>('changeTokenNewPassword/', {token: token})
+            .then(res => {
+                return {
+                    status: res.status,
+                    message: res.data.message
+                }
+            })
+            .catch((e: AxiosError<IApiErrorResponse>): IApiUsersChangeTokenNewPasswordResponse => {
+                return {
+                    message: e.response?.data.message?.shift()
+                }
+            })
     },
 
     /**
