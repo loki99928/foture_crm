@@ -7,10 +7,12 @@ import {AppService} from './app.service';
 import {AuthModule} from "./modiles/auth/auth.module";
 import {typeOrmConfigAsync} from "./config/typeorm.config";
 import {getMailConfig} from "./config/mailer.config";
+import {UserModule} from "./modiles/user/user.module";
 
 
 @Module({
     imports: [
+        // todo-dv разобраться почему не работает isGlobal: true у ConfigModule
         ConfigModule.forRoot({ envFilePath: `.${process.env.NODE_ENV}.env` }),
         TypeOrmModule.forRootAsync(typeOrmConfigAsync),
         MailerModule.forRootAsync({
@@ -19,7 +21,7 @@ import {getMailConfig} from "./config/mailer.config";
             useFactory: getMailConfig,
         }),
         AuthModule,
-        // UserModule
+        UserModule
     ],
     controllers: [AppController],
     providers: [AppService],

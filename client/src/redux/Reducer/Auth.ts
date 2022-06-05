@@ -1,9 +1,9 @@
 import {ActionTypeAuth, InitialStateType} from "../Actions/Auth";
 
 export let initialStateAuth = {
-    userId: null as string | null,
-    email: null as string | null,
-    accessToken: null as string | null,
+    userId: undefined as string | undefined,
+    email: undefined as string | undefined,
+    accessToken: undefined as string | undefined,
     isAuth: false as boolean | null,
     isLoad: false as boolean
 }

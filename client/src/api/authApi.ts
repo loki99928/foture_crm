@@ -1,12 +1,12 @@
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {
+    IApiErrorResponse,
     IApiUserLoginData,
     IApiUserLoginResponse,
     IApiUsersChangeTokenNewPasswordResponse,
     IApiUsersCreateNewPasswordData,
     IApiUsersCreateNewPasswordResponse,
-    IApiUsersForgetData,
-    IApiUsersGetResponse,
+    IApiUsersForgetData, IApiUsersGetResponse,
     IApiUsersRegisterData,
     IResponseServer
 } from "../types/ApiUsersTypes";
@@ -15,7 +15,7 @@ const instance = axios.create({
     baseURL: '/auth/'
 });
 
-export const usersApi = {
+export const authApi = {
 
     /**
      * регистрация пользователя
@@ -47,20 +47,20 @@ export const usersApi = {
      * @returns {*}
      */
     authorize(data: IApiUserLoginData) {
-        return instance.post<IApiUserLoginResponse>('authorize/', data)
+        return instance.post<IApiUserLoginResponse & IApiErrorResponse>('authorize/', data)
             .then(res => {
+                console.log(res)
                 return {
                     status: res.status,
                     message: res.data.message,
+                    userId: res.data.userId,
                     accessToken: res.data.accessToken
                 }
             })
-            .catch((e) => {
+            .catch((e:AxiosError<IApiErrorResponse>): IApiUserLoginResponse  => {
                 let res = e.response
                 return {
-                    status: res.status,
-                    message: res.data.message[0],
-                    accessToken: undefined,
+                    message: e.response?.data.message?.shift()
                 }
             })
     },
@@ -104,30 +104,7 @@ export const usersApi = {
     },
 
     /**
-     * проверка авторизации пользователя по токену
-     *
-     * @param token
-     * @returns {*}
-     */
-    get(token: string) {
-        return instance.get<IApiUsersGetResponse>(
-            'login/',
-            {
-                headers: {
-                    'Authorization': 'Bearer ' + token,
-                }
-            }
-        ).then(res => {
-            return {
-                userId: res.data.userId,
-                errors: res.data.errors,
-                email: res.data.email,
-            }
-        })
-    },
-
-    /**
-     * Проверка наличия пользователя по временному токену(восстановление пароля)
+     * Проверка наличия пользователя по временному token(восстановление пароля)
      *
      * @param token
      * @returns {*}

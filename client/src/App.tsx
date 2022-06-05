@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {Provider} from "react-redux";
+import {Provider, useDispatch} from "react-redux";
 
 import store from "./redux/store";
 
@@ -15,8 +15,13 @@ import MessagePageContainer from "./templates/pages/MessagePage/MessagePageConta
 import UserConfirmationPage from "./templates/pages/UserConfirmationPage/UserConfirmationPage";
 import {NewPasswordPage} from "./templates/pages/NewPasswordPage/NewPasswordPage";
 import {ErrorPage} from "./templates/pages/ErrorPage/ErrorPage";
+import {initializeApp} from "./redux/Thank/App";
 
 const MineApp = () => {
+
+    const dispatch = useDispatch()
+    dispatch(initializeApp())
+
     return (
             <Routes>
                 <Route path="/" element={<HomePage/>}/>

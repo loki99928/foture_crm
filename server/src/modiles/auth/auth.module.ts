@@ -4,13 +4,15 @@ import {AuthService} from './../auth/auth.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {UserEntity} from "../user/user.entity";
 import {JwtModule} from "@nestjs/jwt";
+import {ConfigModule} from "@nestjs/config";
 
 @Module({
     imports: [
+        ConfigModule.forRoot({ envFilePath: `.${process.env.NODE_ENV}.env` }),
         TypeOrmModule.forFeature([UserEntity]),
         JwtModule.register({
-            secret: 'jwtConstants.secret',
-            signOptions: {expiresIn: '60m'},
+            secret: `${process.env.JWT_SECRET}`,
+            signOptions: {expiresIn: `${process.env.JWT_EXPIRES_IN}`},
         }),
     ],
     controllers: [AuthController],
@@ -18,4 +20,5 @@ import {JwtModule} from "@nestjs/jwt";
 })
 export class AuthModule {
 }
+
 

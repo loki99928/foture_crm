@@ -47,5 +47,4 @@ export class UserEntity extends BaseEntity{
         const salt = bcrypt.genSalt()
         this.password = await bcrypt.hash(password || this.password, await salt)
     }
-    // todo-dv нужно сделать время жизни записи
 }

@@ -2,11 +2,11 @@ import {InferActionTypes} from "../store";
 import {initialStateAuth} from "../Reducer/Auth";
 
 export const actions = {
-    setUserData: (userId: string | null, email: string | null) => ({
+    setUserData: (userId: string | undefined, email: string | undefined) => ({
         type: 'CRM/AUTH/SET_USER_DATA',
         data: {userId, email}
     } as const),
-    getUserToken: (accessToken: string | null, refreshToken: string | null) => ({
+    getUserToken: (accessToken: string | undefined, refreshToken: string | undefined) => ({
         type: 'CRM/AUTH/GET_USER_TOKEN',
         data: {accessToken, refreshToken}
     } as const),

@@ -1,5 +1,5 @@
 import {Body, Controller, Get, Param, Post} from '@nestjs/common';
-import {AuthService, IRegister} from "./auth.service";
+import {AuthService, IAuthorizeUserResponse, IRegisterUserResponse} from "./auth.service";
 import {UserRegisterRequestDto} from "./dto/register-user.req.dto";
 import {UserAuthorizeDto} from "./dto/authorize-user.dto";
 
@@ -19,7 +19,7 @@ export class AuthController {
      * @param userData UserAuthorizeDto
      */
     @Post('/authorize')
-    authorize(@Body() userData: UserAuthorizeDto){
+    authorize(@Body() userData: UserAuthorizeDto): Promise<IAuthorizeUserResponse>{
         return this.authService.authorize(userData)
     }
 
@@ -28,7 +28,7 @@ export class AuthController {
      * @param userData UserRegisterRequestDto
      */
     @Post('/register')
-    async register(@Body() userData: UserRegisterRequestDto): Promise<IRegister>{
+    async register(@Body() userData: UserRegisterRequestDto): Promise<IRegisterUserResponse>{
         return this.authService.register(userData)
     }
 

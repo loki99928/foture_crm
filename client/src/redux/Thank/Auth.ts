@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-import {usersApi} from "../../api/apiUsers";
+import {authApi} from "../../api/authApi";
 import {
     IApiUserLoginData,
     IApiUsersCreateNewPasswordData,
@@ -10,6 +10,7 @@ import {
 import {setCookieJWT} from "../../helpers/Tokens";
 import {actions, ActionTypeAuth} from "../Actions/Auth";
 import {BaseThunkType} from "../store";
+import {userApi} from "../../api/userApi";
 
 /**
  * регистрация пользователя
@@ -18,7 +19,7 @@ import {BaseThunkType} from "../store";
  * @returns {(function(*): Array)|*}
  */
 export const RegisterUserApi = (data: IApiUsersRegisterData): ThunkType => async () => {
-    return await usersApi.register(data)
+    return await authApi.register(data)
 }
 /**
  * подтверждение почты пользователя
@@ -27,7 +28,7 @@ export const RegisterUserApi = (data: IApiUsersRegisterData): ThunkType => async
  * @returns {(function(*): Array)|*}
  */
 export const ConfirmUserApi = (userId: string): ThunkType => async (dispatch) => {
-    let result = await usersApi.confirmUser(userId)
+    let result = await authApi.confirmUser(userId)
     dispatch(actions.toggleIsLoad())
     return result
 }
@@ -38,10 +39,10 @@ export const ConfirmUserApi = (userId: string): ThunkType => async (dispatch) =>
  * @returns {(function(*): Array)|*}
  */
 export const AuthUserApi = (data: IApiUserLoginData): ThunkType => async (dispatch) => {
-    let result = await usersApi.authorize(data)
+    let result = await authApi.authorize(data)
     if (result.accessToken !== undefined) {
         setCookieJWT(result.accessToken, data.remember)
-        // dispatch(actions.setUserData(result.usersId, result.email))
+        dispatch(actions.setUserData(result.userId, data.email))
         dispatch(actions.toggleIsAuth(true))
     }
     return result
@@ -53,25 +54,29 @@ export const AuthUserApi = (data: IApiUserLoginData): ThunkType => async (dispat
  * @returns {(function(*): Array)|*}
  */
 export const ForgetUserApi = (data: IApiUsersForgetData): ThunkType => async () => {
-    return await usersApi.forget(data)
+    return await authApi.forget(data)
 }
 /**
- * получение данных пользователя по токену
+ * получение данных пользователя по token
  *
  * @returns {(function(*): Array)|*}
  */
 export const getUser = (): ThunkType => async (dispatch) => {
     const token = Cookies.get('token')
     if (token) {
-        let result = await usersApi.get(token)
-        let {userId, email} = result
-        dispatch(actions.setUserData(userId, email))
-        dispatch(actions.toggleIsAuth(true))
+        let result = await userApi.get(token)
+        if (result && result.accessToken){
+            setCookieJWT(result.accessToken, true)
+            dispatch(actions.setUserData(result.userId, result.email))
+            dispatch(actions.toggleIsAuth(true))
+        } else {
+            dispatch(actions.toggleIsAuth(false))
+        }
     }
 }
 export const validatePasswordToken = (token: string | undefined): ThunkType => async (dispatch) => {
     if (token === undefined) return;
-    let result = await usersApi.changeTokenNewPassword(token)
+    let result = await authApi.changeTokenNewPassword(token)
     dispatch(actions.toggleIsLoad())
     return result
 }
@@ -82,7 +87,7 @@ export const validatePasswordToken = (token: string | undefined): ThunkType => a
  * @returns {(function(*): Array)|*}
  */
 export const CreatingNewPasswordApi = (values: IApiUsersCreateNewPasswordData): ThunkType => async () => {
-    return usersApi.createNewPasswordApi(values)
+    return authApi.createNewPasswordApi(values)
 }
 /**
  * logout user
@@ -91,6 +96,6 @@ export const CreatingNewPasswordApi = (values: IApiUsersCreateNewPasswordData): 
  * @returns {(function(*): void)|*}
  */
 // export const LogOutUserApi = (data: any): ThunkType => (dispatch) => {
-//     // todo-dv нужно реализовать функционал раз логирования
+//     // todo-dv нужно реализовать функционал разлогирования
 // }
 type ThunkType = BaseThunkType<ActionTypeAuth>

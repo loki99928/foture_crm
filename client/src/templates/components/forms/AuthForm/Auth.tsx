@@ -37,8 +37,7 @@ const SignupSchema = Yup.object().shape({
 const Auth: React.FC = () => {
 
     const dispatch = useDispatch()
-    // todo-dv разобраться с mainError
-    const initialValues = {email: '', password: '', remember: false, mainError: null}
+    const initialValues = {email: 'loki99928@yandex.ru', password: '123123', remember: false, mainError: null}
 
     const onSubmit = async (values: IApiUserLoginData, {setSubmitting, setFieldError}: FormikType) => {
         setSubmitting(false);
@@ -50,7 +49,7 @@ const Auth: React.FC = () => {
         setSubmitting(true);
         const res = await dispatch(AuthUserApi(values)) as unknown as IApiUserLoginResponse
 
-        if (res.status !== ResultStatusCodeEnum.Success){
+        if (res.status !== ResultStatusCodeEnum.Success && res.message){
             setFieldError('mainError', res.message)
         }
         setSubmitting(false);

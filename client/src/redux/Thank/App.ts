@@ -11,6 +11,7 @@ export const initializeApp = (): ThunkType => (dispatch) => {
 
     let arrayPromise: Array<Promise<any>> = []
 
+
     arrayPromise.push(dispatch(getUser()))
 
     return Promise.all(arrayPromise)

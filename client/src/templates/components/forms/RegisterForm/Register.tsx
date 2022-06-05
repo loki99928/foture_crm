@@ -59,7 +59,7 @@ const Register: React.FC = () => {
                     type: 'sendMail'
                 }
             })
-        } else {
+        } else if (res.message){
             setFieldError('mainError',  res.message)
         }
         setSubmitting(false);

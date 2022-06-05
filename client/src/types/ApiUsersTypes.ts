@@ -6,8 +6,8 @@ export enum ResultStatusCodeEnum {
 }
 
 export interface IResponseServer {
-    status: ResultStatusCodeEnum
-    message: string
+    status?: ResultStatusCodeEnum
+    message?: string
 }
 
 
@@ -26,6 +26,7 @@ export interface IApiUserLoginData {
 }
 export interface IApiUserLoginResponse extends IResponseServer{
     accessToken?: string
+    userId?: string
 }
 
 // Forget
@@ -37,7 +38,7 @@ export interface IApiUsersForgetData {
 export interface IApiUsersCreateNewPasswordData {
     password: string
     double_password: string
-    token: string | undefined
+    token?: string
 }
 export interface IApiUsersCreateNewPasswordResponse {
     statusCode: ResultStatusCodeEnum
@@ -53,7 +54,14 @@ export interface IApiUsersChangeTokenNewPasswordResponse {
 
 // get
 export interface IApiUsersGetResponse {
-    userId: string | null
-    email: string
-    errors: {[key: string]: string}
+    userId?: string
+    accessToken?: string
+    email?: string
+    message?: string
 }
+
+export interface IApiErrorResponse {
+    message?: string[]
+}
+
+// export type MessageOf<T> = T extends IApiUsersGetResponse | IApiErrorResponse

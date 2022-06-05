@@ -9,7 +9,12 @@ import {JwtService} from "@nestjs/jwt";
 import {UserEntity} from "../user/user.entity";
 import {UserAuthorizeDto} from "./dto/authorize-user.dto";
 
-export interface IRegister {
+export interface IRegisterUserResponse {
+    message: string[]
+}
+export interface IAuthorizeUserResponse {
+    userId: number
+    accessToken: string
     message: string[]
 }
 
@@ -30,8 +35,7 @@ export class AuthService {
         return 'this.authService.login()'
     }
 
-    async authorize(dto: UserAuthorizeDto) {
-
+    async authorize(dto: UserAuthorizeDto): Promise<IAuthorizeUserResponse> {
         try {
             const currentUser = await this.UserRepository.findOneBy({'email': dto.email})
             if (currentUser === null){
@@ -44,27 +48,25 @@ export class AuthService {
             }
 
             const payload = { email: currentUser.email, id: currentUser.id };
-
             // todo-dv need to make the refresh_token
             return {
-                message: 'authorization was successful',
-                accessToken: this.jwtService.sign(payload)
+                userId: currentUser.id,
+                accessToken: this.jwtService.sign(payload),
+                message: ['authorization was successful'],
             };
 
         } catch (e) {
             throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
         }
-
-
     }
 
     /**
      * Registration user
      *
      * @param dto UserRegisterRequestDto
-     * @return Promise<IRegister>
+     * @return Promise<IRegisterUserResponse>
      */
-    async register(dto: UserRegisterRequestDto): Promise<IRegister> {
+    async register(dto: UserRegisterRequestDto): Promise<IRegisterUserResponse> {
         try {
             // verification of the user's confirmed email
             let confirmUser = await this.UserRepository.findOneBy({email: dto.email, confirm: true})
