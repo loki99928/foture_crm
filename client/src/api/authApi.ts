@@ -32,11 +32,7 @@ export const authApi = {
                 }
             })
             .catch((e) => {
-                let res = e.response
-                return {
-                    status: res.status,
-                    message: res.data.message[0],
-                }
+                throw new Error(e.response?.data.message?.shift())
             })
     },
 
@@ -49,17 +45,35 @@ export const authApi = {
     authorize(data: IApiUserLoginData) {
         return instance.post<IApiUserLoginResponse & IApiErrorResponse>('authorize/', data)
             .then(res => {
+                console.log(res)
                 return {
-                    status: res.status,
-                    message: res.data.message,
                     userId: res.data.userId,
                     accessToken: res.data.accessToken
                 }
             })
-            .catch((e: AxiosError<IApiErrorResponse>): IApiUserLoginResponse => {
+            .catch((e: AxiosError<IApiErrorResponse>) => {
+                throw new Error(e.response?.data.message?.shift())
+            })
+    },
+
+    /**
+     * подтверждение почты пользователя
+     *
+     * @param hashUser
+     * @returns {*}
+     */
+    confirmUser(hashUser?: string) {
+        return instance.get<IResponseServer>('confirm/' + hashUser)
+            .then(res => {
+                console.log(res)
                 return {
-                    message: e.response?.data.message?.shift()
+                    status: res.data.status,
+                    message: res.data.message
                 }
+            })
+            .catch((e: AxiosError<IApiErrorResponse>) => {
+                let res = e.response
+                throw new Error(e.response?.data.message?.shift())
             })
     },
 
@@ -77,33 +91,9 @@ export const authApi = {
                     message: res.data.message,
                 }
             })
-            .catch((e: AxiosError<IApiErrorResponse>): IResponseServer => {
-                return {
-                    message: e.response?.data.message?.shift()
-                }
-            })
-    },
-
-    /**
-     * подтверждение почты пользователя
-     *
-     * @param userId
-     * @returns {*}
-     */
-    confirmUser(userId: string) {
-        return instance.get<IResponseServer>('confirm/' + userId)
-            .then(res => {
-                return {
-                    status: res.data.status,
-                    message: res.data.message
-                }
-            })
-            .catch((e) => {
+            .catch((e: AxiosError<IApiErrorResponse>) => {
                 let res = e.response
-                return {
-                    status: res.data.status,
-                    message: res.data.message,
-                }
+                throw new Error(e.response?.data.message?.shift())
             })
     },
 
@@ -121,10 +111,9 @@ export const authApi = {
                     message: res.data.message
                 }
             })
-            .catch((e: AxiosError<IApiErrorResponse>): IApiUsersChangeTokenNewPasswordResponse => {
-                return {
-                    message: e.response?.data.message?.shift()
-                }
+            .catch((e: AxiosError<IApiErrorResponse>) => {
+                let res = e.response
+                throw new Error(e.response?.data.message?.shift())
             })
     },
 

@@ -1,0 +1,204 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Auth page render 1`] = `
+<DocumentFragment>
+  <main
+    class="containerForm"
+  >
+    <div
+      class="blockForm"
+    >
+      <form
+        action="#"
+      >
+        <div
+          class="formBanner"
+        >
+          <img
+            alt=""
+            src="bg-head-form.jpg"
+          />
+        </div>
+        <div
+          class="containerFields"
+        >
+          <h2
+            class="formTitle"
+          >
+            Registration Info
+          </h2>
+          <div
+            class="formBlockField formBlock__field"
+          >
+            <input
+              autocomplete="on"
+              class="formField"
+              data-testid="input_email"
+              for="email"
+              id="email"
+              name="email"
+              type="email"
+              value=""
+            />
+            <div
+              class="formLabel"
+            >
+              <label
+                for="email"
+              >
+                Your email
+              </label>
+            </div>
+          </div>
+          <div
+            class="formBlockField formBlock__field"
+          >
+            <input
+              autocomplete="on"
+              class="formField"
+              data-testid="input_password"
+              for="password"
+              id="password"
+              name="password"
+              type="password"
+              value=""
+            />
+            <div
+              class="formLabel"
+            >
+              <label
+                for="password"
+              >
+                Your password
+              </label>
+            </div>
+          </div>
+          <div>
+            <button
+              class="formBtn formBtn_hover formBtn_active"
+              type="submit"
+            >
+              Send
+            </button>
+          </div>
+          <div
+            class="formFooter footer__form"
+          >
+            <a
+              class=""
+              href="/auth/"
+            >
+              Authorize
+            </a>
+            <a
+              class=""
+              href="/forget/"
+            >
+              forget password
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`auth page render 1`] = `
+<DocumentFragment>
+  <main
+    class="containerForm"
+  >
+    <div
+      class="blockForm"
+    >
+      <div
+        class="formBanner"
+      >
+        <img
+          alt=""
+          src="bg-head-form.jpg"
+        />
+      </div>
+      <div
+        class="containerFields"
+      >
+        <h2
+          class="formTitle"
+        >
+          Registration Info
+        </h2>
+        <form>
+          <div
+            class="formBlockField formBlock__field"
+          >
+            <input
+              autocomplete="on"
+              class="formField"
+              name="email"
+              type="text"
+              value="loki99928@yandex.ru"
+            />
+            <div
+              class="formLabel formLabelStatic"
+            >
+              <label
+                for="email"
+              >
+                Your email
+              </label>
+            </div>
+          </div>
+          <div
+            class="formBlockField formBlock__field"
+          >
+            <input
+              autocomplete="on"
+              class="formField"
+              name="password"
+              type="password"
+              value="123123aA@"
+            />
+            <div
+              class="formLabel formLabelStatic"
+            >
+              <label
+                for="password"
+              >
+                Your password
+              </label>
+            </div>
+          </div>
+          <div
+            class="formTextError formServer__error"
+          />
+          <div>
+            <button
+              class="formBtn formBtn_hover formBtn_active formBtn_focus"
+              type="submit"
+            >
+              Send
+            </button>
+          </div>
+        </form>
+        <div
+          class="formFooter footer__form"
+        >
+          <a
+            class=""
+            href="/auth/"
+          >
+            Authorize
+          </a>
+          <a
+            class=""
+            href="/forget/"
+          >
+            forget password
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

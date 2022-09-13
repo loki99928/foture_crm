@@ -8,14 +8,14 @@ import {useDispatch} from "react-redux";
 
 import s from "../Form.module.scss"
 import bannerForm from "../../../assets/images/bg-head-form.jpg"
-import {FormikControlBtn, FormikControlFields} from "../FormikControl";
+import {FormikControlBtn, FormikControlFields} from "../formFields/FormikControl";
 import {
     IApiUsersCreateNewPasswordData,
     IApiUsersCreateNewPasswordResponse,
     ResultStatusCodeEnum
 } from "../../../../types/ApiUsersTypes";
 import {FormikType} from "../FormType";
-import {CreatingNewPasswordApi} from "../../../../redux/Thank/Auth";
+// import {CreatingNewPasswordApi} from "../../../../redux/_Thank/auth";
 
 const SignupSchema = Yup.object().shape({
     password: Yup
@@ -44,17 +44,17 @@ export const NewPassword: React.FC = () => {
     const initialValues = {password: '', double_password: '', token}
 
     async function creatingNewPassword(values: IApiUsersCreateNewPasswordData, formikEvent: FormikType) {
-        let {setSubmitting, setFieldError} = formikEvent
-        setSubmitting(true);
-        const res = await dispatch(CreatingNewPasswordApi(values)) as unknown as IApiUsersCreateNewPasswordResponse
-
-        if (res.statusCode === ResultStatusCodeEnum.Success){
-            navigate('/message', {
-                state: {
-                    type: 'newPassword'
-                } })
-        }
-        setSubmitting(false);
+        // let {setSubmitting, setFieldError} = formikEvent
+        // setSubmitting(true);
+        // const res = await dispatch(CreatingNewPasswordApi(values)) as unknown as IApiUsersCreateNewPasswordResponse
+        //
+        // if (res.statusCode === ResultStatusCodeEnum.Success){
+        //     navigate('/message', {
+        //         state: {
+        //             type: 'newPassword'
+        //         } })
+        // }
+        // setSubmitting(false);
     }
 
     const onSubmit = async (values: IApiUsersCreateNewPasswordData, {setSubmitting, setFieldError}: FormikType) => {
@@ -64,63 +64,63 @@ export const NewPassword: React.FC = () => {
 
     return (
         <div className={s.blockForm}>
-            <Formik
-                initialValues={initialValues}
-                onSubmit={onSubmit}
-                validationSchema={SignupSchema}
-                enableReinitialize
-                validateOnBlur={true}
-                validateOnChange={true}
-            >
-                {({
-                      isSubmitting,
-                      isValid,
-                      errors,
-                      touched,
-                      values
-                  }) => (
-                    <Form>
-                        <div className={s.formBanner}>
-                            <img src={bannerForm} alt=""/>
-                        </div>
-                        <div className={s.containerFields}>
-                            <h2 className={s.formTitle}>New password</h2>
-                            <FormikControlFields
-                                className={cn(s.formField)}
-                                errors={errors}
-                                touched={touched}
-                                values={values}
-                                control="input"
-                                type="password"
-                                label="Your password"
-                                name="password"
-                                htmlFor="password"
-                            />
-                            <FormikControlFields
-                                className={cn(s.formField)}
-                                errors={errors}
-                                touched={touched}
-                                values={values}
-                                control="input"
-                                type="password"
-                                label="Confirm password"
-                                name="double_password"
-                                htmlFor="double_password"
-                            />
-                            <FormikControlBtn
-                                control="submit"
-                                label="Send"
-                                type="submit"
-                                disabled={isSubmitting || !isValid}
-                            />
-                            <div className={cn(s.formFooter, s.footer__form)}>
-                                <NavLink to="/auth/">Authorize</NavLink>
-                                <NavLink to="/registration/">registration</NavLink>
-                            </div>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
+            {/*<Formik*/}
+            {/*    initialValues={initialValues}*/}
+            {/*    onSubmit={onSubmit}*/}
+            {/*    validationSchema={SignupSchema}*/}
+            {/*    enableReinitialize*/}
+            {/*    validateOnBlur={true}*/}
+            {/*    validateOnChange={true}*/}
+            {/*>*/}
+            {/*    {({*/}
+            {/*          isSubmitting,*/}
+            {/*          isValid,*/}
+            {/*          errors,*/}
+            {/*          touched,*/}
+            {/*          values*/}
+            {/*      }) => (*/}
+            {/*        <Form>*/}
+            {/*            <div className={s.formBanner}>*/}
+            {/*                <img src={bannerForm} alt=""/>*/}
+            {/*            </div>*/}
+            {/*            <div className={s.containerFields}>*/}
+            {/*                <h2 className={s.formTitle}>New password</h2>*/}
+            {/*                <FormikControlFields*/}
+            {/*                    className={cn(s.formField)}*/}
+            {/*                    errors={errors}*/}
+            {/*                    touched={touched}*/}
+            {/*                    values={values}*/}
+            {/*                    control="input"*/}
+            {/*                    type="password"*/}
+            {/*                    label="Your password"*/}
+            {/*                    name="password"*/}
+            {/*                    htmlFor="password"*/}
+            {/*                />*/}
+            {/*                <FormikControlFields*/}
+            {/*                    className={cn(s.formField)}*/}
+            {/*                    errors={errors}*/}
+            {/*                    touched={touched}*/}
+            {/*                    values={values}*/}
+            {/*                    control="input"*/}
+            {/*                    type="password"*/}
+            {/*                    label="Confirm password"*/}
+            {/*                    name="double_password"*/}
+            {/*                    htmlFor="double_password"*/}
+            {/*                />*/}
+            {/*                <FormikControlBtn*/}
+            {/*                    control="submit"*/}
+            {/*                    label="Send"*/}
+            {/*                    type="submit"*/}
+            {/*                    disabled={isSubmitting || !isValid}*/}
+            {/*                />*/}
+            {/*                <div className={cn(s.formFooter, s.footer__form)}>*/}
+            {/*                    <NavLink to="/auth/">Authorize</NavLink>*/}
+            {/*                    <NavLink to="/registration/">registration</NavLink>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </Form>*/}
+            {/*    )}*/}
+            {/*</Formik>*/}
         </div>
     )
 }

@@ -1,12 +1,12 @@
 import {Navigate} from "react-router-dom";
 import React from "react";
 import {connect} from "react-redux";
-import {AppStateType} from "../redux/store";
-import {getAccessToken, isAuth} from "../redux/Selectors/usersSelectors";
+import {StateType} from "../redux/store";
+// import {getAccessToken, isAuth} from "../redux/Selectors/usersSelectors";
 
-let mapStateToPropsForGetUser = (state: AppStateType) => {
+let mapStateToPropsForGetUser = (state: StateType) => {
     return {
-        accessToken: getAccessToken(state),
+        // accessToken: getAccessToken(state),
     } as GetUserComponentPropsType
 }
 
@@ -25,7 +25,7 @@ export function getUser <WCP>(Component: React.ComponentType<WCP>) {
         return <Component {...restProps as WCP}/>
     }
 
-    let connectedRedirectComponent = connect<GetUserComponentPropsType, {}, WCP, AppStateType>(mapStateToPropsForGetUser)(userComponent)
+    let connectedRedirectComponent = connect<GetUserComponentPropsType, {}, WCP, StateType>(mapStateToPropsForGetUser)(userComponent)
 
     return connectedRedirectComponent
 }

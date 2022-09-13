@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Auth page render 1`] = `
+<DocumentFragment>
+  <main />
+</DocumentFragment>
+`;
+
+exports[`auth page render 1`] = `
+<DocumentFragment>
+  <main />
+</DocumentFragment>
+`;

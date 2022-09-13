@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import s from './Message.module.scss'
 
 type MessageType = {
-    message: string
+    message?: string
 }
 
 const Message = (props: MessageType) => {

@@ -3,19 +3,27 @@ import {ErrorMessage, Field} from "formik";
 import cn from "classnames"
 
 import s from "../Form.module.scss"
-import {FormikControlType} from "../FormikControl";
+import {FormikControlType} from "./FormikControl";
 
 const Input: React.FC<FormikControlType> = props => {
-    const {label, name, type, errors, touched, values, ...rest} = props
+    const {label, name, type, formik, ...rest} = props
     return (
-        <div className={cn(s.formBlockField, s.formBlock__field, { [s.formFieldError] : errors?.[name] && touched?.[name] },{ [s.formFieldApproved] : !errors?.[name] && touched?.[name] })}>
-            <Field name={name} id={name} type={type} {...rest}  data-testid={"input_" + name} autocomplete="on"/>
-            <div className={cn(s.formLabel, {[s.formLabelStatic] : values?.[name].length > 0})}>
+        <div className={cn(s.formBlockField, s.formBlock__field, { [s.formFieldError] : formik.errors?.[name] && formik.touched?.[name] },{ [s.formFieldApproved] : !formik.errors?.[name] && formik.touched?.[name] })}>
+            <input
+                className={cn(s.formField)}
+                name={name}
+                type={type}
+                autoComplete="on"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                value={formik.values[name]}
+            />
+            <div className={cn(s.formLabel, {[s.formLabelStatic] : formik.values.email.length > 0})}>
                 <label htmlFor={name}>{label}</label>
             </div>
-            {errors?.[name] && touched?.[name] ? (
+            {formik.errors?.[name] ? (
                 <div className={cn(s.formTextError, s.form__error)} data-testid="formTextError">
-                    <ErrorMessage name={name}></ErrorMessage>
+                    {formik.errors?.[name]}
                 </div>
             ) : null}
         </div>

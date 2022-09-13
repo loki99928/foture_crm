@@ -1,15 +1,17 @@
 import React from "react";
-import {compose} from "redux";
-import {withNotAuthRedirect} from "../../../../hoc/AuthRedirect";
+import {NavLink} from "react-router-dom";
 
 const Home = () => {
     return(
         <div>
-            Home
+            <h1>
+                Home
+            </h1>
+            <p>
+                <NavLink to="/user/">User</NavLink>
+            </p>
         </div>
     )
 }
 
-export default compose<React.ComponentType>(
-    withNotAuthRedirect,
-)(Home)
+export default Home

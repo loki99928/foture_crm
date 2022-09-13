@@ -1,17 +1,16 @@
-import React from "react";
-import {NavLink} from "react-router-dom";
-import {Form, Formik} from "formik";
-import cn from "classnames"
+import React, {useEffect} from "react";
+import {useFormik} from "formik";
 import * as Yup from "yup";
-import {useNavigate} from "react-router";
-
-import {FormikControlBtn, FormikControlFields} from "../FormikControl";
-import bannerForm from "../../../assets/images/bg-head-form.jpg"
 import s from "../Form.module.scss"
 import {FormikType} from "../FormType";
-import {IApiUsersForgetData, IResponseServer, ResultStatusCodeEnum} from "../../../../types/ApiUsersTypes";
+import {IApiUsersForgetData, IApiUsersRegisterData} from "../../../../types/ApiUsersTypes";
 import {useDispatch} from "react-redux";
-import {ForgetUserApi} from "../../../../redux/Thank/Auth";
+import {actionsAuth} from "../../../../redux/reducer/auth/actions";
+import bannerForm from "../../../assets/images/bg-head-form.jpg";
+import {FormikControlBtn, FormikControlFields} from "../formFields/FormikControl";
+import cn from "classnames";
+import {ErrorResponse} from "../formFields/error";
+import {NavLink} from "react-router-dom";
 
 const SignupSchema = Yup.object().shape({
     email: Yup
@@ -22,89 +21,50 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Forget: React.FC = () => {
-
     const dispatch = useDispatch()
-    const navigate = useNavigate();
-    const initialValues = {email: '', mainError: null}
 
-    async function handleForgetUser(values: IApiUsersForgetData, formikEvent: FormikType) {
-        let {setSubmitting, setFieldError} = formikEvent
-        setSubmitting(false)
-        const response = await dispatch(ForgetUserApi(values)) as unknown as IResponseServer
+    useEffect(() => {
+        dispatch(actionsAuth.clearForm())
+    }, [])
 
-        if (response.status === ResultStatusCodeEnum.Created){
-            navigate('/message', {
-                state: {
-                    type: 'forgetPassword'
-                } })
-        } else {
-            console.log(response)
-            if (response.message){
-                setFieldError('mainError', response.message)
-            }
-        }
-        setSubmitting(true)
-    }
-
-    const onSubmit = async (values: IApiUsersForgetData, {setSubmitting, setFieldError}: FormikType) => {
-        setSubmitting(false);
-        await handleForgetUser(values, {setSubmitting, setFieldError})
-    }
+    const formik = useFormik({
+        initialValues: {email: 'loki99928@yandex.ru', mainError: null},
+        onSubmit: async (values: IApiUsersForgetData) => {
+            formik.setSubmitting(true);
+            dispatch(actionsAuth.forgetUserRequest(values))
+        },
+        validationSchema: SignupSchema,
+        validateOnBlur: true,
+        validateOnChange: true
+    });
 
     return (
         <div className={s.blockForm}>
-            <Formik
-                initialValues={initialValues}
-                onSubmit={onSubmit}
-                validationSchema={SignupSchema}
-                enableReinitialize
-                validateOnBlur={true}
-                validateOnChange={true}
-            >
-                {({
-                      isSubmitting,
-                      isValid,
-                      errors,
-                      touched,
-                      values
-                  }) => (
-                    <Form>
-                        <div className={s.formBanner}>
-                            <img src={bannerForm} alt=""/>
-                        </div>
-                        <div className={s.containerFields}>
-                            <h2 className={s.formTitle}>Forget password </h2>
-                            <FormikControlFields
-                                className={cn(s.formField)}
-                                errors={errors}
-                                touched={touched}
-                                values={values}
-                                control="input"
-                                type="email"
-                                label="Your email"
-                                name="email"
-                                htmlFor="email"
-                            />
-                            {
-                                errors.mainError &&
-                                <div className={cn(s.formTextError, s.formServer__error)}>
-                                    {errors.mainError}
-                                </div>
-                            }
-                            <FormikControlBtn
-                                control="submit"
-                                label="Send"
-                                type="submit"
-                                disabled={isSubmitting || !isValid}
-                            />
-                            <div className={cn(s.formFooter, s.footer__form)}>
-                                <NavLink to="/auth/">Authorize</NavLink>
-                                <NavLink to="/registration/">registration</NavLink>
-                            </div>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
+            <div className={s.formBanner}>
+                <img src={bannerForm} alt=""/>
+            </div>
+            <div className={s.containerFields}>
+                <h2 className={s.formTitle}>Authorize Info</h2>
+                <form onSubmit={formik.handleSubmit}>
+                    <FormikControlFields
+                        formik={formik}
+                        className={cn(s.formField)}
+                        type="text"
+                        label="Your email"
+                        name="email"
+                    />
+                    <ErrorResponse/>
+                    <FormikControlBtn
+                        label="Send"
+                        type="submit"
+                        disabled={formik.isSubmitting || !formik.isValid}
+                    />
+                </form>
+                <div className={cn(s.formFooter, s.footer__form)}>
+                    <NavLink to="/auth/">Authorize</NavLink>
+                    <NavLink to="/registration/">registration</NavLink>
+                </div>
+            </div>
         </div>
     )
 }

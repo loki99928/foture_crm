@@ -46,10 +46,12 @@ export class AuthController {
     userConfirmation(@Param('id') id: string){
         return this.authService.userConfirmation(id)
     }
+
     @Post('/changeTokenNewPassword')
     changeTokenNewPassword(){
         return this.authService.changeTokenNewPassword()
     }
+
     @Post('/createNewPassword')
     createNewPassword(){
         return this.authService.createNewPassword()

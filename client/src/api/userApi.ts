@@ -1,4 +1,4 @@
-import axios, {AxiosError, AxiosResponse} from "axios";
+import axios, {AxiosError} from "axios";
 import {IApiErrorResponse, IApiUsersGetResponse} from "../types/ApiUsersTypes";
 
 const instance = axios.create({
@@ -29,13 +29,12 @@ export const userApi = {
                     userId: res.data.userId,
                     accessToken: res.data.accessToken,
                     email: res.data.email,
+                    remember: res.data.remember,
                     message: res.data.message
                 }
             })
-            .catch((e:AxiosError<IApiErrorResponse>): IApiUsersGetResponse => {
-                return {
-                    message: e.response?.data.message?.shift()
-                }
+            .catch((e:AxiosError<IApiErrorResponse>) => {
+                throw new Error(e.response?.data.message?.shift())
             })
     },
 }

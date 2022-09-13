@@ -1,10 +1,10 @@
 import {Navigate} from "react-router-dom";
 import React from "react";
 import {connect} from "react-redux";
-import {AppStateType} from "../redux/store";
-import {isAuth} from "../redux/Selectors/usersSelectors";
+import {StateType} from "../redux/store";
+import {isAuth} from "../redux/reducer/auth/selectors";
 
-let mapStateToPropsForRedirect = (state: AppStateType) => {
+let mapStateToPropsForRedirect = (state: StateType) => {
     return {
         isAuth: isAuth(state),
     } as RedirectComponentPropsType
@@ -20,6 +20,8 @@ export function withNotAuthRedirect <WCP>(Component: React.ComponentType<WCP>) {
 
         let {isAuth, ...restProps} = props
 
+        console.log('withNotAuthRedirect isAuth -> ', isAuth)
+
         if (!isAuth) {
             return (
                 <Navigate to="/auth"></Navigate>
@@ -28,7 +30,7 @@ export function withNotAuthRedirect <WCP>(Component: React.ComponentType<WCP>) {
         return <Component {...restProps as WCP}/>
     }
 
-    let connectedRedirectComponent = connect<RedirectComponentPropsType, {}, WCP, AppStateType>(mapStateToPropsForRedirect)(redirectComponent)
+    let connectedRedirectComponent = connect<RedirectComponentPropsType, {}, WCP, StateType>(mapStateToPropsForRedirect)(redirectComponent)
 
     return connectedRedirectComponent
 }
@@ -36,7 +38,6 @@ export function withNotAuthRedirect <WCP>(Component: React.ComponentType<WCP>) {
 export function withAuthRedirect <WCP>(Component: React.ComponentType<WCP>) {
 
     let redirectComponent = (props: RedirectComponentPropsType) => {
-
         let {isAuth, ...restProps} = props
 
         if (isAuth) {
@@ -47,7 +48,7 @@ export function withAuthRedirect <WCP>(Component: React.ComponentType<WCP>) {
         return <Component {...restProps as WCP}/>
     }
 
-    let connectedRedirectComponent = connect<RedirectComponentPropsType, {}, WCP, AppStateType>(mapStateToPropsForRedirect)(redirectComponent)
+    let connectedRedirectComponent = connect<RedirectComponentPropsType, {}, WCP, StateType>(mapStateToPropsForRedirect)(redirectComponent)
 
     return connectedRedirectComponent
 }

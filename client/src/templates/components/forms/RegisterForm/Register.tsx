@@ -1,139 +1,100 @@
-import React from "react";
-import {Form, Formik} from "formik";
+import React, {useEffect} from "react";
+import {useFormik} from "formik";
 import cn from "classnames"
 import {NavLink} from "react-router-dom";
 import * as Yup from "yup";
-import {useNavigate} from 'react-router';
+import {compose} from "redux";
+import {useDispatch, useSelector} from "react-redux";
 
-import {FormikControlBtn, FormikControlFields} from "../FormikControl";
+import {FormikControlBtn, FormikControlFields} from "../formFields/FormikControl";
 import bannerForm from "../../../assets/images/bg-head-form.jpg"
+import {IApiUsersRegisterData} from "../../../../types/ApiUsersTypes";
+import {ErrorResponse} from "../formFields/error";
+import {actionsAuth} from "../../../../redux/reducer/auth/actions";
+import {getIsLoad, getMessage, getStatus} from "../../../../redux/reducer/auth/selectors";
 import s from "../Form.module.scss"
-import {ResultStatusCodeEnum, IApiUsersRegisterData, IResponseServer} from "../../../../types/ApiUsersTypes";
-import {FormikType} from "../FormType";
-import {useDispatch} from "react-redux";
-import {RegisterUserApi} from "../../../../redux/Thank/Auth";
 
 const SignupSchema = Yup.object().shape({
     email: Yup
         .string()
         .max(50, 'Too Long!')
-        // .email("Not a valid email")
+        .email("Not a valid email")
         .required("Required")
     ,
     password: Yup
         .string()
-    // todo-dv вернуть валидацию
-        // .min(5, 'Too Short. Min length 5 symbol')
-        // .max(50, 'Too Long. Max length 50 symbol')
-        // .matches( /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/, "Password should have 1 lowercase, uppercase a number and one special case character(@, #, $, %, ^ ,&, *)" )
-        // .required('Required')
+        .min(5, 'Too Short. Min length 5 symbol')
+        .max(50, 'Too Long. Max length 50 symbol')
+        .matches( /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/, "Password should have 1 lowercase, uppercase a number and one special case character(@, #, $, %, ^ ,&, *)" )
+        .required('Required')
 });
 
 const Register: React.FC = () => {
 
     const dispatch = useDispatch()
-    const navigate = useNavigate();
-    const initialValues = {email: '', password: '', mainError: null}
 
-    async function handleRegistrationUser(values: IApiUsersRegisterData, formikEvent: FormikType) {
-        let {setSubmitting, setFieldError} = formikEvent
-        setSubmitting(true);
-        const res = await dispatch(RegisterUserApi(values)) as unknown as IResponseServer
-        switch (res.status) {
-            case ResultStatusCodeEnum.Created:
-                navigate('/message', {
-                    state: {
-                        type: 'sendMail'
-                    }
-                })
-                break
-            case ResultStatusCodeEnum.Error:
-                setFieldError('mainError',  'The user with the same email is busy')
-                break
-            case ResultStatusCodeEnum.FORBIDDEN:
-                setFieldError('mainError',  'Error send mail')
-        }
-        if (res.status === ResultStatusCodeEnum.Created){
-            navigate('/message', {
-                state: {
-                    type: 'sendMail'
-                }
-            })
-        } else if (res.message){
-            setFieldError('mainError',  res.message)
-        }
-        setSubmitting(false);
-    }
+    let load = useSelector(getIsLoad)
+    let message = useSelector(getMessage)
+    let status = useSelector(getStatus)
 
-    const onSubmit = async (values: IApiUsersRegisterData, {setSubmitting, setFieldError}: FormikType) => {
-        setSubmitting(false);
-        await handleRegistrationUser(values, {setSubmitting, setFieldError})
-    }
+    useEffect(() => {
+        dispatch(actionsAuth.clearForm())
+    }, [])
+
+    const formik = useFormik({
+        onSubmit(values: IApiUsersRegisterData): void | Promise<any> {
+            formik.setSubmitting(true);
+            dispatch(actionsAuth.registerUserRequest(values))
+        },
+        initialValues: {
+            email: 'loki99928@yandex.ru',
+            password: '123123aA@'
+        },
+        validationSchema: SignupSchema,
+        validateOnBlur: true,
+        validateOnChange: true
+    });
+
+    useEffect(() => {
+        formik.resetForm()
+    }, [message])
+
     return (
         <div className={s.blockForm}>
-            <Formik
-                onSubmit={onSubmit}
-                initialValues={initialValues}
-                validationSchema={SignupSchema}
-            >
-                {({
-                      isSubmitting,
-                      isValid,
-                      errors,
-                      touched,
-                      values,
-                  }) => (
-                    <Form>
-                        <div className={s.formBanner}>
-                            <img src={bannerForm} alt=""/>
-                        </div>
-                        <div className={s.containerFields}>
-                            <h2 className={s.formTitle}>Registration Info</h2>
-                            <FormikControlFields
-                                className={cn(s.formField)}
-                                errors={errors}
-                                touched={touched}
-                                values={values}
-                                control="input"
-                                type="text"
-                                label="Your email"
-                                name="email"
-                                htmlFor="email"
-                            />
-                            <FormikControlFields
-                                className={cn(s.formField)}
-                                errors={errors}
-                                touched={touched}
-                                values={values}
-                                control="input"
-                                type="password"
-                                label="Your password"
-                                name="password"
-                                htmlFor="password"
-                            />
-                            {
-                                errors.mainError &&
-                                <div className={cn(s.formTextError, s.formServer__error)}>
-                                    {errors.mainError}
-                                </div>
-                            }
-                            <FormikControlBtn
-                                control="submit"
-                                label="Send"
-                                type="submit"
-                                disabled={isSubmitting || !isValid}
-                            />
-                            <div className={cn(s.formFooter, s.footer__form)}>
-                                <NavLink to="/auth/">Authorize</NavLink>
-                                <NavLink to="/forget/">forget password</NavLink>
-                            </div>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
+            <div className={s.formBanner}>
+                <img src={bannerForm} alt=""/>
+            </div>
+            <div className={s.containerFields}>
+                <h2 className={s.formTitle}>Registration Info</h2>
+                <form onSubmit={formik.handleSubmit}>
+                    <FormikControlFields
+                        formik={formik}
+                        className={cn(s.formField)}
+                        type="text"
+                        label="Your email"
+                        name="email"
+                    />
+                    <FormikControlFields
+                        formik={formik}
+                        className={cn(s.formField)}
+                        type="password"
+                        label="Your password"
+                        name="password"
+                    />
+                    <ErrorResponse/>
+                    <FormikControlBtn
+                        label="Send"
+                        type="submit"
+                        disabled={formik.isSubmitting || !formik.isValid}
+                    />
+                </form>
+                <div className={cn(s.formFooter, s.footer__form)}>
+                    <NavLink to="/auth/">Authorize</NavLink>
+                    <NavLink to="/forget/">forget password</NavLink>
+                </div>
+            </div>
         </div>
     )
 }
 
 export default Register
-

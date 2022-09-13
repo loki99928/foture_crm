@@ -2,7 +2,7 @@ import React from "react";
 import cn from "classnames"
 
 import s from "../Form.module.scss"
-import {FormikControlTypeBtn} from "../FormikControl";
+import {FormikControlTypeBtn} from "./FormikControl";
 
 const Submit: React.FC<FormikControlTypeBtn> = props => {
     const {label, type, ...rest} = props

@@ -8,6 +8,8 @@ const PASSWORD_RULE_MESSAGE_MAX_LENGTH = 'Max length password 50 symbol'
 const EMAIL_RULE_MESSAGE_REQUIRED = 'Email is required'
 const EMAIL_RULE_MESSAGE_INCORRECT = 'Incorrect email'
 
+const REMEMBER_RULE_MESSAGE_REQUIRED = 'Data is not validate'
+
 export const REGEX = {
     PASSWORD_RULE
 }
@@ -19,4 +21,5 @@ export const MESSAGE = {
     PASSWORD_RULE_MESSAGE_MAX_LENGTH,
     EMAIL_RULE_MESSAGE_REQUIRED,
     EMAIL_RULE_MESSAGE_INCORRECT,
+    REMEMBER_RULE_MESSAGE_REQUIRED
 }

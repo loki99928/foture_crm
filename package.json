@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "server": "npm run start:dev --prefix server",
-    "client": "npm run start --prefix client",
+    "server": "npm run start:server_dev --prefix server",
+    "client": "npm run start:client_dev --prefix client",
     "dev": "concurrently \"npm run server\"  \"npm run client\"",
     "test client": "npm run test --prefix client"
   },

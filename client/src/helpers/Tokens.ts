@@ -12,7 +12,7 @@ interface SettingsType {
  * @param remember boolean cookie token save status
  */
 export const setCookieJWT = (jwt: string, remember: boolean) => {
-    let settings: SettingsType = {path: '/', sameSite: 'Strict'}
+    const settings: SettingsType = {path: '/', sameSite: 'Strict'}
     if (remember) {
         settings['expires'] = 1
     }

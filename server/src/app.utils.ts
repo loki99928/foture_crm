@@ -1,3 +1,9 @@
+/**
+ * Random line generation
+ *
+ * @param len number
+ * @constructor
+ */
 export const GET_ALPHA_NUMERIC_RANDOM = function(len:number): string {
     if ((len==undefined) || (len<=0)) {len=1;}
     const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -8,4 +14,15 @@ export const GET_ALPHA_NUMERIC_RANDOM = function(len:number): string {
         result += characters[Math.round(Math.random()*(characters.length-iffirst-1))];
     }
     return result;
+}
+
+/**
+ * artificial delay
+ *
+ * @param delay number
+ */
+export const delay = function (delay) {
+    return new Promise(function(resolve) {
+        setTimeout(resolve, delay);
+    });
 }

@@ -26,7 +26,7 @@ export interface IApiUserLoginData {
 }
 export interface IApiUserLoginResponse extends IResponseServer{
     accessToken?: string
-    userId?: string
+    userId?: number
 }
 
 // Forget
@@ -56,6 +56,7 @@ export interface IApiUsersGetResponse {
     userId?: string
     accessToken?: string
     email?: string
+    remember?: boolean
     message?: string
 }
 
