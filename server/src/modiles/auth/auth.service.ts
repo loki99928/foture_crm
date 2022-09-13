@@ -27,15 +27,14 @@ export interface IConfirmUserResponse {
 @Injectable()
 export class AuthService {
 
-    private readonly logger = new MyLogger();
+    private readonly logger = new MyLogger(AuthService.name);
 
     // number of password recovery attempts
     private attempts
     // max number of password recovery attempts
-    private maxAttempts = 15
+    private maxAttempts = 3
     // max time change
-    private readonly maxTimeHasGone = 1
-    // private readonly maxTimeHasGone = 15
+    private readonly maxTimeHasGone = 15
 
     constructor(
         @InjectRepository(UserEntity)
@@ -144,27 +143,16 @@ export class AuthService {
 
             if (!currentUser) throw new HttpException(['User is not find'], HttpStatus.BAD_REQUEST);
 
-            console.log('timeHasGone ->', currentUser)
+            let lastModifiedTime = currentUser.lastModifiedTime ?? new Date
 
-            let lastModifiedTime
-            let lastModifiedTimeBD = currentUser.lastModifiedTime
-
-            console.log(lastModifiedTimeBD)
-
-            if (!lastModifiedTimeBD){ // если нет времени первого запроса на восстановления пароля
-                lastModifiedTime = new Date()
-            } else { // если есть берем из бд
-                lastModifiedTime = lastModifiedTimeBD.getTime()
-            }
-
-            let timeHasGone = (Date.now() - currentUser.lastModifiedTime.getTime()) / 1000 / 60
+            let timeHasGone = (Date.now() - lastModifiedTime.getTime()) / 1000 / 60
 
             this.attempts = currentUser.attemptsNumber + 1
 
-            if (currentUser.attemptsNumber >= this.maxAttempts && Math.ceil(timeHasGone) > this.maxTimeHasGone) { // если количество попыток запросов на восстановление пароля превысило мак допустимое за промежуток времени lastModifiedTime
-                throw new HttpException([`The number of password recovery attempts has been exceeded. try again in ${15 - Math.ceil(timeHasGone)} minutes`], HttpStatus.BAD_REQUEST);
+            if (currentUser.attemptsNumber >= this.maxAttempts && Math.ceil(timeHasGone) <= this.maxTimeHasGone) { // если количество попыток запросов на восстановление пароля превысило мак допустимое за промежуток времени lastModifiedTime
+                throw new HttpException([`The number of password recovery attempts has been exceeded. try again in ${this.maxTimeHasGone - Math.ceil(timeHasGone)} minutes`], HttpStatus.BAD_REQUEST);
             } else if (currentUser.attemptsNumber >= this.maxAttempts && Math.ceil(timeHasGone) >= this.maxTimeHasGone) { // если прошло время ограничения по времени
-                lastModifiedTime = new Date()
+                lastModifiedTime = new Date
                 this.attempts = 0
             }
 
@@ -179,6 +167,7 @@ export class AuthService {
                 message: ['Message sent to your email']
             }
         } catch (e) {
+            this.logger.debug(e.response)
             throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
         }
     }
