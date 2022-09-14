@@ -61,6 +61,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
                 ...state,
                 status: undefined,
                 message: undefined,
+                user: undefined,
             })
 
         // REGISTER_USER
@@ -166,13 +167,13 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case FORGET_USER_SUCCESS:
             return {
                 ...state,
-                // message: action.payload.message,
+                message: action.payload.message,
                 user: undefined
             }
         case FORGET_USER_FAIL:
             return {
                 ...state,
-                // message: action.payload.message,
+                message: action.payload.message,
                 user: undefined
             }
 

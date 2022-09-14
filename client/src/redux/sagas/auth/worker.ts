@@ -25,20 +25,11 @@ type TRegisterUser = {
 export function* workerUserRegister({payload}: TRegisterUser): Generator<StrictEffect, void, any> {
     try {
         const result = yield call(authApi.register, payload.user)
-        yield put(actionsAuth.registerUserSuccess({message : result.message[0]}))
+        yield put(actionsAuth.registerUserSuccess({message : result.message.shift()}))
     } catch (err: any) {
         yield put(actionsAuth.registerUserFail({message : err.message}))
     }
 }
-
-
-
-
-
-
-
-
-
 
 /**
  * authorization user
@@ -102,7 +93,7 @@ export function* workerUserConfirm(action: TConfirmUser): Generator<StrictEffect
     const hashUser = action.payload.hashUser
     try {
         const result = yield call(authApi.confirmUser, hashUser)
-        yield put(actionsAuth.confirmUserSuccess({message : result.message[0]}))
+        yield put(actionsAuth.confirmUserSuccess({message : result.message.shift()}))
     } catch (err:any) {
         yield put(actionsAuth.confirmUserFail({message : err.message}))
     }
@@ -121,9 +112,8 @@ export function* workerUserForget(action: TForgetUser): Generator<StrictEffect, 
     const email = action.payload.user.email
     try {
         const result = yield call(authApi.forget, {email})
-        console.log(result)
-        // yield put(actions.confirmUserSuccess({message : result.message}))
+        yield put(actionsAuth.confirmUserSuccess({message : result.message.shift()}))
     } catch (err: any) {
-        // yield put(actions.confirmUserFail({message : err.message}))
+        yield put(actionsAuth.confirmUserFail({message : err.message}))
     }
 }

@@ -83,16 +83,12 @@ export const actionsAuth = {
             user: { userId, accessToken }
         }
     } as const),
-    authUserFail: (payload: any) => ({
+    authUserFail: ({message}: IResponseServer) => ({
         type: AUTH_USER_FAIL,
         payload: {
-            message: payload.message
+            message: message
         }
     } as const),
-
-
-
-
 
     // CHECK_AUTH_USER
     authUserDataRequest: () => ({ type: CHECK_AUTH_USER_REQUEST } as const),
@@ -110,9 +106,20 @@ export const actionsAuth = {
         payload: {
             user: {email}
         }
+
     } as const),
-    forgetUserSuccess: () => ({ type: FORGET_USER_SUCCESS} as const),
-    forgetUserFail: () => ({ type: FORGET_USER_FAIL} as const),
+    forgetUserSuccess: ({message}: IResponseServer) => ({
+        type: FORGET_USER_SUCCESS,
+        payload: {
+            message: message
+        }
+    } as const),
+    forgetUserFail: ({message}: IResponseServer) => ({
+        type: FORGET_USER_FAIL,
+        payload: {
+            message: message
+        }
+    } as const),
 }
 
 export type InitialStateType = typeof initialStateAuth
