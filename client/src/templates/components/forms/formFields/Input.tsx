@@ -18,7 +18,7 @@ const Input: React.FC<FormikControlType> = props => {
                 onChange={formik.handleChange}
                 value={formik.values[name]}
             />
-            <div className={cn(s.formLabel, {[s.formLabelStatic] : formik.values.email.length > 0})}>
+            <div className={cn(s.formLabel, {[s.formLabelStatic] : formik.values[name].length > 0})}>
                 <label htmlFor={name}>{label}</label>
             </div>
             {formik.errors?.[name] ? (

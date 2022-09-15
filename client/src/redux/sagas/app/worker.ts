@@ -11,6 +11,6 @@ export function* workerInitialized(): Generator<StrictEffect, void, any> {
         yield call(workerUserAuthorizationCheck)
         yield putResolve(actionsApp.initializedSuccess())
     } catch (e) {
-
+        console.log(e)
     }
 }

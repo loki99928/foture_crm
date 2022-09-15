@@ -65,14 +65,12 @@ export const authApi = {
     confirmUser(hashUser?: string) {
         return instance.get<IResponseServer>('confirm/' + hashUser)
             .then(res => {
-                console.log(res)
                 return {
                     status: res.data.status,
                     message: res.data.message
                 }
             })
             .catch((e: AxiosError<IApiErrorResponse>) => {
-                let res = e.response
                 throw new Error(e.response?.data.message?.shift())
             })
     },
@@ -92,7 +90,6 @@ export const authApi = {
                 }
             })
             .catch((e: AxiosError<IApiErrorResponse>) => {
-                let res = e.response
                 throw new Error(e.response?.data.message?.shift())
             })
     },
@@ -103,8 +100,8 @@ export const authApi = {
      * @param token
      * @returns {*}
      */
-    changeTokenNewPassword(token: string) {
-        return instance.post<IApiUsersChangeTokenNewPasswordResponse & IApiErrorResponse>('changeTokenNewPassword/', {token: token})
+    changeTokenNewPassword(temporaryToken: string) {
+        return instance.get<IApiUsersChangeTokenNewPasswordResponse & IApiErrorResponse>('changeTokenNewPassword/'+ temporaryToken)
             .then(res => {
                 return {
                     status: res.status,
@@ -112,7 +109,6 @@ export const authApi = {
                 }
             })
             .catch((e: AxiosError<IApiErrorResponse>) => {
-                let res = e.response
                 throw new Error(e.response?.data.message?.shift())
             })
     },

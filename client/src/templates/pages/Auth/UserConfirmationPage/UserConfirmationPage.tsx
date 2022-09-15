@@ -15,7 +15,7 @@ let  UserConfirmationPage: React.FC = () => {
     const message = useSelector(getMessage)
     const status = useSelector(getStatus)
 
-    if (message){
+    if (status === ResultStatusCodeEnum.Error){
         navigate('/message', {
             state: {message}
         })

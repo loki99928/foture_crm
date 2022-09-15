@@ -6,7 +6,7 @@ import {
     AUTH_USER_SUCCESS,
     CHECK_AUTH_USER_FAIL,
     CHECK_AUTH_USER_REQUEST,
-    CHECK_AUTH_USER_SUCCESS,
+    CHECK_AUTH_USER_SUCCESS, CHECK_TEMPORARY_TOKEN_FAIL, CHECK_TEMPORARY_TOKEN_REQUEST, CHECK_TEMPORARY_TOKEN_SUCCESS,
     CONFIRM_USER_FAIL,
     CONFIRM_USER_REQUEST,
     CONFIRM_USER_SUCCESS,
@@ -35,6 +35,7 @@ export type TInitialStateAuth = {
     status?: number
     typeRequest?: string
     hashUser?: string
+    temporaryToken?: string
     user?: TUser
 }
 
@@ -45,6 +46,7 @@ export let initialStateAuth = {
     status: undefined,
     typeRequest: undefined,
     hashUser: undefined,
+    temporaryToken: undefined,
     user: {
         userId: undefined,
         email: undefined,
@@ -64,7 +66,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
                 user: undefined,
             })
 
-        // REGISTER_USER
+        // регистрация пользователя
         case REGISTER_USER_REQUEST:
             return {
                 ...state,
@@ -84,7 +86,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
                 message: action.payload.message,
             }
 
-        // AUTH_USER
+        // авторизация пользователя
         case AUTH_USER_REQUEST:
             return {
                 ...state,
@@ -109,7 +111,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
                 user: undefined
             }
 
-        // CHECK_AUTH_USER
+        // аутентификация пользователя по токену
         case CHECK_AUTH_USER_REQUEST:
             return {
                 ...state,
@@ -134,7 +136,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
                 user: undefined
             }
 
-        // CONFIRM USER
+        // подтверждение почты пользователя
         case CONFIRM_USER_REQUEST:
             return {
                 ...state,
@@ -157,7 +159,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
                 hashUser: undefined
             }
 
-        // FORGET USER
+        // запрос на восстановления пароля
         case FORGET_USER_REQUEST:
             return {
                 ...state,
@@ -175,6 +177,29 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
                 ...state,
                 message: action.payload.message,
                 user: undefined
+            }
+
+        // проверка временного токена из ссылки на восстановление пароля
+        case CHECK_TEMPORARY_TOKEN_REQUEST:
+            return {
+                ...state,
+                message: undefined,
+                status: undefined,
+                temporaryToken: action.payload.temporaryToken,
+            }
+        case CHECK_TEMPORARY_TOKEN_SUCCESS:
+            return {
+                ...state,
+                message: undefined,
+                status: ResultStatusCodeEnum.Success,
+                temporaryToken: undefined
+            }
+        case CHECK_TEMPORARY_TOKEN_FAIL:
+            return {
+                ...state,
+                message: action.payload.message,
+                status: ResultStatusCodeEnum.Error,
+                temporaryToken: undefined
             }
 
         default:

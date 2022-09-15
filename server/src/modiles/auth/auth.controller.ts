@@ -40,16 +40,16 @@ export class AuthController {
 
     /**
      * Confirm user
-     * @param id id of user
+     * @param hashUser hash of user
      */
-    @Get('/confirm/:id')
-    userConfirmation(@Param('id') id: string){
-        return this.authService.userConfirmation(id)
+    @Get('/confirm/:hashUser')
+    userConfirmation(@Param('hashUser') hashUser: string){
+        return this.authService.userConfirmation(hashUser)
     }
 
-    @Post('/changeTokenNewPassword')
-    changeTokenNewPassword(){
-        return this.authService.changeTokenNewPassword()
+    @Get('/changeTokenNewPassword/:hashUser')
+    changeTokenNewPassword(@Param('hashUser')hashUser: string){
+        return this.authService.changeTokenNewPassword(hashUser)
     }
 
     @Post('/createNewPassword')

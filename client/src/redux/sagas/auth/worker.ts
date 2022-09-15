@@ -14,7 +14,7 @@ import {userApi} from "../../../api/userApi";
 
 
 /**
- * register user
+ * регистрация пользователя
  */
 type TRegisterUser = {
     type: string,
@@ -32,7 +32,7 @@ export function* workerUserRegister({payload}: TRegisterUser): Generator<StrictE
 }
 
 /**
- * authorization user
+ * авторизация пользователя
  *
  * @param payload
  */
@@ -62,7 +62,7 @@ export function* workerUserAuthorization({payload}: TAuthorizationUser): Generat
 }
 
 /**
- * checking token of user
+ * авторизация пользователя по токену
  */
 export function* workerUserAuthorizationCheck(): Generator<StrictEffect, void, any> {
     const token = Cookies.get('token')
@@ -79,9 +79,8 @@ export function* workerUserAuthorizationCheck(): Generator<StrictEffect, void, a
     }
 }
 
-
 /**
- * confirm user
+ * подтверждение почты пользователя
  */
 type TConfirmUser = {
     type: string,
@@ -89,7 +88,7 @@ type TConfirmUser = {
         hashUser: string
     }
 }
-export function* workerUserConfirm(action: TConfirmUser): Generator<StrictEffect, void, any> {
+export function* workerUserConfirmEmail(action: TConfirmUser): Generator<StrictEffect, void, any> {
     const hashUser = action.payload.hashUser
     try {
         const result = yield call(authApi.confirmUser, hashUser)
@@ -100,7 +99,7 @@ export function* workerUserConfirm(action: TConfirmUser): Generator<StrictEffect
 }
 
 /**
- * forget user password
+ * запрос на восстановление пароля
  */
 type TForgetUser = {
     type: string,
@@ -117,3 +116,25 @@ export function* workerUserForget(action: TForgetUser): Generator<StrictEffect, 
         yield put(actionsAuth.confirmUserFail({message : err.message}))
     }
 }
+
+
+/**
+ * проверка временного токена из ссылки на восстановление пароля
+ */
+type TTemporaryToken = {
+    type: string,
+    payload: {
+        temporaryToken: string
+    }
+}
+export function* workerCheckTemporaryToken(action: TTemporaryToken): Generator<StrictEffect, void, any> {
+    const temporaryToken = action.payload.temporaryToken
+    try {
+        const result = yield call(authApi.changeTokenNewPassword, temporaryToken)
+        yield put(actionsAuth.checkTemporaryTokenSuccess({message : result.message.shift()}))
+    } catch (err: any) {
+        yield put(actionsAuth.checkTemporaryTokenFail({message : err.message}))
+    }
+}
+
+

@@ -4,7 +4,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {MailerService} from "@nestjs-modules/mailer";
 import * as bcrypt from "bcrypt";
 import {JwtService} from "@nestjs/jwt";
-import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
+import {delay, GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 import {UserRegisterRequestDto} from './dto/register-user.req.dto'
 import {UserAuthorizeDto} from "./dto/authorize-user.dto";
 import {UserForgetDto} from "./dto/forget-user.dto";
@@ -49,7 +49,7 @@ export class AuthService {
     }
 
     /**
-     * Registration user
+     * регистрация пользователя
      *
      * @param dto UserRegisterRequestDto
      * @return Promise<IRegisterUserResponse>
@@ -81,7 +81,7 @@ export class AuthService {
     }
 
     /**
-     * confirmation email of user
+     * подтверждение почты пользователя
      *
      * @param hashUser
      * @return Promise<{ message: string }>
@@ -101,7 +101,7 @@ export class AuthService {
     }
 
     /**
-     * authorize user
+     * авторизация пользователя
      *
      * @param dto UserAuthorizeDto
      */
@@ -133,7 +133,7 @@ export class AuthService {
     }
 
     /**
-     * user password recovery
+     * запрос на восстановление пароля
      *
      * @param dto UserForgetDto
      */
@@ -172,10 +172,30 @@ export class AuthService {
         }
     }
 
-
-    changeTokenNewPassword() {
-        return 'this.authService.changeTokenNewPassword()'
+    /**
+     * проверка временного токена из ссылки на восстановление пароля
+     */
+    async changeTokenNewPassword(hashUser) {
+        try {
+            const user = await this.UserRepository.findOneBy({hashUser, confirm: true})
+            this.logger.debug(user)
+            if (user){
+                await this.UserRepository.update(user.id, {hashUser: '', lastModifiedTime: null, attemptsNumber: 0})
+                return {
+                    message: ['Token is valid']
+                }
+            } else {
+                throw new HttpException(['Token is not valid'], HttpStatus.BAD_REQUEST);
+            }
+        } catch (e) {
+            throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
+        }
     }
+
+
+
+
+
 
     createNewPassword() {
         return 'this.authService.createNewPassword()'

@@ -6,9 +6,9 @@ import RegisterPage from "./templates/pages/Auth/RegisterPage/RegisterPage";
 import MessagePageContainer from "./templates/pages/Client/MessagePage/MessagePageContainer";
 import ForgetPasswordPage from "./templates/pages/Auth/ForgetFormPage/ForgetPasswordPage";
 import UserConfirmationPage from "./templates/pages/Auth/UserConfirmationPage/UserConfirmationPage";
-import {NewPasswordPage} from "./templates/pages/Auth/NewPasswordPage/NewPasswordPage";
 import {ErrorPage} from "./templates/pages/Client/ErrorPage/ErrorPage";
 import UserPage from "./templates/pages/Admin/UserPage/UserPage";
+import {NewPasswordPage} from "./templates/pages/Auth/NewPasswordPage/NewPasswordPage";
 
 const routers = [
     {
@@ -43,7 +43,7 @@ const routers = [
     },
     {
         id: 'NEW_PASSWORD',
-        path: '/new_password/:token',
+        path: '/new_password/:temporaryToken',
         element: <NewPasswordPage/>
     },
     {

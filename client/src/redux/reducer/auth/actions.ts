@@ -29,11 +29,16 @@ export const FORGET_USER_REQUEST = 'CRM/AUTH/FORGET_USER_REQUEST'
 export const FORGET_USER_SUCCESS = 'CRM/AUTH/FORGET_USER_SUCCESS'
 export const FORGET_USER_FAIL = 'CRM/AUTH/FORGET_USER_FAIL'
 
+export const CHECK_TEMPORARY_TOKEN_REQUEST = 'CRM/AUTH/CHECK_TEMPORARY_TOKEN_REQUEST'
+export const CHECK_TEMPORARY_TOKEN_SUCCESS = 'CRM/AUTH/CHECK_TEMPORARY_TOKEN_SUCCESS'
+export const CHECK_TEMPORARY_TOKEN_FAIL = 'CRM/AUTH/CHECK_TEMPORARY_TOKEN_FAIL'
+
 export const actionsAuth = {
 
+    // сброс формы
     clearForm: () => ({ type: AUTH_LOAD_FORM } as const),
 
-    // REGISTER_USER
+    // регистрация пользователя
     registerUserRequest: ({email, password}: TUser) => ({
         type: REGISTER_USER_REQUEST,
         payload: {
@@ -51,26 +56,7 @@ export const actionsAuth = {
             payload: {message}
         } as const),
 
-
-    // CONFIRM USER
-    confirmUserRequest: (hashUser: string) => ({
-        type: CONFIRM_USER_REQUEST,
-        payload: {hashUser}
-    } as const),
-    confirmUserSuccess: ({message}: IResponseServer) => ({
-        type: CONFIRM_USER_SUCCESS,
-        payload: {
-            message: message
-        }
-    } as const),
-    confirmUserFail: ({message}: IResponseServer) => ({
-        type: CONFIRM_USER_FAIL,
-        payload: {
-            message: message
-        }
-    } as const),
-
-    // AUTH_USER
+    // авторизация пользователя
     authUserRequest: ({email, password, remember}: TUser) => ({
         type: AUTH_USER_REQUEST,
         payload: {
@@ -90,7 +76,7 @@ export const actionsAuth = {
         }
     } as const),
 
-    // CHECK_AUTH_USER
+    // аутентификация пользователя по токену
     authUserDataRequest: () => ({ type: CHECK_AUTH_USER_REQUEST } as const),
     authUserDataSuccess: ({userId, email, accessToken}: TUser) => ({
         type: CHECK_AUTH_USER_SUCCESS,
@@ -100,7 +86,25 @@ export const actionsAuth = {
     } as const),
     authUserDataFail: () => ({ type: CHECK_AUTH_USER_FAIL } as const),
 
-    // FORGET USER
+    // подтверждение почты пользователя
+    confirmUserRequest: (hashUser: string | undefined) => ({
+        type: CONFIRM_USER_REQUEST,
+        payload: {hashUser}
+    } as const),
+    confirmUserSuccess: ({message}: IResponseServer) => ({
+        type: CONFIRM_USER_SUCCESS,
+        payload: {
+            message: message
+        }
+    } as const),
+    confirmUserFail: ({message}: IResponseServer) => ({
+        type: CONFIRM_USER_FAIL,
+        payload: {
+            message: message
+        }
+    } as const),
+
+    // запрос на восстановление пароля
     forgetUserRequest: ({email}: TUser) => ({
         type: FORGET_USER_REQUEST,
         payload: {
@@ -120,6 +124,32 @@ export const actionsAuth = {
             message: message
         }
     } as const),
+
+    // проверка временного токена из ссылки на восстановление пароля
+    checkTemporaryTokenRequest: (temporaryToken: string | undefined) => ({
+        type: CHECK_TEMPORARY_TOKEN_REQUEST,
+        payload: {temporaryToken}
+    } as const),
+    checkTemporaryTokenSuccess: ({message}: IResponseServer) => ({
+        type: CHECK_TEMPORARY_TOKEN_SUCCESS,
+        payload: {
+            message: message
+        }
+    } as const),
+    checkTemporaryTokenFail: ({message}: IResponseServer) => ({
+        type: CHECK_TEMPORARY_TOKEN_FAIL,
+        payload: {
+            message: message
+        }
+    } as const)
+
+
+
+
+
+
+
+
 }
 
 export type InitialStateType = typeof initialStateAuth

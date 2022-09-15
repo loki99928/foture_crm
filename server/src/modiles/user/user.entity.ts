@@ -18,7 +18,9 @@ export class UserEntity extends BaseEntity{
     })
     password: string
 
-    @Column()
+    @Column({
+        default: undefined
+    })
     hashUser: string
 
     /**

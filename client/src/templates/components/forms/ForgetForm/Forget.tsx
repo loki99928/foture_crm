@@ -44,7 +44,7 @@ const Forget: React.FC = () => {
                 <img src={bannerForm} alt=""/>
             </div>
             <div className={s.containerFields}>
-                <h2 className={s.formTitle}>Authorize Info</h2>
+                <h2 className={s.formTitle}>Forgotten Your Password?</h2>
                 <form onSubmit={formik.handleSubmit}>
                     <FormikControlFields
                         formik={formik}
@@ -55,7 +55,7 @@ const Forget: React.FC = () => {
                     />
                     <ErrorResponse/>
                     <FormikControlBtn
-                        label="Send"
+                        label="Send Email"
                         type="submit"
                         disabled={formik.isSubmitting || !formik.isValid}
                     />

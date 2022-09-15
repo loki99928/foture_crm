@@ -28,7 +28,7 @@ export class UserService {
     }
 
     /**
-     * getting user data by token
+     * аутентификация пользователя по токену
      * @param jwt authorize token
      */
     // async get(jwt): Promise<IUserResponse>{

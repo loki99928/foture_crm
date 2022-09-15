@@ -4,35 +4,35 @@ import {useDispatch, useSelector} from "react-redux";
 
 import s from "../../../components/forms/Form.module.scss";
 import {NewPassword} from "../../../components/forms/NewPasswordForm/NewPassword";
-// import {getIsLoad} from "../../../redux/Selectors/usersSelectors";
-// import {validatePasswordToken} from "../../../redux/_Thank/auth";
+import {actionsAuth} from "../../../../redux/reducer/auth/actions";
+import {getMessage, getStatus} from "../../../../redux/reducer/auth/selectors";
+import {ResultStatusCodeEnum} from "../../../../types/ApiUsersTypes";
+import {Preloader} from "../../../components/preloader/Preloader";
 
 export const NewPasswordPage = () => {
 
     const dispatch = useDispatch()
-    const {token} = useParams()
     const navigate = useNavigate()
-    // const isLoadPage = useSelector(getIsLoad)
+    const {temporaryToken} = useParams()
+    const status = useSelector(getStatus)
+    const message = useSelector(getMessage)
 
     useEffect(() => {
-        // if(!isLoadPage){
-        //     (async () => {
-        //         const result = await dispatch(validatePasswordToken(token)) as unknown as IApiUsersChangeTokenNewPasswordResponse
-        //         if(result.statusCode === ResultStatusCodeEnum.Error){
-        //             navigate('/404')
-        //         }
-        //     })();
-        // }
+        dispatch(actionsAuth.checkTemporaryTokenRequest(temporaryToken))
     }, [])
 
-    // if (!isLoadPage){
-    //     return (
-    //         <div className={sp.pagePreloader}>
-    //             <Preloader/>
-    //         </div>
-    //
-    //     )
-    // }
+    if (status === undefined){
+        return (
+            <Preloader/>
+        );
+    }
+
+
+    if (status === ResultStatusCodeEnum.Error){
+        navigate('/message', {
+            state: {message}
+        })
+    }
 
     return (
         <main className={s.containerForm}>
