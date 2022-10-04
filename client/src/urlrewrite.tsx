@@ -43,7 +43,7 @@ const routers = [
     },
     {
         id: 'NEW_PASSWORD',
-        path: '/new_password/:temporaryToken',
+        path: '/new_password/:hashUser',
         element: <NewPasswordPage/>
     },
     {

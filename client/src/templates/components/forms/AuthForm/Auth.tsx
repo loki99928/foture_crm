@@ -1,19 +1,15 @@
 import React, {useEffect} from "react";
 import {NavLink} from "react-router-dom";
-import {Form, Formik, useFormik} from "formik";
+import {useFormik} from "formik";
 import cn from "classnames"
 import * as Yup from "yup";
-import {compose} from "redux";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 
 import s from "../Form.module.scss"
 import bannerForm from "../../../assets/images/bg-head-form.jpg"
 import {FormikControlBtn, FormikControlFields} from "../formFields/FormikControl";
-import {IApiUserLoginData, IApiUsersRegisterData} from "../../../../types/ApiUsersTypes";
-import {FormikType} from "../FormType";
+import {IApiUsersRegisterData} from "../../../../types/ApiUsersTypes";
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
-import { getUser} from "../../../../redux/reducer/auth/selectors";
-import {withAuthRedirect} from "../../../../hoc/AuthRedirect";
 import {ErrorResponse} from "../formFields/error";
 
 const SignupSchema = Yup.object().shape({

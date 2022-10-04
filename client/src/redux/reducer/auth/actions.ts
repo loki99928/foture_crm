@@ -33,6 +33,10 @@ export const CHECK_TEMPORARY_TOKEN_REQUEST = 'CRM/AUTH/CHECK_TEMPORARY_TOKEN_REQ
 export const CHECK_TEMPORARY_TOKEN_SUCCESS = 'CRM/AUTH/CHECK_TEMPORARY_TOKEN_SUCCESS'
 export const CHECK_TEMPORARY_TOKEN_FAIL = 'CRM/AUTH/CHECK_TEMPORARY_TOKEN_FAIL'
 
+export const CREATE_NEW_PASSWORD_REQUEST = 'CRM/AUTH/CREATE_NEW_PASSWORD_REQUEST'
+export const CREATE_NEW_PASSWORD_SUCCESS = 'CRM/AUTH/CREATE_NEW_PASSWORD_SUCCESS'
+export const CREATE_NEW_PASSWORD_FAIL = 'CRM/AUTH/CREATE_NEW_PASSWORD_FAIL'
+
 export const actionsAuth = {
 
     // сброс формы
@@ -126,9 +130,9 @@ export const actionsAuth = {
     } as const),
 
     // проверка временного токена из ссылки на восстановление пароля
-    checkTemporaryTokenRequest: (temporaryToken: string | undefined) => ({
+    checkTemporaryTokenRequest: (hashUser: string | undefined) => ({
         type: CHECK_TEMPORARY_TOKEN_REQUEST,
-        payload: {temporaryToken}
+        payload: {hashUser}
     } as const),
     checkTemporaryTokenSuccess: ({message}: IResponseServer) => ({
         type: CHECK_TEMPORARY_TOKEN_SUCCESS,
@@ -141,10 +145,27 @@ export const actionsAuth = {
         payload: {
             message: message
         }
+    } as const),
+
+    // запрос на создание нового пароля
+    createNewPasswordResponse: ({password, double_password, hashUser}: any) => ({
+        type: CREATE_NEW_PASSWORD_REQUEST,
+        payload: {
+            password, double_password, hashUser
+        }
+    } as const),
+    createNewPasswordSuccess: ({message}: IResponseServer) => ({
+        type: CREATE_NEW_PASSWORD_SUCCESS,
+        payload: {
+            message
+        }
+    } as const),
+    createNewPasswordFail: ({message}: IResponseServer) => ({
+        type: CREATE_NEW_PASSWORD_FAIL,
+        payload: {
+            message
+        }
     } as const)
-
-
-
 
 
 

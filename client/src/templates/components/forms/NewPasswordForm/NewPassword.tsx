@@ -10,6 +10,8 @@ import bannerForm from "../../../assets/images/bg-head-form.jpg"
 import {FormikControlBtn, FormikControlFields} from "../formFields/FormikControl";
 import {IApiUsersCreateNewPasswordData} from "../../../../types/ApiUsersTypes";
 import {ErrorResponse} from "../formFields/error";
+import {actionsAuth} from "../../../../redux/reducer/auth/actions";
+import {useParams} from "react-router";
 
 const SignupSchema = Yup.object().shape({
     password: Yup
@@ -27,14 +29,21 @@ const SignupSchema = Yup.object().shape({
         .required('Required')
 });
 
+// todo-dv нужно разобраться при не совпадение паролей выводит две ошибки
 export const NewPassword: React.FC = () => {
 
     const dispatch = useDispatch()
+    const {hashUser} = useParams()
 
     const formik = useFormik({
         onSubmit(values: IApiUsersCreateNewPasswordData): void | Promise<any> {
             formik.setSubmitting(true);
-            // dispatch(actionsAuth.registerUserRequest(values))
+            const arrRequest = {
+                password: values.password,
+                double_password: values.double_password,
+                hashUser
+            }
+            dispatch(actionsAuth.createNewPasswordResponse(arrRequest))
             formik.setSubmitting(false);
         },
         initialValues: {

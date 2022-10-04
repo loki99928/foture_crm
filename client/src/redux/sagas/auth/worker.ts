@@ -124,17 +124,30 @@ export function* workerUserForget(action: TForgetUser): Generator<StrictEffect, 
 type TTemporaryToken = {
     type: string,
     payload: {
-        temporaryToken: string
+        hashUser: string
     }
 }
 export function* workerCheckTemporaryToken(action: TTemporaryToken): Generator<StrictEffect, void, any> {
-    const temporaryToken = action.payload.temporaryToken
+    const hashUser = action.payload.hashUser
     try {
-        const result = yield call(authApi.changeTokenNewPassword, temporaryToken)
-        yield put(actionsAuth.checkTemporaryTokenSuccess({message : result.message.shift()}))
+        const result = yield call(authApi.changeTokenNewPassword, hashUser)
+        console.log(result)
+        // yield put(actionsAuth.checkTemporaryTokenSuccess({message : result.message.shift()}))
     } catch (err: any) {
         yield put(actionsAuth.checkTemporaryTokenFail({message : err.message}))
     }
 }
 
-
+/**
+ * сохранение нового пароля
+ */
+export function* workerCreateNewPassword(action: any): Generator<StrictEffect, void, any>{
+    console.log(action)
+    try {
+        const result = yield call(authApi.createNewPasswordApi, action.payload)
+        console.log(result)
+        yield put(actionsAuth.createNewPasswordSuccess({message : result.message.shift()}))
+    } catch (err: any) {
+        yield put(actionsAuth.createNewPasswordFail({message : err.message}))
+    }
+}

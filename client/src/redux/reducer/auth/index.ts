@@ -6,10 +6,15 @@ import {
     AUTH_USER_SUCCESS,
     CHECK_AUTH_USER_FAIL,
     CHECK_AUTH_USER_REQUEST,
-    CHECK_AUTH_USER_SUCCESS, CHECK_TEMPORARY_TOKEN_FAIL, CHECK_TEMPORARY_TOKEN_REQUEST, CHECK_TEMPORARY_TOKEN_SUCCESS,
+    CHECK_AUTH_USER_SUCCESS,
+    CHECK_TEMPORARY_TOKEN_FAIL,
+    CHECK_TEMPORARY_TOKEN_REQUEST,
+    CHECK_TEMPORARY_TOKEN_SUCCESS,
     CONFIRM_USER_FAIL,
     CONFIRM_USER_REQUEST,
     CONFIRM_USER_SUCCESS,
+    CREATE_NEW_PASSWORD_FAIL,
+    CREATE_NEW_PASSWORD_REQUEST,
     FORGET_USER_FAIL,
     FORGET_USER_REQUEST,
     FORGET_USER_SUCCESS,
@@ -35,7 +40,6 @@ export type TInitialStateAuth = {
     status?: number
     typeRequest?: string
     hashUser?: string
-    temporaryToken?: string
     user?: TUser
 }
 
@@ -46,7 +50,6 @@ export let initialStateAuth = {
     status: undefined,
     typeRequest: undefined,
     hashUser: undefined,
-    temporaryToken: undefined,
     user: {
         userId: undefined,
         email: undefined,
@@ -185,23 +188,44 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
                 ...state,
                 message: undefined,
                 status: undefined,
-                temporaryToken: action.payload.temporaryToken,
+                hashUser: action.payload.hashUser,
             }
         case CHECK_TEMPORARY_TOKEN_SUCCESS:
             return {
                 ...state,
                 message: undefined,
-                status: ResultStatusCodeEnum.Success,
-                temporaryToken: undefined
+                status: ResultStatusCodeEnum.Success
             }
         case CHECK_TEMPORARY_TOKEN_FAIL:
             return {
                 ...state,
                 message: action.payload.message,
                 status: ResultStatusCodeEnum.Error,
-                temporaryToken: undefined
+                hashUser: undefined
             }
 
+            // запрос на создание нового пароля
+        case CREATE_NEW_PASSWORD_REQUEST:
+            return {
+                ...state,
+                status: undefined,
+                message: undefined,
+                hashUser: action.payload.hashUser,
+            }
+        case CREATE_NEW_PASSWORD_FAIL:
+            return {
+                ...state,
+                status: ResultStatusCodeEnum.Success,
+                message: action.payload.message,
+                hashUser: undefined,
+            }
+        case CREATE_NEW_PASSWORD_FAIL:
+            return {
+                ...state,
+                status: ResultStatusCodeEnum.Error,
+                message: action.payload.message,
+                hashUser: undefined,
+            }
         default:
             return state
     }

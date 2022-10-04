@@ -100,8 +100,8 @@ export const authApi = {
      * @param token
      * @returns {*}
      */
-    changeTokenNewPassword(temporaryToken: string) {
-        return instance.get<IApiUsersChangeTokenNewPasswordResponse & IApiErrorResponse>('changeTokenNewPassword/'+ temporaryToken)
+    changeTokenNewPassword(hashUser: string) {
+        return instance.get<IApiUsersChangeTokenNewPasswordResponse & IApiErrorResponse>('changeTokenNewPassword/'+ hashUser)
             .then(res => {
                 return {
                     status: res.status,
@@ -120,7 +120,8 @@ export const authApi = {
      * @returns {*}
      */
     createNewPasswordApi(values: IApiUsersCreateNewPasswordData) {
-        return instance.post<IApiUsersCreateNewPasswordResponse>('createNewPasswordApi/', values).then(res => {
+        return instance.post<IApiUsersCreateNewPasswordResponse>('createNewPassword/', values).then(res => {
+            console.log(res)
             return {
                 status: res.data.statusCode,
                 message: res.data.message,

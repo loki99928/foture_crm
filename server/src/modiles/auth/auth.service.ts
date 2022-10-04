@@ -4,12 +4,13 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {MailerService} from "@nestjs-modules/mailer";
 import * as bcrypt from "bcrypt";
 import {JwtService} from "@nestjs/jwt";
-import {delay, GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
+import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 import {UserRegisterRequestDto} from './dto/register-user.req.dto'
 import {UserAuthorizeDto} from "./dto/authorize-user.dto";
 import {UserForgetDto} from "./dto/forget-user.dto";
 import {MyLogger} from "../../common/Logger";
 import {UserEntity} from "../user/user.entity";
+import {NewPasswordUserDto} from "./dto/newPassword-user.dto";
 
 export interface IRegisterUserResponse {
     message: string[]
@@ -23,7 +24,9 @@ export interface IAuthorizeUserResponse {
 export interface IConfirmUserResponse {
     message: string[]
 }
-
+export interface ICreateNewPasswordResponse {
+    message: string[]
+}
 @Injectable()
 export class AuthService {
 
@@ -36,16 +39,16 @@ export class AuthService {
     // max time change
     private readonly maxTimeHasGone = 15
 
+    private sendErrorCode(text: string): Error{
+        throw new HttpException([text], HttpStatus.BAD_REQUEST);
+    }
+
     constructor(
         @InjectRepository(UserEntity)
         private UserRepository: Repository<UserEntity>,
         private readonly mailerService: MailerService,
         private jwtService: JwtService
     ) {
-    }
-
-    login() {
-        return 'this.authService.login()'
     }
 
     /**
@@ -59,7 +62,7 @@ export class AuthService {
             // verification of the user's confirmed email
             let confirmUser = await this.UserRepository.findOneBy({email: dto.email, confirm: true})
             if (confirmUser){
-                throw new HttpException(['Email busy'], HttpStatus.BAD_REQUEST);
+                this.sendErrorCode('Email busy')
             }
 
             // verification of unconfirmed user email
@@ -110,12 +113,12 @@ export class AuthService {
         try {
             const currentUser = await this.UserRepository.findOneBy({'email': dto.email, confirm: true})
             if (currentUser === null){
-                throw new HttpException(['Email or password is incorrect'], HttpStatus.BAD_REQUEST);
+                this.sendErrorCode('Email or password is incorrect')
             }
 
             const isValidPassword = bcrypt.compareSync(dto.password, currentUser.password)
             if (!isValidPassword) {
-                throw new HttpException(['Email or password is incorrect'], HttpStatus.BAD_REQUEST);
+                this.sendErrorCode('Email or password is incorrect')
             }
 
             const payload = { email: currentUser.email, id: currentUser.id, remember: dto.remember };
@@ -141,7 +144,7 @@ export class AuthService {
         try {
             let currentUser = await this.UserRepository.findOneBy({email: dto.email})
 
-            if (!currentUser) throw new HttpException(['User is not find'], HttpStatus.BAD_REQUEST);
+            if (!currentUser) this.sendErrorCode('User is not find')
 
             let lastModifiedTime = currentUser.lastModifiedTime ?? new Date
 
@@ -150,15 +153,15 @@ export class AuthService {
             this.attempts = currentUser.attemptsNumber + 1
 
             if (currentUser.attemptsNumber >= this.maxAttempts && Math.ceil(timeHasGone) <= this.maxTimeHasGone) { // если количество попыток запросов на восстановление пароля превысило мак допустимое за промежуток времени lastModifiedTime
-                throw new HttpException([`The number of password recovery attempts has been exceeded. try again in ${this.maxTimeHasGone - Math.ceil(timeHasGone)} minutes`], HttpStatus.BAD_REQUEST);
-            } else if (currentUser.attemptsNumber >= this.maxAttempts && Math.ceil(timeHasGone) >= this.maxTimeHasGone) { // если прошло время ограничения по времени
+                this.sendErrorCode(`The number of password recovery attempts has been exceeded. try again in ${this.maxTimeHasGone - Math.ceil(timeHasGone)} minutes`)
+            } else if (currentUser.attemptsNumber <= this.maxAttempts && Math.ceil(timeHasGone) >= this.maxTimeHasGone) { // если прошло время ограничения по времени
                 lastModifiedTime = new Date
                 this.attempts = 0
             }
 
             let hashUser = getAlphaNumericRandom(20)
 
-            let newUser = await this.UserRepository.update(currentUser.id, {attemptsNumber: this.attempts, lastModifiedTime, hashUser})
+            await this.UserRepository.update(currentUser.id, {attemptsNumber: this.attempts, lastModifiedTime, hashUser})
 
             currentUser.hashUser = hashUser
             await this.sendMailForgetUser(currentUser)
@@ -174,19 +177,50 @@ export class AuthService {
 
     /**
      * проверка временного токена из ссылки на восстановление пароля
+     *
+     * @param hashUser string
      */
-    async changeTokenNewPassword(hashUser) {
+    async changeTokenNewPassword(hashUser: string) {
         try {
-            const user = await this.UserRepository.findOneBy({hashUser, confirm: true})
-            this.logger.debug(user)
-            if (user){
-                await this.UserRepository.update(user.id, {hashUser: '', lastModifiedTime: null, attemptsNumber: 0})
-                return {
-                    message: ['Token is valid']
-                }
-            } else {
-                throw new HttpException(['Token is not valid'], HttpStatus.BAD_REQUEST);
+            // const user = await this.UserRepository.findOneBy({hashUser, confirm: true})
+            //
+            // if (!user) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу
+
+            // let lastModifiedTime = user.lastModifiedTime;
+            // let timeHasGone = (Date.now() - lastModifiedTime.getTime()) / 1000 / 60
+            // if (Math.ceil(timeHasGone) > this.maxTimeHasGone) this.sendErrorCode('Token expired') // если закончилось время жизни токена
+
+            return {
+                message: ['Token is valid']
             }
+
+        } catch (e) {
+            throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Создание нового пароля
+     * @param dto NewPasswordUserDto
+     */
+    async createNewPassword(dto: NewPasswordUserDto) {
+        console.log(dto)
+        try {
+            const arrUser = await this.UserRepository.findOneBy({hashUser: dto.hashUser, confirm: true})
+
+            if (!arrUser) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу
+
+            this.logger.debug(arrUser)
+            // const user = new UserEntity()
+            // user.email = arrUser.email
+            // user.password = dto.password
+            // User = await user.save()
+            // await this.UserRepository.update(arrUser.id, {hashUser: '', lastModifiedTime: null, attemptsNumber: 0, password: dto.password})
+            await this.UserRepository.update(arrUser.id, { password: dto.password})
+            return {
+                message: ['Token is valid']
+            }
+
         } catch (e) {
             throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
         }
@@ -197,9 +231,11 @@ export class AuthService {
 
 
 
-    createNewPassword() {
-        return 'this.authService.createNewPassword()'
-    }
+
+
+
+
+
 
     // todo-dv нужно перенести отправку почты в отдельный файл
     async sendMailForgetUser(user: UserRegisterRequestDto) {
@@ -213,7 +249,7 @@ export class AuthService {
                     url: process.env.PRODUCTION_LINK + '/new_password/' + user.hashUser,
                 },
             })
-            .catch((e) => {
+            .catch(() => {
                 throw new HttpException({message: ['Mail sending error']}, HttpStatus.UNPROCESSABLE_ENTITY);
             });
     }
@@ -230,7 +266,7 @@ export class AuthService {
                     url: process.env.PRODUCTION_LINK + '/confirm/' + user.hashUser,
                 },
             })
-            .catch((e) => {
+            .catch(() => {
                 throw new HttpException({message: ['Mail sending error']}, HttpStatus.UNPROCESSABLE_ENTITY);
             });
     }

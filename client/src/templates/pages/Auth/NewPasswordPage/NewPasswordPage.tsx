@@ -6,29 +6,27 @@ import s from "../../../components/forms/Form.module.scss";
 import {NewPassword} from "../../../components/forms/NewPasswordForm/NewPassword";
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 import {getMessage, getStatus} from "../../../../redux/reducer/auth/selectors";
-import {ResultStatusCodeEnum} from "../../../../types/ApiUsersTypes";
 import {Preloader} from "../../../components/preloader/Preloader";
 
 export const NewPasswordPage = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const {temporaryToken} = useParams()
+    const {hashUser} = useParams()
     const status = useSelector(getStatus)
     const message = useSelector(getMessage)
 
     useEffect(() => {
-        dispatch(actionsAuth.checkTemporaryTokenRequest(temporaryToken))
+        dispatch(actionsAuth.checkTemporaryTokenRequest(hashUser))
     }, [])
 
-    if (status === undefined){
-        return (
-            <Preloader/>
-        );
-    }
+    // if (status === undefined){
+    //     return (
+    //         <Preloader/>
+    //     );
+    // }
 
-
-    if (status === ResultStatusCodeEnum.Error){
+    if (message){
         navigate('/message', {
             state: {message}
         })

@@ -2,11 +2,11 @@ import {takeEvery, all} from "redux-saga/effects";
 import {
     AUTH_USER_REQUEST,
     CHECK_AUTH_USER_REQUEST, CHECK_TEMPORARY_TOKEN_REQUEST,
-    CONFIRM_USER_REQUEST, FORGET_USER_REQUEST,
+    CONFIRM_USER_REQUEST, CREATE_NEW_PASSWORD_REQUEST, FORGET_USER_REQUEST,
     REGISTER_USER_REQUEST
 } from "../../reducer/auth/actions";
 import {
-    workerCheckTemporaryToken,
+    workerCheckTemporaryToken, workerCreateNewPassword,
     workerUserAuthorization,
     workerUserAuthorizationCheck,
     workerUserConfirmEmail,
@@ -25,5 +25,6 @@ export function* watchUserAuthorization() {
         takeEvery(CHECK_AUTH_USER_REQUEST, workerUserAuthorizationCheck),
         takeEvery(FORGET_USER_REQUEST, workerUserForget),
         takeEvery(CHECK_TEMPORARY_TOKEN_REQUEST, workerCheckTemporaryToken),
+        takeEvery(CREATE_NEW_PASSWORD_REQUEST, workerCreateNewPassword),
     ])
 }
