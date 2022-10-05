@@ -101,7 +101,7 @@ export const authApi = {
      * @returns {*}
      */
     changeTokenNewPassword(hashUser: string) {
-        return instance.get<IApiUsersChangeTokenNewPasswordResponse & IApiErrorResponse>('changeTokenNewPassword/'+ hashUser)
+        return instance.get<IApiUsersChangeTokenNewPasswordResponse & IApiErrorResponse>('changeTokenNewPassword/' + hashUser)
             .then(res => {
                 return {
                     status: res.status,
@@ -120,12 +120,15 @@ export const authApi = {
      * @returns {*}
      */
     createNewPasswordApi(values: IApiUsersCreateNewPasswordData) {
-        return instance.post<IApiUsersCreateNewPasswordResponse>('createNewPassword/', values).then(res => {
-            console.log(res)
-            return {
-                status: res.data.statusCode,
-                message: res.data.message,
-            }
-        })
+        return instance.post<IApiUsersCreateNewPasswordResponse>('createNewPassword/', values)
+            .then(res => {
+                return {
+                    status: res.status,
+                    message: res.data.message
+                }
+            })
+            .catch((e: AxiosError<IApiErrorResponse>) => {
+                throw new Error(e.response?.data.message?.shift())
+            })
     }
 }

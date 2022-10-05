@@ -1,5 +1,5 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
-import {Repository} from "typeorm";
+import {Column, PrimaryGeneratedColumn, Repository} from "typeorm";
 import {InjectRepository} from "@nestjs/typeorm";
 import {MailerService} from "@nestjs-modules/mailer";
 import * as bcrypt from "bcrypt";
@@ -10,7 +10,7 @@ import {UserAuthorizeDto} from "./dto/authorize-user.dto";
 import {UserForgetDto} from "./dto/forget-user.dto";
 import {MyLogger} from "../../common/Logger";
 import {UserEntity} from "../user/user.entity";
-import {NewPasswordUserDto} from "./dto/newPassword-user.dto";
+import {NewPasswordUserDto} from "./dto/new-password-user.dto";
 
 export interface IRegisterUserResponse {
     message: string[]
@@ -25,6 +25,9 @@ export interface IConfirmUserResponse {
     message: string[]
 }
 export interface ICreateNewPasswordResponse {
+    message: string[]
+}
+export interface IResponse {
     message: string[]
 }
 @Injectable()
@@ -55,9 +58,9 @@ export class AuthService {
      * регистрация пользователя
      *
      * @param dto UserRegisterRequestDto
-     * @return Promise<IRegisterUserResponse>
+     * @return Promise<IResponse>
      */
-    async register(dto: UserRegisterRequestDto): Promise<IRegisterUserResponse> {
+    async register(dto: UserRegisterRequestDto): Promise<IResponse> {
         try {
             // verification of the user's confirmed email
             let confirmUser = await this.UserRepository.findOneBy({email: dto.email, confirm: true})
@@ -87,9 +90,9 @@ export class AuthService {
      * подтверждение почты пользователя
      *
      * @param hashUser
-     * @return Promise<{ message: string }>
+     * @return Promise<IResponse>
      */
-    async userConfirmation(hashUser): Promise<{ message: string[] }> {
+    async userConfirmation(hashUser): Promise<IResponse> {
         return this.UserRepository.findOneBy({hashUser, confirm: false})
             .then(async (user) => {
                 if (user){
@@ -139,8 +142,9 @@ export class AuthService {
      * запрос на восстановление пароля
      *
      * @param dto UserForgetDto
+     * @return Promise<IResponse>
      */
-    async forget(dto: UserForgetDto): Promise<IConfirmUserResponse> {
+    async forget(dto: UserForgetDto): Promise<IResponse> {
         try {
             let currentUser = await this.UserRepository.findOneBy({email: dto.email})
 
@@ -170,7 +174,6 @@ export class AuthService {
                 message: ['Message sent to your email']
             }
         } catch (e) {
-            this.logger.debug(e.response)
             throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
         }
     }
@@ -179,21 +182,18 @@ export class AuthService {
      * проверка временного токена из ссылки на восстановление пароля
      *
      * @param hashUser string
+     * @return Promise<IResponse>
      */
-    async changeTokenNewPassword(hashUser: string) {
+    async changeTokenNewPassword(hashUser: string): Promise<IResponse> {
         try {
-            // const user = await this.UserRepository.findOneBy({hashUser, confirm: true})
-            //
-            // if (!user) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу
-
-            // let lastModifiedTime = user.lastModifiedTime;
-            // let timeHasGone = (Date.now() - lastModifiedTime.getTime()) / 1000 / 60
-            // if (Math.ceil(timeHasGone) > this.maxTimeHasGone) this.sendErrorCode('Token expired') // если закончилось время жизни токена
-
+            const user = await this.UserRepository.findOneBy({hashUser, confirm: true})
+            if (!user) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу
+            let lastModifiedTime = user.lastModifiedTime;
+            let timeHasGone = (Date.now() - lastModifiedTime.getTime()) / 1000 / 60
+            if (Math.ceil(timeHasGone) > this.maxTimeHasGone) this.sendErrorCode('Token expired') // если закончилось время жизни токена
             return {
                 message: ['Token is valid']
             }
-
         } catch (e) {
             throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
         }
@@ -202,25 +202,20 @@ export class AuthService {
     /**
      * Создание нового пароля
      * @param dto NewPasswordUserDto
+     * @return Promise<IResponse>
      */
-    async createNewPassword(dto: NewPasswordUserDto) {
-        console.log(dto)
+    async createNewPassword(dto: NewPasswordUserDto): Promise<IResponse> {
         try {
-            const arrUser = await this.UserRepository.findOneBy({hashUser: dto.hashUser, confirm: true})
-
+            let arrUser = await this.UserRepository.findOneBy({hashUser: dto.hashUser, confirm: true})
             if (!arrUser) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу
 
-            this.logger.debug(arrUser)
-            // const user = new UserEntity()
-            // user.email = arrUser.email
-            // user.password = dto.password
-            // User = await user.save()
-            // await this.UserRepository.update(arrUser.id, {hashUser: '', lastModifiedTime: null, attemptsNumber: 0, password: dto.password})
-            await this.UserRepository.update(arrUser.id, { password: dto.password})
+            // todo-dv нужно разобраться как обновлять данные
+            const user = new UserEntity()
+            let hasPas = await user.hashPassword(dto.password)
+            await this.UserRepository.update(arrUser.id, {hashUser: '', lastModifiedTime: null, attemptsNumber: 0, password: hasPas})
             return {
-                message: ['Token is valid']
+                message: ['Password saved']
             }
-
         } catch (e) {
             throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
         }
@@ -228,17 +223,8 @@ export class AuthService {
 
 
 
-
-
-
-
-
-
-
-
-
     // todo-dv нужно перенести отправку почты в отдельный файл
-    async sendMailForgetUser(user: UserRegisterRequestDto) {
+    async sendMailForgetUser(user: UserEntity) {
         return await this.mailerService
             .sendMail({
                 to: user.email,
@@ -255,7 +241,7 @@ export class AuthService {
     }
 
     // todo-dv нужно перенести отправку почты в отдельный файл
-    async sendMailRegisterUser(user: UserRegisterRequestDto) {
+    async sendMailRegisterUser(user: UserEntity) {
         return await this.mailerService
             .sendMail({
                 to: user.email,

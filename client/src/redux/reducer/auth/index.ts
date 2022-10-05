@@ -14,7 +14,7 @@ import {
     CONFIRM_USER_REQUEST,
     CONFIRM_USER_SUCCESS,
     CREATE_NEW_PASSWORD_FAIL,
-    CREATE_NEW_PASSWORD_REQUEST,
+    CREATE_NEW_PASSWORD_REQUEST, CREATE_NEW_PASSWORD_SUCCESS,
     FORGET_USER_FAIL,
     FORGET_USER_REQUEST,
     FORGET_USER_SUCCESS,
@@ -212,7 +212,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
                 message: undefined,
                 hashUser: action.payload.hashUser,
             }
-        case CREATE_NEW_PASSWORD_FAIL:
+        case CREATE_NEW_PASSWORD_SUCCESS:
             return {
                 ...state,
                 status: ResultStatusCodeEnum.Success,

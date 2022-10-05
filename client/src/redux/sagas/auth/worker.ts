@@ -54,7 +54,7 @@ export function* workerUserAuthorization({payload}: TAuthorizationUser): Generat
             }
             yield put(actionsAuth.authUserSuccess(data))
         } else {
-            throw new Error('token is not validation')
+            new Error('token is not validation')
         }
     } catch (err: any) {
         yield put(actionsAuth.authUserFail({message : err.message}))
@@ -131,8 +131,7 @@ export function* workerCheckTemporaryToken(action: TTemporaryToken): Generator<S
     const hashUser = action.payload.hashUser
     try {
         const result = yield call(authApi.changeTokenNewPassword, hashUser)
-        console.log(result)
-        // yield put(actionsAuth.checkTemporaryTokenSuccess({message : result.message.shift()}))
+        yield put(actionsAuth.checkTemporaryTokenSuccess({message : result.message.shift()}))
     } catch (err: any) {
         yield put(actionsAuth.checkTemporaryTokenFail({message : err.message}))
     }
@@ -141,11 +140,17 @@ export function* workerCheckTemporaryToken(action: TTemporaryToken): Generator<S
 /**
  * сохранение нового пароля
  */
-export function* workerCreateNewPassword(action: any): Generator<StrictEffect, void, any>{
-    console.log(action)
+type TCreateNewPassword = {
+    type: string,
+    payload: {
+        password: string
+        double_password: string
+        hashUser: string
+    }
+}
+export function* workerCreateNewPassword(action: TCreateNewPassword): Generator<StrictEffect, void, any>{
     try {
         const result = yield call(authApi.createNewPasswordApi, action.payload)
-        console.log(result)
         yield put(actionsAuth.createNewPasswordSuccess({message : result.message.shift()}))
     } catch (err: any) {
         yield put(actionsAuth.createNewPasswordFail({message : err.message}))

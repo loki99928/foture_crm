@@ -1,4 +1,4 @@
-import {BaseEntity, BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 import * as bcrypt from "bcrypt";
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 
@@ -52,9 +52,12 @@ export class UserEntity extends BaseEntity{
         this.hashUser = getAlphaNumericRandom(20)
     }
 
+    @BeforeUpdate()
     @BeforeInsert()
-    async setPassword(password: string){
+    async hashPassword(password: string){
         const salt = bcrypt.genSalt()
         this.password = await bcrypt.hash(password || this.password, await salt)
+        return this.password
     }
+
 }

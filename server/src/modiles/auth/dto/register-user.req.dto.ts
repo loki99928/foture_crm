@@ -11,7 +11,4 @@ export class UserRegisterRequestDto {
     @MaxLength(50, {message: MESSAGE.PASSWORD_RULE_MESSAGE_MAX_LENGTH})
     @Matches(REGEX.PASSWORD_RULE, {message: MESSAGE.PASSWORD_RULE_MESSAGE_REGEX})
     readonly password: string
-
-    @IsNotEmpty({message: MESSAGE.HASH_RULE_MESSAGE_REQUIRED})
-    readonly hashUser: string
 }
