@@ -33,7 +33,7 @@ describe('MessagePage', () => {
             //     </Router>
             // </Provider>
         )
-        screen.debug()
+        // screen.debug()
         // expect(asFragment()).toMatchSnapshot()
     })
 })

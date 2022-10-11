@@ -17,15 +17,16 @@ const Input: React.FC<FormikControlType> = props => {
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 value={formik.values[name]}
+                {...rest}
             />
             <div className={cn(s.formLabel, {[s.formLabelStatic] : formik.values[name].length > 0})}>
                 <label htmlFor={name}>{label}</label>
             </div>
-            {formik.errors?.[name] ? (
+            {(formik.errors?.[name] && formik.touched?.[name]) && (
                 <div className={cn(s.formTextError, s.form__error)} data-testid="formTextError">
                     {formik.errors?.[name]}
                 </div>
-            ) : null}
+            )}
         </div>
     )
 }

@@ -4,8 +4,9 @@ import {render} from "@testing-library/react";
 import {Router} from "react-router";
 import {Provider} from "react-redux";
 
-import store from "../../../redux/store";
-import {RegisterPage} from "./RegisterPage";
+import store from "../../../../redux/store";
+import RegisterPage from "./RegisterPage";
+
 
 describe('auth page', () => {
     it('render', function () {

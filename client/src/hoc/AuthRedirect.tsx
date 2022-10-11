@@ -20,8 +20,6 @@ export function withNotAuthRedirect <WCP>(Component: React.ComponentType<WCP>) {
 
         let {isAuth, ...restProps} = props
 
-        console.log('withNotAuthRedirect isAuth -> ', isAuth)
-
         if (!isAuth) {
             return (
                 <Navigate to="/auth"></Navigate>

@@ -38,7 +38,7 @@
   "scripts": {
     "start:client_dev": "set PORT=3006 && react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test:client ": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -5,25 +5,23 @@ exports[`ForgetForm Snapshot 1`] = `
   <div
     class="blockForm"
   >
-    <form
-      action="#"
+    <div
+      class="formBanner"
     >
-      <div
-        class="formBanner"
+      <img
+        alt=""
+        src="bg-head-form.jpg"
+      />
+    </div>
+    <div
+      class="containerFields"
+    >
+      <h2
+        class="formTitle"
       >
-        <img
-          alt=""
-          src="bg-head-form.jpg"
-        />
-      </div>
-      <div
-        class="containerFields"
-      >
-        <h2
-          class="formTitle"
-        >
-          Forget password 
-        </h2>
+        Forgotten Your Password?
+      </h2>
+      <form>
         <div
           class="formBlockField formBlock__field"
         >
@@ -31,10 +29,8 @@ exports[`ForgetForm Snapshot 1`] = `
             autocomplete="on"
             class="formField"
             data-testid="input_email"
-            for="email"
-            id="email"
             name="email"
-            type="email"
+            type="text"
             value=""
           />
           <div
@@ -47,32 +43,35 @@ exports[`ForgetForm Snapshot 1`] = `
             </label>
           </div>
         </div>
+        <div
+          class="formTextError formServer__error"
+        />
         <div>
           <button
-            class="formBtn formBtn_hover formBtn_active"
+            class="formBtn formBtn_hover formBtn_active formBtn_focus"
             type="submit"
           >
-            Send
+            Send Email
           </button>
         </div>
-        <div
-          class="formFooter footer__form"
+      </form>
+      <div
+        class="formFooter footer__form"
+      >
+        <a
+          class=""
+          href="/auth/"
         >
-          <a
-            class=""
-            href="/auth/"
-          >
-            Authorize
-          </a>
-          <a
-            class=""
-            href="/registration/"
-          >
-            registration
-          </a>
-        </div>
+          Authorize
+        </a>
+        <a
+          class=""
+          href="/registration/"
+        >
+          registration
+        </a>
       </div>
-    </form>
+    </div>
   </div>
 </DocumentFragment>
 `;

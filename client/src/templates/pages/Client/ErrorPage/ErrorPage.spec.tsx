@@ -4,17 +4,17 @@ import {render} from "@testing-library/react";
 import {Router} from "react-router";
 import {Provider} from "react-redux";
 
-import store from "../../../redux/store";
-import {ForgetPasswordPage} from "./ForgetPasswordPage";
+import {ErrorPage} from "./ErrorPage";
+import store from "../../../../redux/store";
 
 describe('auth page', () => {
-    it('render', function () {
+    it('Snapshot', function () {
         const hashHistory = createMemoryHistory()
 
         const { asFragment } = render(
             <Provider store={store}>
-                <Router location={'/forget'} navigator={hashHistory}>
-                    <ForgetPasswordPage/>
+                <Router location={'/auth'} navigator={hashHistory}>
+                    <ErrorPage/>
                 </Router>
             </Provider>
         )

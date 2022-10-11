@@ -12,21 +12,22 @@ import {IApiUsersCreateNewPasswordData} from "../../../../types/ApiUsersTypes";
 import {ErrorResponse} from "../formFields/error";
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 import {useParams} from "react-router";
+import {MESSAGE, REGEX} from "../form.utils";
 
 const SignupSchema = Yup.object().shape({
     password: Yup
         .string()
-        .min(5, 'Too Short. Min length 5 symbol')
-        .max(50, 'Too Long. Max length 50 symbol')
-        .matches(/^(?=.*[a-z])/, "Must one Lowercase")
-        .matches(/^(?=.*[A-Z])/, "Must one Uppercase")
-        .matches(/^(?=.*[0-9])/, "Must One Number")
-        .matches(/^(?=.*[!@#\$%\^&\*])/, "Must One Special Case Character(@, #, $, %, ^ ,&, *)")
-        .required('Required'),
+        .min(REGEX.PASSWORD_MIN_LENGTH, MESSAGE.PASSWORD_RULE_MESSAGE_MIN_LENGTH)
+        .max(REGEX.PASSWORD_MAX_LENGTH, MESSAGE.PASSWORD_RULE_MESSAGE_MAX_LENGTH)
+        .matches( REGEX.PASSWORD_LOWERCASE, MESSAGE.PASSWORD_RULE_MESSAGE_LOWERCASE )
+        .matches( REGEX.PASSWORD_UPPERCASE, MESSAGE.PASSWORD_RULE_MESSAGE_UPPERCASE )
+        .matches( REGEX.PASSWORD_NUMBER, MESSAGE.PASSWORD_RULE_MESSAGE_NUMBER )
+        .matches( REGEX.PASSWORD_SPECIAL_CASE, MESSAGE.PASSWORD_RULE_MESSAGE_SPECIAL_CASE)
+        .required(MESSAGE.PASSWORD_RULE_MESSAGE_REQUIRED),
     double_password: Yup
         .string()
-        .oneOf([Yup.ref('password')], 'Password mismatch')
-        .required('Required')
+        .oneOf([Yup.ref('password')], MESSAGE.PASSWORD_RULE_MESSAGE_MISMATCH)
+        .required(MESSAGE.PASSWORD_RULE_MESSAGE_REQUIRED)
 });
 
 // todo-dv нужно разобраться при не совпадение паролей выводит две ошибки
@@ -47,8 +48,8 @@ export const NewPassword: React.FC = () => {
             formik.setSubmitting(false);
         },
         initialValues: {
-            password: '123123aA@',
-            double_password: '123123aA@'
+            password: '',
+            double_password: ''
         },
         validationSchema: SignupSchema,
         validateOnBlur: true,
@@ -69,6 +70,7 @@ export const NewPassword: React.FC = () => {
                         type="password"
                         label="Your password"
                         name="password"
+                        data-testid="input_password"
                     />
                     <FormikControlFields
                         formik={formik}
@@ -76,6 +78,7 @@ export const NewPassword: React.FC = () => {
                         type="password"
                         label="Password confirmation"
                         name="double_password"
+                        data-testid="input_double_password"
                     />
                     <ErrorResponse/>
                     <FormikControlBtn

@@ -11,23 +11,24 @@ import {FormikControlBtn, FormikControlFields} from "../formFields/FormikControl
 import {IApiUsersRegisterData} from "../../../../types/ApiUsersTypes";
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 import {ErrorResponse} from "../formFields/error";
+import {MESSAGE, REGEX} from "../form.utils";
 
 const SignupSchema = Yup.object().shape({
     email: Yup
         .string()
-        .max(50, 'Too Long!')
-        .email("Not a valid email")
-        .required("Required")
+        .max(REGEX.EMAIL_MAX_LENGTH, MESSAGE.EMAIL_RULE_MESSAGE_TO_LONG)
+        .email(MESSAGE.EMAIL_RULE_MESSAGE_NOT_VALID)
+        .required(MESSAGE.EMAIL_RULE_MESSAGE_REQUIRED)
     ,
     password: Yup
         .string()
-        .min(5, 'Too Short. Min length 5 symbol')
-        .max(50, 'Too Long. Max length 50 symbol')
-        .matches( /^(?=.*[a-z])/, "Must one Lowercase" )
-        .matches( /^(?=.*[A-Z])/, "Must one Uppercase" )
-        .matches( /^(?=.*[0-9])/, "Must One Number" )
-        .matches( /^(?=.*[!@#\$%\^&\*])/, "Must One Special Case Character(@, #, $, %, ^ ,&, *)" )
-        .required('Required')
+        .min(REGEX.PASSWORD_MIN_LENGTH, MESSAGE.PASSWORD_RULE_MESSAGE_MIN_LENGTH)
+        .max(REGEX.PASSWORD_MAX_LENGTH, MESSAGE.PASSWORD_RULE_MESSAGE_MAX_LENGTH)
+        .matches( REGEX.PASSWORD_LOWERCASE, MESSAGE.PASSWORD_RULE_MESSAGE_LOWERCASE )
+        .matches( REGEX.PASSWORD_UPPERCASE, MESSAGE.PASSWORD_RULE_MESSAGE_UPPERCASE )
+        .matches( REGEX.PASSWORD_NUMBER, MESSAGE.PASSWORD_RULE_MESSAGE_NUMBER )
+        .matches( REGEX.PASSWORD_SPECIAL_CASE, MESSAGE.PASSWORD_RULE_MESSAGE_SPECIAL_CASE)
+        .required(MESSAGE.PASSWORD_RULE_MESSAGE_REQUIRED)
 });
 
 const Auth: React.FC = () => {
@@ -38,7 +39,7 @@ const Auth: React.FC = () => {
     }, [])
 
     const formik = useFormik({
-        initialValues: {email: 'loki99928@yandex.ru', password: '123123aA@', remember: false, mainError: null},
+        initialValues: {email: '', password: '', remember: false, mainError: null},
         onSubmit: async (values: IApiUsersRegisterData) => {
             formik.setSubmitting(true);
             dispatch(actionsAuth.authUserRequest(values))
@@ -62,6 +63,7 @@ const Auth: React.FC = () => {
                         type="text"
                         label="Your email"
                         name="email"
+                        data-testid="input_email"
                     />
                     <FormikControlFields
                         formik={formik}
@@ -69,6 +71,7 @@ const Auth: React.FC = () => {
                         type="password"
                         label="Your password"
                         name="password"
+                        data-testid="input_password"
                     />
                     <FormikControlFields
                         className={cn(s.formFieldCheck)}

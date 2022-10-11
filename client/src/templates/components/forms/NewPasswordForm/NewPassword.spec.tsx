@@ -3,6 +3,7 @@ import {act, fireEvent, screen} from "@testing-library/react";
 
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import {NewPassword} from "./NewPassword";
+import {MESSAGE} from "../form.utils";
 
 describe('NewPassword', () => {
 
@@ -23,7 +24,7 @@ describe('NewPassword', () => {
             const password = screen.getByTestId('input_password')
             await act( async () => {
                 fireEvent.change(password, {
-                    target: { value: '123pass456345' }
+                    target: { value: '123123aA@' }
                 })
             });
             await act( async () => {
@@ -44,7 +45,7 @@ describe('NewPassword', () => {
                 fireEvent.focusOut(password)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent('Too Short. Min length 5 symbol');
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_RULE_MESSAGE_MIN_LENGTH);
         })
 
         it('too long', async () => {
@@ -59,7 +60,7 @@ describe('NewPassword', () => {
                 fireEvent.focusOut(password)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent('Too Long. Max length 50 symbol');
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_RULE_MESSAGE_MAX_LENGTH);
         })
     })
 
@@ -76,12 +77,12 @@ describe('NewPassword', () => {
             const double_password = screen.getByTestId('input_double_password')
             await act( async () => {
                 fireEvent.change(password, {
-                    target: { value: '123pass456345' }
+                    target: { value: '123123aA@' }
                 })
             });
             await act( async () => {
                 fireEvent.change(double_password, {
-                    target: { value: '123pass456345' }
+                    target: { value: '123123aA@' }
                 })
             });
             await act( async () => {
@@ -96,7 +97,7 @@ describe('NewPassword', () => {
             const double_password = screen.getByTestId('input_double_password')
             await act( async () => {
                 fireEvent.change(password, {
-                    target: { value: '123pass45634' }
+                    target: { value: '123123aA@' }
                 })
             });
             await act( async () => {
@@ -122,7 +123,7 @@ describe('NewPassword', () => {
                 fireEvent.focusOut(double_password)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent('Password mismatch');
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_RULE_MESSAGE_MISMATCH);
         })
 
         it('too long', async () => {
@@ -137,7 +138,7 @@ describe('NewPassword', () => {
                 fireEvent.focusOut(double_password)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent('Password mismatch');
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_RULE_MESSAGE_MISMATCH);
         })
     })
 
@@ -179,12 +180,12 @@ describe('NewPassword', () => {
             });
             await act( async () => {
                 fireEvent.change(password, {
-                    target: { value: '1234f2' }
+                    target: { value: '123123aA@' }
                 })
             });
             await act( async () => {
                 fireEvent.change(double_password, {
-                    target: { value: '1234f2' }
+                    target: { value: '123123aA@' }
                 })
             });
             expect(btn).not.toBeDisabled()

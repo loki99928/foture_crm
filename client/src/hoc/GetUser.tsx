@@ -20,8 +20,6 @@ export function getUser <WCP>(Component: React.ComponentType<WCP>) {
 
         let {accessToken, ...restProps} = props
 
-        console.log(accessToken)
-
         return <Component {...restProps as WCP}/>
     }
 
