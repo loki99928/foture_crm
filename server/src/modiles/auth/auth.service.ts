@@ -61,6 +61,7 @@ export class AuthService {
      * @return Promise<IResponse>
      */
     async register(dto: UserRegisterRequestDto): Promise<IResponse> {
+        console.log(dto)
         try {
             // verification of the user's confirmed email
             let confirmUser = await this.UserRepository.findOneBy({email: dto.email, confirm: true})

@@ -11,17 +11,12 @@ import {setCookieJWT} from "../../../helpers/Tokens";
 
 import Cookies from "js-cookie";
 import {userApi} from "../../../api/userApi";
+import {TRegisterUser} from "./types";
 
 
 /**
  * регистрация пользователя
  */
-type TRegisterUser = {
-    type: string,
-    payload: {
-        user: IApiUsersRegisterData
-    }
-}
 export function* workerUserRegister({payload}: TRegisterUser): Generator<StrictEffect, void, any> {
     try {
         const result = yield call(authApi.register, payload.user)
@@ -111,9 +106,9 @@ export function* workerUserForget(action: TForgetUser): Generator<StrictEffect, 
     const email = action.payload.user.email
     try {
         const result = yield call(authApi.forget, {email})
-        yield put(actionsAuth.confirmUserSuccess({message : result.message.shift()}))
+        yield put(actionsAuth.forgetUserSuccess({message : result.message.shift()}))
     } catch (err: any) {
-        yield put(actionsAuth.confirmUserFail({message : err.message}))
+        yield put(actionsAuth.forgetUserFail({message : err.message}))
     }
 }
 
