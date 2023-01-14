@@ -2,7 +2,7 @@ import {BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGenerated
 import * as bcrypt from "bcrypt";
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 
-@Entity({name:'own_user'})
+@Entity({name:'own_users'})
 export class UserEntity extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number

@@ -1,7 +1,8 @@
-import {testSaga} from 'redux-saga-test-plan';
+import {expectSaga, testSaga} from 'redux-saga-test-plan';
 import Cookies from "js-cookie";
 import {
-    workerCheckTemporaryToken, workerCreateNewPassword,
+    workerCheckTemporaryToken,
+    workerCreateNewPassword,
     workerUserAuthorization,
     workerUserAuthorizationCheck,
     workerUserConfirmEmail,
@@ -11,13 +12,15 @@ import {
 import {authApi} from "../../../api/authApi";
 import {
     actionsAuth,
-    AUTH_USER_REQUEST, CHECK_TEMPORARY_TOKEN_REQUEST,
-    CONFIRM_USER_REQUEST, CREATE_NEW_PASSWORD_REQUEST,
+    AUTH_USER_REQUEST,
+    CHECK_TEMPORARY_TOKEN_REQUEST,
+    CONFIRM_USER_REQUEST,
+    CREATE_NEW_PASSWORD_REQUEST,
     FORGET_USER_REQUEST,
     REGISTER_USER_REQUEST
 } from "../../reducer/auth/actions";
 import {userApi} from "../../../api/userApi";
-import {call, put} from "redux-saga/effects";
+import {call} from "redux-saga/effects";
 
 describe('Sagas auth', () => {
 
@@ -31,11 +34,12 @@ describe('Sagas auth', () => {
                 }
             }
         }
-        const fakeUser = {
-            email: 'test@mail.ru',
-            password: '1314@tvwD'
-        }
+
         it('success', () => {
+            const fakeUser = {
+                email: 'test@mail.ru',
+                password: '1314@tvwD'
+            }
             let result = {
                 message: ['Success register']
             }
@@ -47,6 +51,11 @@ describe('Sagas auth', () => {
                 .next()
                 .isDone()
         });
+
+        const fakeUser = {
+            email: 'test@mail.ru',
+            password: '1314@tvwD'
+        }
         it('fail', () => {
             const error = new Error('Email busy');
             testSaga(workerUserRegister, action)
