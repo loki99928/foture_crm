@@ -172,12 +172,14 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case FORGET_USER_SUCCESS:
             return {
                 ...state,
+                status: ResultStatusCodeEnum.Success,
                 message: action.payload.message,
                 user: undefined
             }
         case FORGET_USER_FAIL:
             return {
                 ...state,
+                status: ResultStatusCodeEnum.Error,
                 message: action.payload.message,
                 user: undefined
             }
