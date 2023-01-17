@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router";
 import {useSelector} from "react-redux";
-import Message from "../../../components/content/Message/Message";
+import Message from "../../../components/main/Message/Message";
 import {getMessage} from "../../../../redux/reducer/auth/selectors";
 
 let MessagePageContainer: React.FC=  () => {

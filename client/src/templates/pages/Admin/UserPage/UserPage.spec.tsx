@@ -5,7 +5,7 @@ import {Router} from "react-router";
 import {Provider} from "react-redux";
 
 import store from "../../../../redux/store";
-import User from "../../../components/content/User/User";
+import User from "../../../components/main/User/User";
 
 describe('auth page', () => {
     it('render', function () {
