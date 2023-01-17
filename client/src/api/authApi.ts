@@ -45,7 +45,6 @@ export const authApi = {
     authorize(data: IApiUserLoginData) {
         return instance.post<IApiUserLoginResponse & IApiErrorResponse>('authorize/', data)
             .then(res => {
-                console.log(res)
                 return {
                     userId: res.data.userId,
                     accessToken: res.data.accessToken

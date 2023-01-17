@@ -4,7 +4,7 @@ import {render} from "@testing-library/react";
 import {Router} from "react-router";
 import {Provider} from "react-redux";
 
-import store from "../../../../redux/store";
+import store from "../../../../../redux/store";
 import ForgetPasswordPage from "./ForgetPasswordPage";
 
 describe('auth page', () => {

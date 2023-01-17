@@ -16,8 +16,6 @@ const RegisterPage = () => {
     const message = useSelector(getMessage)
     const status = useSelector(getStatus)
 
-    console.log(status)
-
     if (status === ResultStatusCodeEnum.Success){
         navigate('/message', {
             state: {message}
