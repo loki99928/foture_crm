@@ -6,7 +6,7 @@ import s from "../../../../components/forms/Form.module.scss";
 import {NewPassword} from "../../../../components/forms/NewPasswordForm/NewPassword";
 import {actionsAuth} from "../../../../../redux/reducer/auth/actions";
 import {getMessage, getStatus} from "../../../../../redux/reducer/auth/selectors";
-import {Preloader} from "../../../../components/preloader/Preloader";
+import {Preloader} from "../../../../components/preloader/default/Preloader";
 
 export const NewPasswordPage = () => {
 

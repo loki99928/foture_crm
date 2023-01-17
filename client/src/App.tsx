@@ -7,7 +7,7 @@ import store from "./redux/store";
 import "./templates/assets/scss/Normalize.css"
 import "./templates/assets/scss/Settings.scss"
 import {Routers} from "./urlrewrite";
-import {Preloader} from "./templates/components/preloader/Preloader";
+import {Preloader} from "./templates/components/preloader/default/Preloader";
 import {actionsApp} from "./redux/reducer/app/actions";
 import {getInitialized} from "./redux/reducer/app/selectors";
 import {isAuth} from "./redux/reducer/auth/selectors";
