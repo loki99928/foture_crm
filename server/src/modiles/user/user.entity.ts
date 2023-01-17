@@ -4,6 +4,7 @@ import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils
 
 @Entity({name:'own_users'})
 export class UserEntity extends BaseEntity{
+
     @PrimaryGeneratedColumn()
     id: number
 
@@ -32,12 +33,21 @@ export class UserEntity extends BaseEntity{
     attemptsNumber: number
 
     /**
-     * number of password reset requests
+     * confirm of email
      */
     @Column({
         default: false
     })
     confirm: boolean
+
+    /**
+     * confirm of email
+     * administrator | editor | author | contributor | subscriber
+     */
+    @Column({
+        default: 2
+    })
+    role: number
 
     /**
      * Half-day password change request time
