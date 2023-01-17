@@ -12,7 +12,7 @@ import {
 import {authApi} from "../../../api/authApi";
 import {
     actionsAuth,
-    AUTH_USER_REQUEST,
+    AUTH_USER_REQUEST, CHECK_AUTH_USER_SUCCESS,
     CHECK_TEMPORARY_TOKEN_REQUEST,
     CONFIRM_USER_REQUEST,
     CREATE_NEW_PASSWORD_REQUEST,
@@ -20,7 +20,9 @@ import {
     REGISTER_USER_REQUEST
 } from "../../reducer/auth/actions";
 import {userApi} from "../../../api/userApi";
-import {call} from "redux-saga/effects";
+import {call, put, putResolve} from "redux-saga/effects";
+import {IApiUserLoginData} from "../../../types/ApiUsersTypes";
+import {setCookieJWT} from "../../../helpers/Tokens";
 
 describe('Sagas auth', () => {
 
