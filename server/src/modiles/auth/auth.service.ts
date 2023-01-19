@@ -61,7 +61,7 @@ export class AuthService {
      * @return Promise<IResponse>
      */
     async register(dto: UserRegisterRequestDto): Promise<IResponse> {
-        console.log(dto)
+        // todo-dv Нужно реализовать что у первого пользователя role administrator
         try {
             // verification of the user's confirmed email
             let confirmUser = await this.UserRepository.findOneBy({email: dto.email, confirm: true})

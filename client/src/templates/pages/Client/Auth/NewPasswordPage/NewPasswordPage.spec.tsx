@@ -6,8 +6,6 @@ import {Provider} from "react-redux";
 import store from "../../../../../redux/store";
 import {NewPasswordPage} from "./NewPasswordPage";
 
-
-// todo-dv разобраться с get параметрами
 describe('auth page', () => {
     it('render', function () {
         const hashHistory = createMemoryHistory()

@@ -50,6 +50,12 @@ export class UserEntity extends BaseEntity{
     role: number
 
     /**
+     * avatar of user
+     */
+    @Column()
+    avatarId: number
+
+    /**
      * Half-day password change request time
      */
     @Column({
@@ -68,6 +74,11 @@ export class UserEntity extends BaseEntity{
         const salt = bcrypt.genSalt()
         this.password = await bcrypt.hash(password || this.password, await salt)
         return this.password
+    }
+
+    @BeforeInsert()
+    async setAvatarId(){
+        this.avatarId = Math.round(Math.random()*10)
     }
 
 }
