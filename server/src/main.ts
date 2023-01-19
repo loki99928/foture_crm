@@ -8,7 +8,9 @@ async function start() {
     const app = await NestFactory.create(
         AppModule,
         {
-            logger: new MyLogger(),
+            // todo-dv разобраться с логированием. при своем отключается вывод ошибок в консоле
+            logger: ['error', 'warn'],
+            // logger: new MyLogger(),
         }
     );
     app.useGlobalPipes(

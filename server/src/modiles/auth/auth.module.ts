@@ -15,6 +15,7 @@ import {UserEntity} from "../user/user.entity";
             signOptions: {expiresIn: `${process.env.JWT_EXPIRES_IN}`},
         }),
     ],
+    exports: [AuthService],
     controllers: [AuthController],
     providers: [AuthService],
 })

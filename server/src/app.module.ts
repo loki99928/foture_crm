@@ -8,6 +8,7 @@ import {AuthModule} from "./modiles/auth/auth.module";
 import {typeOrmConfigAsync} from "./config/typeorm.config";
 import {getMailConfig} from "./config/mailer.config";
 import {UserModule} from "./modiles/user/user.module";
+import {AvatarModule} from "./modiles/avatar/avatar.module";
 
 
 @Module({
@@ -21,7 +22,8 @@ import {UserModule} from "./modiles/user/user.module";
             useFactory: getMailConfig,
         }),
         AuthModule,
-        UserModule
+        UserModule,
+        AvatarModule
     ],
     controllers: [AppController],
     providers: [AppService],
