@@ -1,28 +1,29 @@
-import {BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import * as bcrypt from "bcrypt";
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
+import {AvatarsEntity} from "../avatar/avatar.entity";
 
 @Entity({name:'own_users'})
 export class UserEntity extends BaseEntity{
 
     @PrimaryGeneratedColumn()
-    id: number
+    public id: number
 
     @Column({
         unique: true,
         nullable: false
     })
-    email: string
+    public email: string
 
     @Column({
         nullable: false
     })
-    password: string
+    public password: string
 
     @Column({
         default: undefined
     })
-    hashUser: string
+    public hashUser: string
 
     /**
      * number of password reset requests
@@ -30,7 +31,7 @@ export class UserEntity extends BaseEntity{
     @Column({
         default: 0
     })
-    attemptsNumber: number
+    public attemptsNumber: number
 
     /**
      * confirm of email
@@ -38,7 +39,7 @@ export class UserEntity extends BaseEntity{
     @Column({
         default: false
     })
-    confirm: boolean
+    public confirm: boolean
 
     /**
      * confirm of email
@@ -47,13 +48,14 @@ export class UserEntity extends BaseEntity{
     @Column({
         default: 2
     })
-    role: number
+    public role: number
 
     /**
      * avatar of user
      */
     @Column()
-    avatarId: number
+    // @ManyToOne( () => AvatarsEntity, (avatar: AvatarsEntity) => avatar.id )
+    public avatarId: number
 
     /**
      * Half-day password change request time
@@ -61,7 +63,7 @@ export class UserEntity extends BaseEntity{
     @Column({
         default: null
     })
-    lastModifiedTime: Date
+    public lastModifiedTime: Date
 
     @BeforeInsert()
     async setHashUser(){
@@ -76,9 +78,9 @@ export class UserEntity extends BaseEntity{
         return this.password
     }
 
-    @BeforeInsert()
-    async setAvatarId(){
-        this.avatarId = Math.round(Math.random()*10)
-    }
+    // @BeforeInsert()
+    // async setAvatarId(){
+    //     this.avatarId = Math.round(Math.random()*10)
+    // }
 
 }
