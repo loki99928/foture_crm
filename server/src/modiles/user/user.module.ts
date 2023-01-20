@@ -10,7 +10,6 @@ import {UserEntity} from "./user.entity";
     providers: [UserService],
     controllers: [UserController],
     imports: [
-        ConfigModule.forRoot({ envFilePath: `.${process.env.NODE_ENV}.env` }),
         TypeOrmModule.forFeature([UserEntity]),
         JwtModule.register({
             secret: `${process.env.JWT_SECRET}`,

@@ -11,6 +11,7 @@ import {UserForgetDto} from "./dto/forget-user.dto";
 import {MyLogger} from "../../common/Logger";
 import {UserEntity} from "../user/user.entity";
 import {NewPasswordUserDto} from "./dto/new-password-user.dto";
+import {ConfigService} from "@nestjs/config";
 
 export interface IRegisterUserResponse {
     message: string[]
@@ -50,9 +51,8 @@ export class AuthService {
         @InjectRepository(UserEntity)
         private UserRepository: Repository<UserEntity>,
         private readonly mailerService: MailerService,
-        private jwtService: JwtService
-    ) {
-    }
+        private jwtService: JwtService,
+    ) {}
 
     /**
      * регистрация пользователя

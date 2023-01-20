@@ -1,7 +1,6 @@
 import {BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import * as bcrypt from "bcrypt";
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
-import {AvatarsEntity} from "../avatar/avatar.entity";
 
 @Entity({name:'own_users'})
 export class UserEntity extends BaseEntity{
@@ -51,10 +50,10 @@ export class UserEntity extends BaseEntity{
     public role: number
 
     /**
-     * avatar of user
+     * images of user
      */
     @Column()
-    // @ManyToOne( () => AvatarsEntity, (avatar: AvatarsEntity) => avatar.id )
+    // @ManyToOne( () => AvatarsEntity, (images: AvatarsEntity) => images.id )
     public avatarId: number
 
     /**

@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 
-@Controller('avatar')
-export class AvatarController {
+@Controller('images')
+export class ImagesController {
     constructor( ) {}
 }

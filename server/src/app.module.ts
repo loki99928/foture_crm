@@ -8,13 +8,16 @@ import {AuthModule} from "./modiles/auth/auth.module";
 import {typeOrmConfigAsync} from "./config/typeorm.config";
 import {getMailConfig} from "./config/mailer.config";
 import {UserModule} from "./modiles/user/user.module";
-import {AvatarModule} from "./modiles/avatar/avatar.module";
+import {ImagesModule} from "./modiles/images/images.module";
 
 
 @Module({
     imports: [
         // todo-dv разобраться почему не работает isGlobal: true у ConfigModule
-        ConfigModule.forRoot({ envFilePath: `.${process.env.NODE_ENV}.env` }),
+        ConfigModule.forRoot({
+            envFilePath: `.${process.env.NODE_ENV}.env`,
+            isGlobal: true
+        }),
         TypeOrmModule.forRootAsync(typeOrmConfigAsync),
         MailerModule.forRootAsync({
             imports: [ConfigModule],
@@ -23,7 +26,7 @@ import {AvatarModule} from "./modiles/avatar/avatar.module";
         }),
         AuthModule,
         UserModule,
-        AvatarModule
+        ImagesModule
     ],
     controllers: [AppController],
     providers: [AppService],

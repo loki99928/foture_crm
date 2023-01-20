@@ -8,7 +8,6 @@ import {UserEntity} from "../user/user.entity";
 
 @Module({
     imports: [
-        ConfigModule.forRoot({ envFilePath: `.${process.env.NODE_ENV}.env` }),
         TypeOrmModule.forFeature([UserEntity]),
         JwtModule.register({
             secret: `${process.env.JWT_SECRET}`,
