@@ -1,6 +1,22 @@
-import {BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {
+    BaseEntity,
+    BeforeInsert,
+    BeforeUpdate,
+    Column,
+    Entity, JoinTable,
+    ManyToOne,
+    OneToOne,
+    PrimaryGeneratedColumn
+} from "typeorm";
 import * as bcrypt from "bcrypt";
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
+import {ImagesEntity} from "../images/images.entity";
+
+export enum UserRole {
+    ADMIN = "admin",
+    EDITOR = "editor",
+    SUBSCRIBER = "subscriber",
+}
 
 @Entity({name:'own_users'})
 export class UserEntity extends BaseEntity{
@@ -42,19 +58,13 @@ export class UserEntity extends BaseEntity{
 
     /**
      * confirm of email
-     * administrator | editor | author | contributor | subscriber
      */
     @Column({
-        default: 2
+        type: "enum",
+        enum: UserRole,
+        default: UserRole.EDITOR,
     })
-    public role: number
-
-    /**
-     * images of user
-     */
-    @Column()
-    // @ManyToOne( () => AvatarsEntity, (images: AvatarsEntity) => images.id )
-    public avatarId: number
+    public role: UserRole
 
     /**
      * Half-day password change request time
@@ -63,6 +73,12 @@ export class UserEntity extends BaseEntity{
         default: null
     })
     public lastModifiedTime: Date
+
+    /**
+     * images of user
+     */
+    @ManyToOne( () => ImagesEntity, (images: ImagesEntity) => images.users )
+    public avatar: number
 
     @BeforeInsert()
     async setHashUser(){
@@ -77,9 +93,9 @@ export class UserEntity extends BaseEntity{
         return this.password
     }
 
-    // @BeforeInsert()
-    // async setAvatarId(){
-    //     this.avatarId = Math.round(Math.random()*10)
-    // }
+    @BeforeInsert()
+    async setAvatar(){
+        this.avatar = Math.round(Math.random()*10)
+    }
 
 }

@@ -34,7 +34,7 @@ export class UserService {
     // async get(jwt): Promise<IUserResponse>{
     async get(jwt): Promise<any>{
 
-        // await delay(1000)
+        await delay(1000)
 
         try {
             const json = this.jwtService.decode(jwt, { json: true }) as IJWTUser;

@@ -1,5 +1,5 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
-import {Column, PrimaryGeneratedColumn, Repository} from "typeorm";
+import {Repository} from "typeorm";
 import {InjectRepository} from "@nestjs/typeorm";
 import {MailerService} from "@nestjs-modules/mailer";
 import * as bcrypt from "bcrypt";
@@ -11,7 +11,6 @@ import {UserForgetDto} from "./dto/forget-user.dto";
 import {MyLogger} from "../../common/Logger";
 import {UserEntity} from "../user/user.entity";
 import {NewPasswordUserDto} from "./dto/new-password-user.dto";
-import {ConfigService} from "@nestjs/config";
 
 export interface IRegisterUserResponse {
     message: string[]
