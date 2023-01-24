@@ -52,6 +52,7 @@ const Auth: React.FC = () => {
 
     return (
         <div className={s.blockForm}>
+            <img src="/images/avatar_1.jpg" alt=""/>
             <div className={s.formBanner}>
                 <img src={bannerForm} alt=""/>
             </div>

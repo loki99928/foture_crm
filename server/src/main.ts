@@ -2,17 +2,17 @@ import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import {ValidationPipe} from "@nestjs/common";
 import {MyLogger} from "./common/Logger";
+import {Logger, LoggerErrorInterceptor} from "nestjs-pino";
 
 async function start() {
     let port = process.env.PORT || 5000
     const app = await NestFactory.create(
         AppModule,
         {
-            // todo-dv разобраться с логированием. при своем отключается вывод ошибок в консоле
-            logger: ['error', 'warn'],
-            // logger: new MyLogger(),
+            bufferLogs: true
         }
     );
+    app.useLogger(app.get(Logger));
     app.useGlobalPipes(
         new ValidationPipe({
             transform: true,
