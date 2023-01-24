@@ -14,7 +14,6 @@ import {ImagesModule} from "./modiles/images/images.module";
 
 @Module({
     imports: [
-        // todo-dv разобраться почему не работает isGlobal: true у ConfigModule
         ConfigModule.forRoot({
             envFilePath: `.${process.env.NODE_ENV}.env`,
             isGlobal: true

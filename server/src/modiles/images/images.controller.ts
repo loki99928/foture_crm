@@ -9,7 +9,8 @@ export class ImagesController {
 
     @Get('/:filename')
     get(@Param("filename") filename: string){
-        return filename
+        console.log(filename)
+        return 'filename'
         // res.sendFile(name, { root: 'static/images'});
         // return this.ImagesService.uploadImage(name)
     }

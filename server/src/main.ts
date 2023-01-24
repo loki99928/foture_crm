@@ -19,6 +19,7 @@ async function start() {
             whitelist: true,
         })
     )
+    app.enableCors()
     await app.listen(port);
 }
 
