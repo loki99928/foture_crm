@@ -15,6 +15,7 @@ export interface IUserResponse{
     email: string
     accessToken: string
     message: string
+    remember: boolean
 }
 
 @Injectable()
@@ -31,10 +32,10 @@ export class UserService {
      * аутентификация пользователя по токену
      * @param jwt authorize token
      */
-    // async get(jwt): Promise<IUserResponse>{
-    async get(jwt): Promise<any>{
+    async get(jwt): Promise<IUserResponse>{
+    // async get(jwt): Promise<any>{
 
-        await delay(1000)
+        // await delay(1000)
 
         try {
             const json = this.jwtService.decode(jwt, { json: true }) as IJWTUser;

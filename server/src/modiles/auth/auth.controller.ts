@@ -8,7 +8,9 @@ import {NewPasswordUserDto} from "./dto/new-password-user.dto";
 @Controller('auth')
 export class AuthController {
 
-    constructor(private readonly authService: AuthService) {
+    constructor(
+        private readonly authService: AuthService
+    ) {
     }
 
     /**

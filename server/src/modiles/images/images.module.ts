@@ -1,11 +1,15 @@
-import { Module } from '@nestjs/common';
+import {Module} from '@nestjs/common';
+import {TypeOrmModule} from "@nestjs/typeorm";
 import {ImagesController} from "./images.controller";
 import {ImagesService} from "./images.service";
-import {AuthService} from "../auth/auth.service";
-import {AuthModule} from "../auth/auth.module";
+import {SettingsEntity} from "../settings/settings.entity";
+import {ImagesEntity} from "./images.entity";
 
 @Module({
     controllers: [ImagesController],
-    providers: [ImagesService]
+    providers: [ImagesService],
+    imports: [
+        TypeOrmModule.forFeature([SettingsEntity, ImagesEntity])
+    ]
 })
 export class ImagesModule {}

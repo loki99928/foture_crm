@@ -1,7 +1,6 @@
 import {Module} from '@nestjs/common';
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {JwtModule} from "@nestjs/jwt";
-import {ConfigModule} from "@nestjs/config";
 import {AuthController} from './../auth/auth.controller';
 import {AuthService} from './../auth/auth.service';
 import {UserEntity} from "../user/user.entity";
