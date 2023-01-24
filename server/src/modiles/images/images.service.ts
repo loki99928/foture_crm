@@ -17,8 +17,26 @@ export class ImagesService {
     async init(){
         const createAvatar = await this.SettingsRepository.findOneBy({option: 'createAvatar'})
         if (createAvatar){
-            await this.ImagesRepository.save([{type: 'avatar', url: '/access/images/avatar/avatar_1.jpg'}, {type: 'avatar', url: '/access/images/avatar/avatar_2.jpg'}])
+            /**
+             * создаем массив изображений
+             */
+            let arrImages = []
+            for (let i = 1; i <= 10; i++){
+                arrImages.push({type: 'avatar', url: `/access/images/avatar/avatar_${i}.jpg`})
+            }
+            /**
+             * создаем дефолтные автарки пользователей
+             */
+            await this.ImagesRepository.save(arrImages)
+
+            /**
+             * меняем status что созданы дефолтные автарки пользователей
+             */
             await this.SettingsRepository.save({option: 'create_avatar', value: 'init'})
         }
+    }
+
+    get(name){
+
     }
 }

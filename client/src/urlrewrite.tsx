@@ -52,6 +52,11 @@ const routers = [
         element: <UserPage/>
     },
     {
+        id: 'IMAGE',
+        path: '/image/:name',
+        element: <UserPage/>
+    },
+    {
         id: 'ERROR',
         path: '*',
         element: <ErrorPage/>
