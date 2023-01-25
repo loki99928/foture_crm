@@ -10,6 +10,9 @@ import {typeOrmConfigAsync} from "./config/typeorm.config";
 import {getMailConfig} from "./config/mailer.config";
 import {UserModule} from "./modiles/user/user.module";
 import {ImagesModule} from "./modiles/images/images.module";
+import {join} from "path";
+import {ServeStaticModule} from "@nestjs/serve-static";
+import * as fs from "fs";
 
 
 @Module({
@@ -23,6 +26,10 @@ import {ImagesModule} from "./modiles/images/images.module";
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: getMailConfig,
+        }),
+        ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', 'static'),
+            serveRoot: "/static",
         }),
         LoggerModule.forRoot({
             pinoHttp: {
@@ -43,4 +50,7 @@ import {ImagesModule} from "./modiles/images/images.module";
 })
 
 export class AppModule {
+    constructor() {
+        console.log(join(__dirname, '..', 'static'))
+    }
 }
