@@ -33,22 +33,23 @@ export class UserService {
      * @param jwt authorize token
      */
     async get(jwt): Promise<IUserResponse>{
-    // async get(jwt): Promise<any>{
 
         // await delay(1000)
-
         try {
             const json = this.jwtService.decode(jwt, { json: true }) as IJWTUser;
 
             if (json === null) throw new HttpException(['Token is not validation'], HttpStatus.BAD_REQUEST);
 
-            const expired = Date.now() >= json['exp'] * 1000
+            console.log(json)
 
+            const expired = Date.now() >= json['exp'] * 1000
+            console.log(expired)
             if (expired) {
                 throw new HttpException(['Token expired'], HttpStatus.BAD_REQUEST);
             }
 
             let user = await this.UserRepository.findOneById(json.id)
+            console.log(user)
             if (user === null) throw new HttpException(['User is not find'], HttpStatus.BAD_REQUEST);
 
             const payload = { email: user.email, id: user.id, remember: json.remember };
@@ -57,7 +58,7 @@ export class UserService {
                 userId: user.id,
                 email: user.email,
                 remember: json.remember,
-                accessToken: this.jwtService.sign(payload),
+                accessToken: this.jwtService.sign(payload, {expiresIn: '1d'}),
                 message: 'authorization is validation',
             };
 

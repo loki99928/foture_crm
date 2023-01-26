@@ -1,11 +1,6 @@
 import {InferActionTypes} from "../../store";
 import {initialStateAuth, TUser} from "./index";
-import {
-    IApiUserLoginData,
-    IApiUserLoginResponse,
-    IResponseServer,
-    ResultStatusCodeEnum
-} from "../../../types/ApiUsersTypes";
+import {IResponseServer} from "../../../types/ApiUsersTypes";
 
 export const AUTH_LOAD_FORM = 'CRM/AUTH/AUTH_LOAD_FORM'
 
@@ -166,10 +161,6 @@ export const actionsAuth = {
             message
         }
     } as const)
-
-
-
-
 
 }
 

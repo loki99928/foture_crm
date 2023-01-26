@@ -51,7 +51,7 @@ export class AuthService {
         private UserRepository: Repository<UserEntity>,
         private readonly mailerService: MailerService,
         private jwtService: JwtService,
-    ) {}
+    ) { }
 
     /**
      * регистрация пользователя
@@ -120,6 +120,7 @@ export class AuthService {
             }
 
             const isValidPassword = bcrypt.compareSync(dto.password, currentUser.password)
+
             if (!isValidPassword) {
                 this.sendErrorCode('Email or password is incorrect')
             }
@@ -128,12 +129,13 @@ export class AuthService {
 
             return {
                 userId: currentUser.id,
-                accessToken: this.jwtService.sign(payload),
+                accessToken: this.jwtService.sign(payload, {expiresIn: '1d'}),
                 remember: dto.remember,
                 message: ['authorization was successful'],
             };
 
         } catch (e) {
+            console.log(e)
             throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
         }
     }

@@ -49,8 +49,4 @@ import * as fs from "fs";
     providers: [AppService],
 })
 
-export class AppModule {
-    constructor() {
-        console.log(join(__dirname, '..', 'static'))
-    }
-}
+export class AppModule {}

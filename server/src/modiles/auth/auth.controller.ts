@@ -14,16 +14,6 @@ export class AuthController {
     }
 
     /**
-     * Authorize user
-     * @param userData UserAuthorizeDto
-     * @return Promise
-     */
-    @Post('/authorize')
-    authorize(@Body() userData: UserAuthorizeDto): Promise<IAuthorizeUserResponse>{
-        return this.authService.authorize(userData)
-    }
-
-    /**
      * Register user
      * @param userData UserRegisterRequestDto
      * @return Promise
@@ -34,16 +24,6 @@ export class AuthController {
     }
 
     /**
-     * Проверка наличия пользователя по временному token(восстановление пароля)
-     * @param UserData UserForgetDto
-     * @return Promise
-     */
-    @Post('/forget')
-    async forget(@Body() UserData: UserForgetDto): Promise<IResponse>{
-        return this.authService.forget(UserData)
-    }
-
-    /**
      * подтверждение почты пользователя
      * @param hashUser hash of user
      * @return Promise
@@ -51,6 +31,26 @@ export class AuthController {
     @Get('/confirm/:hashUser')
     userConfirmation(@Param('hashUser') hashUser: string): Promise<IResponse>{
         return this.authService.userConfirmation(hashUser)
+    }
+
+    /**
+     * Authorize user
+     * @param userData UserAuthorizeDto
+     * @return Promise
+     */
+    @Post('/authorize')
+    authorize(@Body() userData: UserAuthorizeDto): Promise<IAuthorizeUserResponse>{
+        return this.authService.authorize(userData)
+    }
+
+    /**
+     * Проверка наличия пользователя по временному token(восстановление пароля)
+     * @param UserData UserForgetDto
+     * @return Promise
+     */
+    @Post('/forget')
+    async forget(@Body() UserData: UserForgetDto): Promise<IResponse>{
+        return this.authService.forget(UserData)
     }
 
     /**

@@ -4,13 +4,20 @@ import cn from "classnames"
 import s from "../Form.module.scss"
 import {FormikControlType} from "./FormikControl";
 
-const Input: React.FC<FormikControlType> = (props) => {
-    const {label, name, type, ...rest} = props
+const Checkbox: React.FC<FormikControlType> = (props) => {
+    const {label, name, type, formik, ...rest} = props
     return (
         <div className={cn(s.formBlockCheck, s.formBlock__check)}>
             <div>
                 <label className={cn(s.formContainerCheck)}>
-                    <input type={type} name={name} {...rest}/>
+                    <input type={type}
+                           name={name}
+                           onBlur={formik.handleBlur}
+                           onChange={formik.handleChange}
+                           checked={formik.values[name]}
+                           value={formik.values[name]}
+                           {...rest}
+                    />
                     <span className={cn(s.formCheckStyle, s.form__check)}></span>
                     {label}
                 </label>
@@ -19,4 +26,4 @@ const Input: React.FC<FormikControlType> = (props) => {
     )
 }
 
-export default Input
+export default Checkbox
