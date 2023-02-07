@@ -1,7 +1,7 @@
 import {IsNotEmpty, Matches, MaxLength, MinLength} from "class-validator";
 import {MESSAGE, REGEX} from "../auth.utils";
 
-export class NewPasswordUserDto {
+export class NewPasswordUserDTO {
 
     @IsNotEmpty({message: MESSAGE.HASH_RULE_MESSAGE_REQUIRED})
     readonly hashUser: string

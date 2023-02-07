@@ -15,8 +15,8 @@ export class ImagesService {
         this.init()
     }
     async init(){
-        const createAvatar = await this.SettingsRepository.findOneBy({option: 'createAvatar'})
-        if (createAvatar){
+        const createAvatar = await this.SettingsRepository.findOneBy({name: 'create_avatar', value: 'init'})
+        if (!createAvatar){
             /**
              * создаем массив изображений
              */
@@ -32,7 +32,7 @@ export class ImagesService {
             /**
              * меняем status что созданы дефолтные автарки пользователей
              */
-            await this.SettingsRepository.save({option: 'create_avatar', value: 'init'})
+            await this.SettingsRepository.save({name: 'create_avatar', value: 'init'})
         }
     }
 

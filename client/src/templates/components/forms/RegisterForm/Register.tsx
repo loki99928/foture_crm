@@ -48,8 +48,8 @@ const Register: React.FC = () => {
             dispatch(actionsAuth.registerUserRequest(values))
         },
         initialValues: {
-            email: '',
-            password: ''
+            email: 'loki99928@yandex.ru',
+            password: '123Qw@'
         },
         validationSchema: SignupSchema,
         validateOnBlur: true,

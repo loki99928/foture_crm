@@ -1,13 +1,4 @@
-import {
-    BaseEntity,
-    BeforeInsert,
-    BeforeUpdate,
-    Column,
-    Entity, JoinTable,
-    ManyToOne,
-    OneToOne,
-    PrimaryGeneratedColumn
-} from "typeorm";
+import {BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import * as bcrypt from "bcrypt";
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 import {ImagesEntity} from "../images/images.entity";
@@ -18,24 +9,30 @@ export enum UserRole {
     SUBSCRIBER = "subscriber",
 }
 
-@Entity({name:'own_users'})
-export class UserEntity extends BaseEntity{
+@Entity({name: 'own_users'})
+export class UserEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     public id: number
 
-    @Column({
+    @Column( {
+        type: 'character',
+        length: 50,
         unique: true,
         nullable: false
     })
     public email: string
 
-    @Column({
+    @Column( {
+        type: 'character',
+        length: 100,
         nullable: false
     })
     public password: string
 
     @Column({
+        type: 'varchar',
+        length: 20,
         default: undefined
     })
     public hashUser: string
@@ -43,7 +40,8 @@ export class UserEntity extends BaseEntity{
     /**
      * number of password reset requests
      */
-    @Column({
+    @Column( {
+        type: 'smallint',
         default: 0
     })
     public attemptsNumber: number
@@ -51,7 +49,8 @@ export class UserEntity extends BaseEntity{
     /**
      * confirm of email
      */
-    @Column({
+    @Column( {
+        type: 'boolean',
         default: false
     })
     public confirm: boolean
@@ -60,7 +59,7 @@ export class UserEntity extends BaseEntity{
      * confirm of email
      */
     @Column({
-        type: "enum",
+        type: 'enum',
         enum: UserRole,
         default: UserRole.EDITOR,
     })
@@ -70,6 +69,7 @@ export class UserEntity extends BaseEntity{
      * Half-day password change request time
      */
     @Column({
+        type: 'date',
         default: null
     })
     public lastModifiedTime: Date
@@ -77,25 +77,34 @@ export class UserEntity extends BaseEntity{
     /**
      * images of user
      */
-    @ManyToOne( () => ImagesEntity, (images: ImagesEntity) => images.users )
-    public avatar: number
+    @ManyToOne(
+        type => ImagesEntity,
+        images => images.users
+    )
+    public avatar: ImagesEntity
 
     @BeforeInsert()
-    async setHashUser(){
+    async setHashUser() {
         this.hashUser = getAlphaNumericRandom(20)
     }
 
     @BeforeUpdate()
     @BeforeInsert()
-    async hashPassword(password: string){
+    async hashPassword(password: string) {
         const salt = bcrypt.genSalt()
         this.password = await bcrypt.hash(password || this.password, await salt)
         return this.password
     }
 
-    @BeforeInsert()
-    async setAvatar(){
-        this.avatar = Math.round(Math.random()*10)
+    async toResponseObject(showToken: boolean = true) {
+        const {id, email, hashUser, attemptsNumber, confirm, role, lastModifiedTime} = this
+        const responseObject: any = {id, email, hashUser, attemptsNumber, confirm, role, lastModifiedTime}
+
+        if (this.avatar){
+            responseObject.avatarUrl = this.avatar.url;
+        }
+
+        return responseObject
     }
 
 }

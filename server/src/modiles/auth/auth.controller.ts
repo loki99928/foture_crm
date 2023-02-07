@@ -1,9 +1,9 @@
 import {Body, Controller, Get, Param, Post} from '@nestjs/common';
 import {AuthService, IAuthorizeUserResponse, IResponse} from "./auth.service";
-import {UserRegisterRequestDto} from "./dto/register-user.req.dto";
-import {UserAuthorizeDto} from "./dto/authorize-user.dto";
-import {UserForgetDto} from "./dto/forget-user.dto";
-import {NewPasswordUserDto} from "./dto/new-password-user.dto";
+import {UserRegisterRequestDTO} from "./dto/register-user.req.dto";
+import {UserAuthorizeDTO} from "./dto/authorize-user.dto";
+import {UserForgetDTO} from "./dto/forget-user.dto";
+import {NewPasswordUserDTO} from "./dto/new-password-user-d-t.o";
 
 @Controller('auth')
 export class AuthController {
@@ -19,7 +19,7 @@ export class AuthController {
      * @return Promise
      */
     @Post('/register')
-    async register(@Body() userData: UserRegisterRequestDto): Promise<IResponse>{
+    async register(@Body() userData: UserRegisterRequestDTO): Promise<IResponse>{
         return this.authService.register(userData)
     }
 
@@ -39,7 +39,7 @@ export class AuthController {
      * @return Promise
      */
     @Post('/authorize')
-    authorize(@Body() userData: UserAuthorizeDto): Promise<IAuthorizeUserResponse>{
+    authorize(@Body() userData: UserAuthorizeDTO): Promise<IAuthorizeUserResponse>{
         return this.authService.authorize(userData)
     }
 
@@ -49,7 +49,7 @@ export class AuthController {
      * @return Promise
      */
     @Post('/forget')
-    async forget(@Body() UserData: UserForgetDto): Promise<IResponse>{
+    async forget(@Body() UserData: UserForgetDTO): Promise<IResponse>{
         return this.authService.forget(UserData)
     }
 
@@ -69,7 +69,7 @@ export class AuthController {
      * @return Promise
      */
     @Post('/createNewPassword')
-    async createNewPassword(@Body() UserData: NewPasswordUserDto): Promise<IResponse>{
+    async createNewPassword(@Body() UserData: NewPasswordUserDTO): Promise<IResponse>{
         return this.authService.createNewPassword(UserData)
     }
 }

@@ -5,6 +5,7 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {UserController} from "./user.controller";
 import {UserService} from './user.service';
 import {UserEntity} from "./user.entity";
+import {ImagesEntity} from "../images/images.entity";
 
 @Module({
     providers: [UserService],

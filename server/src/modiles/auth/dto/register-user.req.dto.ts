@@ -1,7 +1,7 @@
 import {IsEmail, IsNotEmpty, Matches, MaxLength, MinLength} from 'class-validator';
 import {MESSAGE, REGEX} from "../auth.utils";
 
-export class UserRegisterRequestDto {
+export class UserRegisterRequestDTO {
     @IsNotEmpty({message: MESSAGE.EMAIL_RULE_MESSAGE_REQUIRED})
     @IsEmail({},  {message: MESSAGE.EMAIL_RULE_MESSAGE_INCORRECT})
     readonly email: string

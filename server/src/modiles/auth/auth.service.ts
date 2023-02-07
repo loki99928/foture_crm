@@ -5,12 +5,13 @@ import {MailerService} from "@nestjs-modules/mailer";
 import * as bcrypt from "bcrypt";
 import {JwtService} from "@nestjs/jwt";
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
-import {UserRegisterRequestDto} from './dto/register-user.req.dto'
-import {UserAuthorizeDto} from "./dto/authorize-user.dto";
-import {UserForgetDto} from "./dto/forget-user.dto";
+import {UserRegisterRequestDTO} from './dto/register-user.req.dto'
+import {UserAuthorizeDTO} from "./dto/authorize-user.dto";
+import {UserForgetDTO} from "./dto/forget-user.dto";
 import {MyLogger} from "../../common/Logger";
 import {UserEntity} from "../user/user.entity";
-import {NewPasswordUserDto} from "./dto/new-password-user.dto";
+import {NewPasswordUserDTO} from "./dto/new-password-user-d-t.o";
+import {ImagesEntity} from "../images/images.entity";
 
 export interface IRegisterUserResponse {
     message: string[]
@@ -47,35 +48,41 @@ export class AuthService {
     }
 
     constructor(
-        @InjectRepository(UserEntity)
-        private UserRepository: Repository<UserEntity>,
+        @InjectRepository(UserEntity) private UserRepository: Repository<UserEntity>,
+        @InjectRepository(ImagesEntity) private ImageRepository: Repository<ImagesEntity>,
         private readonly mailerService: MailerService,
         private jwtService: JwtService,
-    ) { }
+    ) {}
 
     /**
      * регистрация пользователя
      *
-     * @param dto UserRegisterRequestDto
+     * @param data UserRegisterRequestDto
      * @return Promise<IResponse>
      */
-    async register(dto: UserRegisterRequestDto): Promise<IResponse> {
+    async register(data: UserRegisterRequestDTO): Promise<IResponse> {
         // todo-dv Нужно реализовать что у первого пользователя role administrator
         try {
             // verification of the user's confirmed email
-            let confirmUser = await this.UserRepository.findOneBy({email: dto.email, confirm: true})
+            let confirmUser = await this.UserRepository.findOneBy({email: data.email, confirm: true})
             if (confirmUser){
                 this.sendErrorCode('Email busy')
             }
 
             // verification of unconfirmed user email
-            let User = await this.UserRepository.findOneBy({email: dto.email, confirm: false})
+            let User = await this.UserRepository.findOneBy({email: data.email, confirm: false})
             if (!User){
-                // todo-dv почему нельзя использовать схему сохранения this.TemporaryUserRepository.save? не работают @BeforeInsert()
-                const user = new UserEntity()
-                user.email = dto.email
-                user.password = dto.password
-                User = await user.save()
+                const image = await this.ImageRepository.findOne({
+                    where: {
+                        id: Math.ceil((Math.random() * 10))
+                    }
+                });
+                const user = this.UserRepository.create({
+                    email: data.email,
+                    password: data.password
+                });
+                user.avatar = image;
+                await this.UserRepository.save(user);
             }
             await this.sendMailRegisterUser(User)
             return {
@@ -109,28 +116,28 @@ export class AuthService {
     /**
      * авторизация пользователя
      *
-     * @param dto UserAuthorizeDto
+     * @param data UserAuthorizeDto
      */
-    async authorize(dto: UserAuthorizeDto): Promise<IAuthorizeUserResponse> {
+    async authorize(data: UserAuthorizeDTO): Promise<IAuthorizeUserResponse> {
 
         try {
-            const currentUser = await this.UserRepository.findOneBy({'email': dto.email, confirm: true})
+            const currentUser = await this.UserRepository.findOneBy({'email': data.email, confirm: true})
             if (currentUser === null){
                 this.sendErrorCode('Email or password is incorrect')
             }
 
-            const isValidPassword = bcrypt.compareSync(dto.password, currentUser.password)
+            const isValidPassword = bcrypt.compareSync(data.password, currentUser.password)
 
             if (!isValidPassword) {
                 this.sendErrorCode('Email or password is incorrect')
             }
 
-            const payload = { email: currentUser.email, id: currentUser.id, remember: dto.remember };
+            const payload = { email: currentUser.email, id: currentUser.id, remember: data.remember };
 
             return {
                 userId: currentUser.id,
                 accessToken: this.jwtService.sign(payload, {expiresIn: '1d'}),
-                remember: dto.remember,
+                remember: data.remember,
                 message: ['authorization was successful'],
             };
 
@@ -143,12 +150,12 @@ export class AuthService {
     /**
      * запрос на восстановление пароля
      *
-     * @param dto UserForgetDto
+     * @param data UserForgetDto
      * @return Promise<IResponse>
      */
-    async forget(dto: UserForgetDto): Promise<IResponse> {
+    async forget(data: UserForgetDTO): Promise<IResponse> {
         try {
-            let currentUser = await this.UserRepository.findOneBy({email: dto.email})
+            let currentUser = await this.UserRepository.findOneBy({email: data.email})
 
             if (!currentUser) this.sendErrorCode('User is not find')
 
@@ -203,17 +210,17 @@ export class AuthService {
 
     /**
      * Создание нового пароля
-     * @param dto NewPasswordUserDto
+     * @param data NewPasswordUserDto
      * @return Promise<IResponse>
      */
-    async createNewPassword(dto: NewPasswordUserDto): Promise<IResponse> {
+    async createNewPassword(data: NewPasswordUserDTO): Promise<IResponse> {
         try {
-            let arrUser = await this.UserRepository.findOneBy({hashUser: dto.hashUser, confirm: true})
+            let arrUser = await this.UserRepository.findOneBy({hashUser: data.hashUser, confirm: true})
             if (!arrUser) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу
 
             // todo-dv нужно разобраться как обновлять данные
             const user = new UserEntity()
-            let hasPas = await user.hashPassword(dto.password)
+            let hasPas = await user.hashPassword(data.password)
             await this.UserRepository.update(arrUser.id, {hashUser: '', lastModifiedTime: null, attemptsNumber: 0, password: hasPas})
             return {
                 message: ['Password saved']
@@ -222,8 +229,6 @@ export class AuthService {
             throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
         }
     }
-
-
 
     // todo-dv нужно перенести отправку почты в отдельный файл
     async sendMailForgetUser(user: UserEntity) {
