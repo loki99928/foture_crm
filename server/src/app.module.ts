@@ -44,9 +44,7 @@ import * as fs from "fs";
         AuthModule,
         UserModule,
         ImagesModule
-    ],
-    controllers: [AppController],
-    providers: [AppService],
+    ]
 })
 
 export class AppModule {}

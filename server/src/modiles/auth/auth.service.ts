@@ -8,7 +8,10 @@ import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils
 import {MyLogger} from "../../common/Logger";
 import {UserEntity, UserRole} from "../user/user.entity";
 import {ImagesEntity} from "../images/images.entity";
-import {UserDTO} from "../user/user.dto";
+import {RegisterDTO} from "./dto/register.dto";
+import {AuthorizeDTO} from "./dto/authorize.dto";
+import {ForgetDTO} from "./dto/forget.dto";
+import {NewPasswordDTO} from "./dto/newPassword.dto";
 
 export interface IRegisterUserResponse {
     message: string[]
@@ -57,7 +60,7 @@ export class AuthService {
      * @param data UserRegisterRequestDto
      * @return Promise<IResponse>
      */
-    async register(data: UserDTO): Promise<IResponse> {
+    async register(data: RegisterDTO): Promise<IResponse> {
         // todo-dv Нужно реализовать что у первого пользователя role administrator
         try {
             // verification of the user's confirmed email
@@ -124,7 +127,7 @@ export class AuthService {
      *
      * @param data UserAuthorizeDto
      */
-    async authorize(data: UserDTO): Promise<IAuthorizeUserResponse> {
+    async authorize(data: AuthorizeDTO): Promise<IAuthorizeUserResponse> {
 
         try {
             let currentUser = await this.UserRepository.findOneBy({'email': data.email, confirm: true})
@@ -158,7 +161,7 @@ export class AuthService {
      * @param data UserForgetDto
      * @return Promise<IResponse>
      */
-    async forget(data: UserDTO): Promise<IResponse> {
+    async forget(data: ForgetDTO): Promise<IResponse> {
         try {
             let currentUser = await this.UserRepository.findOneBy({email: data.email})
 
@@ -218,7 +221,7 @@ export class AuthService {
      * @param data NewPasswordUserDto
      * @return Promise<IResponse>
      */
-    async createNewPassword(data: UserDTO): Promise<IResponse> {
+    async createNewPassword(data: NewPasswordDTO): Promise<IResponse> {
         try {
             let arrUser = await this.UserRepository.findOneBy({hashUser: data.hashUser, confirm: true})
             if (!arrUser) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу
