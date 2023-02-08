@@ -42,7 +42,6 @@ const Auth: React.FC = () => {
         // initialValues: {email: '', password: '', remember: false, mainError: null},
         initialValues: {email: 'loki99928@yandex.ru', password: '123Qw@', remember: false, mainError: null},
         onSubmit: async (values: IApiUsersRegisterData) => {
-            console.log(values)
             formik.setSubmitting(true);
             dispatch(actionsAuth.authUserRequest(values))
         },

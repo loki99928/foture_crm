@@ -2,8 +2,10 @@ import {BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, Prima
 import * as bcrypt from "bcrypt";
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 import {ImagesEntity} from "../images/images.entity";
+import {ApiProperty} from "@nestjs/swagger";
 
 export enum UserRole {
+    SUPERADMIN = "superadmin",
     ADMIN = "admin",
     EDITOR = "editor",
     SUBSCRIBER = "subscriber",
@@ -12,24 +14,28 @@ export enum UserRole {
 @Entity({name: 'own_users'})
 export class UserEntity extends BaseEntity {
 
+    @ApiProperty()
     @PrimaryGeneratedColumn()
     public id: number
 
+    @ApiProperty()
     @Column( {
-        type: 'character',
+        type: 'varchar',
         length: 50,
         unique: true,
         nullable: false
     })
     public email: string
 
+    @ApiProperty()
     @Column( {
-        type: 'character',
+        type: 'varchar',
         length: 100,
         nullable: false
     })
     public password: string
 
+    @ApiProperty()
     @Column({
         type: 'varchar',
         length: 20,
@@ -40,6 +46,7 @@ export class UserEntity extends BaseEntity {
     /**
      * number of password reset requests
      */
+    @ApiProperty()
     @Column( {
         type: 'smallint',
         default: 0
@@ -49,6 +56,7 @@ export class UserEntity extends BaseEntity {
     /**
      * confirm of email
      */
+    @ApiProperty()
     @Column( {
         type: 'boolean',
         default: false
@@ -58,6 +66,7 @@ export class UserEntity extends BaseEntity {
     /**
      * confirm of email
      */
+    @ApiProperty()
     @Column({
         type: 'enum',
         enum: UserRole,
@@ -68,6 +77,7 @@ export class UserEntity extends BaseEntity {
     /**
      * Half-day password change request time
      */
+    @ApiProperty()
     @Column({
         type: 'date',
         default: null
@@ -77,6 +87,7 @@ export class UserEntity extends BaseEntity {
     /**
      * images of user
      */
+    @ApiProperty()
     @ManyToOne(
         type => ImagesEntity,
         images => images.users
@@ -97,8 +108,8 @@ export class UserEntity extends BaseEntity {
     }
 
     async toResponseObject(showToken: boolean = true) {
-        const {id, email, hashUser, attemptsNumber, confirm, role, lastModifiedTime} = this
-        const responseObject: any = {id, email, hashUser, attemptsNumber, confirm, role, lastModifiedTime}
+        const {id, email, password, hashUser, attemptsNumber, confirm, role, lastModifiedTime} = this
+        const responseObject: any = {id, email, password, hashUser, attemptsNumber, confirm, role, lastModifiedTime}
 
         if (this.avatar){
             responseObject.avatarUrl = this.avatar.url;

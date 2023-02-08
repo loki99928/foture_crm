@@ -1,25 +1,24 @@
 import {Body, Controller, Get, Param, Post} from '@nestjs/common';
 import {AuthService, IAuthorizeUserResponse, IResponse} from "./auth.service";
-import {UserRegisterRequestDTO} from "./dto/register-user.req.dto";
-import {UserAuthorizeDTO} from "./dto/authorize-user.dto";
-import {UserForgetDTO} from "./dto/forget-user.dto";
-import {NewPasswordUserDTO} from "./dto/new-password-user-d-t.o";
+import {ApiBody, ApiTags} from "@nestjs/swagger";
+import {UserDTO} from "../user/user.dto";
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
 
     constructor(
         private readonly authService: AuthService
-    ) {
-    }
+    ) {}
 
     /**
      * Register user
      * @param userData UserRegisterRequestDto
      * @return Promise
      */
+    @ApiBody({ type: UserDTO })
     @Post('/register')
-    async register(@Body() userData: UserRegisterRequestDTO): Promise<IResponse>{
+    async register(@Body() userData: UserDTO): Promise<IResponse>{
         return this.authService.register(userData)
     }
 
@@ -39,7 +38,7 @@ export class AuthController {
      * @return Promise
      */
     @Post('/authorize')
-    authorize(@Body() userData: UserAuthorizeDTO): Promise<IAuthorizeUserResponse>{
+    authorize(@Body() userData: UserDTO): Promise<IAuthorizeUserResponse>{
         return this.authService.authorize(userData)
     }
 
@@ -49,7 +48,7 @@ export class AuthController {
      * @return Promise
      */
     @Post('/forget')
-    async forget(@Body() UserData: UserForgetDTO): Promise<IResponse>{
+    async forget(@Body() UserData: UserDTO): Promise<IResponse>{
         return this.authService.forget(UserData)
     }
 
@@ -69,7 +68,7 @@ export class AuthController {
      * @return Promise
      */
     @Post('/createNewPassword')
-    async createNewPassword(@Body() UserData: NewPasswordUserDTO): Promise<IResponse>{
+    async createNewPassword(@Body() UserData: UserDTO): Promise<IResponse>{
         return this.authService.createNewPassword(UserData)
     }
 }

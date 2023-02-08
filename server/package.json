@@ -25,6 +25,7 @@
     "@nestjs/jwt": "^8.0.1",
     "@nestjs/passport": "^8.2.1",
     "@nestjs/serve-static": "^3.0.0",
+    "@nestjs/swagger": "^6.2.1",
     "@types/multer": "^1.4.7",
     "@types/redux-saga": "^0.10.5",
     "@webundsoehne/nestjs-util": "^5.4.3",

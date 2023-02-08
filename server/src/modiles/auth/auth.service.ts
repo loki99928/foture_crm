@@ -5,13 +5,10 @@ import {MailerService} from "@nestjs-modules/mailer";
 import * as bcrypt from "bcrypt";
 import {JwtService} from "@nestjs/jwt";
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
-import {UserRegisterRequestDTO} from './dto/register-user.req.dto'
-import {UserAuthorizeDTO} from "./dto/authorize-user.dto";
-import {UserForgetDTO} from "./dto/forget-user.dto";
 import {MyLogger} from "../../common/Logger";
-import {UserEntity} from "../user/user.entity";
-import {NewPasswordUserDTO} from "./dto/new-password-user-d-t.o";
+import {UserEntity, UserRole} from "../user/user.entity";
 import {ImagesEntity} from "../images/images.entity";
+import {UserDTO} from "../user/user.dto";
 
 export interface IRegisterUserResponse {
     message: string[]
@@ -60,7 +57,7 @@ export class AuthService {
      * @param data UserRegisterRequestDto
      * @return Promise<IResponse>
      */
-    async register(data: UserRegisterRequestDTO): Promise<IResponse> {
+    async register(data: UserDTO): Promise<IResponse> {
         // todo-dv Нужно реализовать что у первого пользователя role administrator
         try {
             // verification of the user's confirmed email
@@ -77,10 +74,21 @@ export class AuthService {
                         id: Math.ceil((Math.random() * 10))
                     }
                 });
-                const user = this.UserRepository.create({
+
+                let arrUser  = {
                     email: data.email,
                     password: data.password
-                });
+                } as UserEntity
+
+                /**
+                 * check for the presence of a superadmin, if not, then create the first user with super rights
+                 */
+                const isSuperAdmin = await this.UserRepository.findOneBy({role: UserRole.SUPERADMIN})
+                if (!isSuperAdmin){
+                    arrUser.role = UserRole.SUPERADMIN
+                }
+
+                const user = this.UserRepository.create(arrUser);
                 user.avatar = image;
                 await this.UserRepository.save(user);
             }
@@ -100,17 +108,15 @@ export class AuthService {
      * @return Promise<IResponse>
      */
     async userConfirmation(hashUser): Promise<IResponse> {
-        return this.UserRepository.findOneBy({hashUser, confirm: false})
-            .then(async (user) => {
-                if (user){
-                    await this.UserRepository.update(user.id, {confirm: true})
-                    return {
-                        message: ['Your email has been verified']
-                    }
-                } else {
-                    throw new HttpException({message:['User is not find']}, HttpStatus.BAD_REQUEST);
-                }
-            })
+        const user = await this.UserRepository.findOneBy({hashUser, confirm: false})
+        if (user){
+            await this.UserRepository.update(user.id, {confirm: true})
+            return {
+                message: ['Your email has been verified']
+            }
+        } else {
+            throw new HttpException({message:['User is not find']}, HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -118,14 +124,13 @@ export class AuthService {
      *
      * @param data UserAuthorizeDto
      */
-    async authorize(data: UserAuthorizeDTO): Promise<IAuthorizeUserResponse> {
+    async authorize(data: UserDTO): Promise<IAuthorizeUserResponse> {
 
         try {
-            const currentUser = await this.UserRepository.findOneBy({'email': data.email, confirm: true})
+            let currentUser = await this.UserRepository.findOneBy({'email': data.email, confirm: true})
             if (currentUser === null){
                 this.sendErrorCode('Email or password is incorrect')
             }
-
             const isValidPassword = bcrypt.compareSync(data.password, currentUser.password)
 
             if (!isValidPassword) {
@@ -153,7 +158,7 @@ export class AuthService {
      * @param data UserForgetDto
      * @return Promise<IResponse>
      */
-    async forget(data: UserForgetDTO): Promise<IResponse> {
+    async forget(data: UserDTO): Promise<IResponse> {
         try {
             let currentUser = await this.UserRepository.findOneBy({email: data.email})
 
@@ -213,7 +218,7 @@ export class AuthService {
      * @param data NewPasswordUserDto
      * @return Promise<IResponse>
      */
-    async createNewPassword(data: NewPasswordUserDTO): Promise<IResponse> {
+    async createNewPassword(data: UserDTO): Promise<IResponse> {
         try {
             let arrUser = await this.UserRepository.findOneBy({hashUser: data.hashUser, confirm: true})
             if (!arrUser) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу

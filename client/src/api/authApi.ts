@@ -37,6 +37,25 @@ export const authApi = {
     },
 
     /**
+     * подтверждение почты пользователя
+     *
+     * @param hashUser
+     * @returns {*}
+     */
+    confirmUser(hashUser?: string) {
+        return instance.get<IResponseServer>('confirm/' + hashUser)
+            .then(res => {
+                return {
+                    status: res.data.status,
+                    message: res.data.message
+                }
+            })
+            .catch((e: AxiosError<IApiErrorResponse>) => {
+                throw new Error(e.response?.data.message?.shift())
+            })
+    },
+
+    /**
      * авторизация пользователя
      *
      * @param data
@@ -55,24 +74,6 @@ export const authApi = {
             })
     },
 
-    /**
-     * подтверждение почты пользователя
-     *
-     * @param hashUser
-     * @returns {*}
-     */
-    confirmUser(hashUser?: string) {
-        return instance.get<IResponseServer>('confirm/' + hashUser)
-            .then(res => {
-                return {
-                    status: res.data.status,
-                    message: res.data.message
-                }
-            })
-            .catch((e: AxiosError<IApiErrorResponse>) => {
-                throw new Error(e.response?.data.message?.shift())
-            })
-    },
 
     /**
      * Запрос на восстановление пароля
