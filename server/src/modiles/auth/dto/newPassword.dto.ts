@@ -4,27 +4,27 @@ import {ApiProperty} from "@nestjs/swagger";
 
 export class NewPasswordDTO {
 
+    @IsNotEmpty({message: MESSAGE.HASH_RULE_MESSAGE_REQUIRED})
     @ApiProperty({
         type: 'string'
     })
-    @IsNotEmpty({message: MESSAGE.HASH_RULE_MESSAGE_REQUIRED})
     readonly hashUser: string
 
-    @ApiProperty({
-        type: 'string'
-    })
     @IsNotEmpty({message: MESSAGE.PASSWORD_RULE_MESSAGE_REQUIRED})
     @MinLength(5, {message: MESSAGE.PASSWORD_RULE_MESSAGE_MIN_LENGTH})
     @MaxLength(50, {message: MESSAGE.PASSWORD_RULE_MESSAGE_MAX_LENGTH})
     @Matches(REGEX.PASSWORD_RULE, {message: MESSAGE.PASSWORD_RULE_MESSAGE_REGEX})
+    @ApiProperty({
+        type: 'string'
+    })
     readonly password: string
 
-    @ApiProperty({
-        type: 'string'
-    })
     @IsNotEmpty({message: MESSAGE.PASSWORD_RULE_MESSAGE_REQUIRED})
     @MinLength(5, {message: MESSAGE.PASSWORD_RULE_MESSAGE_MIN_LENGTH})
     @MaxLength(50, {message: MESSAGE.PASSWORD_RULE_MESSAGE_MAX_LENGTH})
     @Matches(REGEX.PASSWORD_RULE, {message: MESSAGE.PASSWORD_RULE_MESSAGE_REGEX})
+    @ApiProperty({
+        type: 'string'
+    })
     readonly double_password: string
 }

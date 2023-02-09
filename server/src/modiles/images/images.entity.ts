@@ -5,30 +5,30 @@ import {ApiProperty} from "@nestjs/swagger";
 @Entity({name: 'own_images'})
 export class ImagesEntity extends BaseEntity {
 
-    @ApiProperty()
     @PrimaryGeneratedColumn()
+    @ApiProperty()
     public id: number
 
-    @ApiProperty()
     @Column({
         type: 'character',
         length: 10
     })
+    @ApiProperty()
     public type: string
 
-    @ApiProperty()
     @Column({
         type: "character",
         length: 200
     })
+    @ApiProperty()
     public url: string
 
-    @ApiProperty()
     @OneToMany(
         () => UserEntity,
         (user: UserEntity) => user.avatar,
         {cascade: true}
     )
+    @ApiProperty()
     @JoinTable()
     public users: UserEntity[]
 

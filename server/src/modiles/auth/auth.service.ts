@@ -12,25 +12,9 @@ import {RegisterDTO} from "./dto/register.dto";
 import {AuthorizeDTO} from "./dto/authorize.dto";
 import {ForgetDTO} from "./dto/forget.dto";
 import {NewPasswordDTO} from "./dto/newPassword.dto";
+import {MessageRO} from "./dto/authorize.ro";
+import {UserRO} from "../user/dto/user.ro";
 
-export interface IRegisterUserResponse {
-    message: string[]
-}
-export interface IAuthorizeUserResponse {
-    userId: number
-    accessToken: string
-    message: string[]
-    remember: boolean
-}
-export interface IConfirmUserResponse {
-    message: string[]
-}
-export interface ICreateNewPasswordResponse {
-    message: string[]
-}
-export interface IResponse {
-    message: string[]
-}
 @Injectable()
 export class AuthService {
 
@@ -58,9 +42,9 @@ export class AuthService {
      * регистрация пользователя
      *
      * @param data UserRegisterRequestDto
-     * @return Promise<IResponse>
+     * @return Promise<MessageRO>
      */
-    async register(data: RegisterDTO): Promise<IResponse> {
+    async register(data: RegisterDTO): Promise<MessageRO> {
         // todo-dv Нужно реализовать что у первого пользователя role administrator
         try {
             // verification of the user's confirmed email
@@ -108,9 +92,9 @@ export class AuthService {
      * подтверждение почты пользователя
      *
      * @param hashUser
-     * @return Promise<IResponse>
+     * @return Promise<MessageRO>
      */
-    async userConfirmation(hashUser): Promise<IResponse> {
+    async userConfirmation(hashUser): Promise<MessageRO> {
         const user = await this.UserRepository.findOneBy({hashUser, confirm: false})
         if (user){
             await this.UserRepository.update(user.id, {confirm: true})
@@ -126,8 +110,9 @@ export class AuthService {
      * авторизация пользователя
      *
      * @param data UserAuthorizeDto
+     * @return Promise<ResponseUser>
      */
-    async authorize(data: AuthorizeDTO): Promise<IAuthorizeUserResponse> {
+    async authorize(data: AuthorizeDTO): Promise<UserRO> {
 
         try {
             let currentUser = await this.UserRepository.findOneBy({'email': data.email, confirm: true})
@@ -144,13 +129,13 @@ export class AuthService {
 
             return {
                 userId: currentUser.id,
+                email: currentUser.email,
                 accessToken: this.jwtService.sign(payload, {expiresIn: '1d'}),
                 remember: data.remember,
                 message: ['authorization was successful'],
             };
 
         } catch (e) {
-            console.log(e)
             throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
         }
     }
@@ -159,9 +144,9 @@ export class AuthService {
      * запрос на восстановление пароля
      *
      * @param data UserForgetDto
-     * @return Promise<IResponse>
+     * @return Promise<MessageRO>
      */
-    async forget(data: ForgetDTO): Promise<IResponse> {
+    async forget(data: ForgetDTO): Promise<MessageRO> {
         try {
             let currentUser = await this.UserRepository.findOneBy({email: data.email})
 
@@ -201,7 +186,7 @@ export class AuthService {
      * @param hashUser string
      * @return Promise<IResponse>
      */
-    async changeTokenNewPassword(hashUser: string): Promise<IResponse> {
+    async changeTokenNewPassword(hashUser: string): Promise<MessageRO> {
         try {
             const user = await this.UserRepository.findOneBy({hashUser, confirm: true})
             if (!user) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу
@@ -221,7 +206,7 @@ export class AuthService {
      * @param data NewPasswordUserDto
      * @return Promise<IResponse>
      */
-    async createNewPassword(data: NewPasswordDTO): Promise<IResponse> {
+    async createNewPassword(data: NewPasswordDTO): Promise<MessageRO> {
         try {
             let arrUser = await this.UserRepository.findOneBy({hashUser: data.hashUser, confirm: true})
             if (!arrUser) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу

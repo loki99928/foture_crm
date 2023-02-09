@@ -13,13 +13,21 @@ async function start() {
         }
     );
 
-    // http://localhost:5000/api#/
+    // app.useGlobalGuards()
+
     const config = new DocumentBuilder()
         .setTitle('Feature CRM')
         .setDescription('The CRM API')
         .setVersion('1.0')
-        .addTag('crm')
-        .build();
+        .addBearerAuth({
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+            name: 'JWT',
+            description: "enter JWT token",
+            in: 'header'
+        }, 'JWT-auth')
+        .build()
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
 

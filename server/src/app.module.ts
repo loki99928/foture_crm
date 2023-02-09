@@ -3,8 +3,6 @@ import {ConfigModule, ConfigService} from "@nestjs/config";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {MailerModule} from "@nestjs-modules/mailer";
 import {LoggerModule} from "nestjs-pino";
-import {AppController} from './app.controller';
-import {AppService} from './app.service';
 import {AuthModule} from "./modiles/auth/auth.module";
 import {typeOrmConfigAsync} from "./config/typeorm.config";
 import {getMailConfig} from "./config/mailer.config";
@@ -12,7 +10,6 @@ import {UserModule} from "./modiles/user/user.module";
 import {ImagesModule} from "./modiles/images/images.module";
 import {join} from "path";
 import {ServeStaticModule} from "@nestjs/serve-static";
-import * as fs from "fs";
 
 
 @Module({

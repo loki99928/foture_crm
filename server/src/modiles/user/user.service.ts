@@ -3,18 +3,11 @@ import {JwtService} from "@nestjs/jwt";
 import {InjectRepository} from "@nestjs/typeorm";
 import {UserEntity} from "./user.entity";
 import {Repository} from "typeorm";
+import {UserRO} from "./dto/user.ro";
 
 export interface IJWTUser {
     email: string
     id: number
-    remember: boolean
-}
-
-export interface IUserResponse {
-    userId: number
-    email: string
-    accessToken: string
-    message: string
     remember: boolean
 }
 
@@ -30,11 +23,12 @@ export class UserService {
      * аутентификация пользователя по токену
      * @param jwt authorize token
      */
-    async get(jwt): Promise<IUserResponse> {
+    async get(jwt): Promise<UserRO> {
 
         // await delay(1000)
         try {
             const json = this.jwtService.decode(jwt, {json: true}) as IJWTUser;
+
 
             if (json === null) throw new HttpException(['Token is not validation'], HttpStatus.BAD_REQUEST);
 
@@ -45,8 +39,9 @@ export class UserService {
             }
 
             let user = await this.UserRepository.findOneBy(
-                {id: 1},
+                {id: json.id},
             )
+
             if (user === null) throw new HttpException(['User is not find'], HttpStatus.BAD_REQUEST);
 
             const payload = {email: user.email, id: user.id, remember: json.remember};
@@ -56,7 +51,7 @@ export class UserService {
                 email: user.email,
                 remember: json.remember,
                 accessToken: this.jwtService.sign(payload, {expiresIn: '1d'}),
-                message: 'authorization is validation',
+                message: ['authorization is validation'],
             };
 
         } catch (e) {

@@ -14,84 +14,84 @@ export enum UserRole {
 @Entity({name: 'own_users'})
 export class UserEntity extends BaseEntity {
 
-    @ApiProperty()
     @PrimaryGeneratedColumn()
+    @ApiProperty()
     public id: number
 
-    @ApiProperty()
     @Column( {
         type: 'varchar',
         length: 50,
         unique: true,
         nullable: false
     })
+    @ApiProperty()
     public email: string
 
-    @ApiProperty()
     @Column( {
         type: 'varchar',
         length: 100,
         nullable: false
     })
+    @ApiProperty()
     public password: string
 
-    @ApiProperty()
     @Column({
         type: 'varchar',
         length: 20,
         default: undefined
     })
+    @ApiProperty()
     public hashUser: string
 
     /**
      * number of password reset requests
      */
-    @ApiProperty()
     @Column( {
         type: 'smallint',
         default: 0
     })
+    @ApiProperty()
     public attemptsNumber: number
 
     /**
      * confirm of email
      */
-    @ApiProperty()
     @Column( {
         type: 'boolean',
         default: false
     })
+    @ApiProperty()
     public confirm: boolean
 
     /**
      * confirm of email
      */
-    @ApiProperty()
     @Column({
         type: 'enum',
         enum: UserRole,
         default: UserRole.EDITOR,
     })
+    @ApiProperty({ enum: UserRole})
     public role: UserRole
 
     /**
      * Half-day password change request time
      */
-    @ApiProperty()
     @Column({
         type: 'date',
         default: null
     })
+    @ApiProperty()
     public lastModifiedTime: Date
 
     /**
      * images of user
      */
-    @ApiProperty()
     @ManyToOne(
         type => ImagesEntity,
         images => images.users
     )
+    @ApiProperty()
     public avatar: ImagesEntity
 
     @BeforeInsert()
