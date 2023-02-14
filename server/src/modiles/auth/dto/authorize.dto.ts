@@ -1,6 +1,6 @@
 import {IsEmail, IsNotEmpty, MaxLength, MinLength, Matches} from "class-validator";
-import {MESSAGE, REGEX} from "../auth.utils";
 import {ApiProperty} from "@nestjs/swagger";
+import {MESSAGE, REGEX} from "../auth.utils";
 
 export class AuthorizeDTO {
     @IsNotEmpty({message: MESSAGE.EMAIL_RULE_MESSAGE_REQUIRED})
@@ -20,11 +20,4 @@ export class AuthorizeDTO {
         default: '123Qw@'
     })
     readonly password: string
-
-    @IsNotEmpty({message: MESSAGE.PASSWORD_RULE_MESSAGE_REQUIRED})
-    @ApiProperty({
-        type: 'boolean',
-        default: false
-    })
-    readonly remember: boolean
 }

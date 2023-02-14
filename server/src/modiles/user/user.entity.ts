@@ -1,8 +1,17 @@
-import {BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {
+    BaseEntity,
+    BeforeInsert,
+    BeforeUpdate,
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    PrimaryGeneratedColumn, UpdateDateColumn
+} from "typeorm";
 import * as bcrypt from "bcrypt";
+import {ApiProperty} from "@nestjs/swagger";
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 import {ImagesEntity} from "../images/images.entity";
-import {ApiProperty} from "@nestjs/swagger";
 
 export enum UserRole {
     SUPERADMIN = "superadmin",
@@ -17,6 +26,14 @@ export class UserEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     @ApiProperty()
     public id: number
+
+    @CreateDateColumn()
+    @ApiProperty()
+    created: Date;
+
+    @UpdateDateColumn()
+    @ApiProperty()
+    updated: Date;
 
     @Column( {
         type: 'varchar',
@@ -107,15 +124,12 @@ export class UserEntity extends BaseEntity {
         return this.password
     }
 
-    async toResponseObject(showToken: boolean = true) {
-        const {id, email, password, hashUser, attemptsNumber, confirm, role, lastModifiedTime} = this
-        const responseObject: any = {id, email, password, hashUser, attemptsNumber, confirm, role, lastModifiedTime}
-
+    toResponseObject(showToken: boolean = true) {
+        const {id, email, role} = this
+        const responseObject: any = {id, email, role}
         if (this.avatar){
             responseObject.avatarUrl = this.avatar.url;
         }
-
         return responseObject
     }
-
 }

@@ -56,8 +56,6 @@ export interface IApiUsersGetResponse {
     userId?: string
     accessToken?: string
     email?: string
-    remember?: boolean
-    message?: string
 }
 
 export interface IApiErrorResponse {

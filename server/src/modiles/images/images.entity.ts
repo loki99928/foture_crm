@@ -1,4 +1,14 @@
-import {BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {
+    BaseEntity,
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn
+} from "typeorm";
 import {UserEntity} from "../user/user.entity";
 import {ApiProperty} from "@nestjs/swagger";
 
@@ -9,15 +19,19 @@ export class ImagesEntity extends BaseEntity {
     @ApiProperty()
     public id: number
 
+    @CreateDateColumn()
+    @ApiProperty()
+    created: Date;
+
     @Column({
-        type: 'character',
+        type: 'varchar',
         length: 10
     })
     @ApiProperty()
     public type: string
 
     @Column({
-        type: "character",
+        type: "varchar",
         length: 200
     })
     @ApiProperty()
@@ -32,7 +46,7 @@ export class ImagesEntity extends BaseEntity {
     @JoinTable()
     public users: UserEntity[]
 
-    async toResponseObject(showToken: boolean = true) {
+    toResponseObject(showToken: boolean = true) {
         const {id, type, url} = this
         const responseObject: any = {id, type, url}
 

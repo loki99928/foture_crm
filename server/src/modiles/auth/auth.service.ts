@@ -4,6 +4,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {MailerService} from "@nestjs-modules/mailer";
 import * as bcrypt from "bcrypt";
 import {JwtService} from "@nestjs/jwt";
+
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 import {MyLogger} from "../../common/Logger";
 import {UserEntity, UserRole} from "../user/user.entity";
@@ -113,7 +114,6 @@ export class AuthService {
      * @return Promise<ResponseUser>
      */
     async authorize(data: AuthorizeDTO): Promise<UserRO> {
-
         try {
             let currentUser = await this.UserRepository.findOneBy({'email': data.email, confirm: true})
             if (currentUser === null){
@@ -125,14 +125,12 @@ export class AuthService {
                 this.sendErrorCode('Email or password is incorrect')
             }
 
-            const payload = { email: currentUser.email, id: currentUser.id, remember: data.remember };
+            const payload = { email: currentUser.email, id: currentUser.id};
 
             return {
                 userId: currentUser.id,
                 email: currentUser.email,
-                accessToken: this.jwtService.sign(payload, {expiresIn: '1d'}),
-                remember: data.remember,
-                message: ['authorization was successful'],
+                accessToken: this.jwtService.sign(payload, {expiresIn: '1d'})
             };
 
         } catch (e) {

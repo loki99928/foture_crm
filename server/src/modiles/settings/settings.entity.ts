@@ -1,4 +1,4 @@
-import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 import {ApiProperty} from "@nestjs/swagger";
 
 @Entity('own_settings')
@@ -9,6 +9,10 @@ export class SettingsEntity extends BaseEntity{
     })
     @ApiProperty()
     public id: number
+
+    @UpdateDateColumn()
+    @ApiProperty()
+    updated: Date;
 
     @Column({
         type: 'character',
@@ -26,7 +30,7 @@ export class SettingsEntity extends BaseEntity{
     @ApiProperty()
     public value: string
 
-    async toResponseObject(showToken: boolean = true) {
+    toResponseObject(showToken: boolean = true) {
         const {id, name, value} = this
         const responseObject: any = {id, name, value}
 

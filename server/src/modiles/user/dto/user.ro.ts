@@ -18,14 +18,5 @@ export class UserRO {
     @ApiProperty()
     email: string
 
-    @IsBoolean()
-    @ApiProperty()
-    remember: boolean
-
-    @IsArray()
-    @IsNotEmpty()
-    @ApiProperty()
-    message:string[];
-
 }
 

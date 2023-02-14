@@ -19,8 +19,7 @@ export class UserController {
     @ApiBearerAuth()
     @ApiCreatedResponse({type: UserRO})
     @ApiBadRequestResponse({type: MessageRO})
-    get(@Req() request: Request){
-        const jwt = request.headers.authorization.replace('Bearer ', '');
-        return this.UserService.get(jwt)
+    get(@Req() req: Request){
+        return this.UserService.get(req.body)
     }
 }

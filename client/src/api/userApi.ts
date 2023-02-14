@@ -25,12 +25,11 @@ export const userApi = {
             }
         )
             .then(res => {
+                // todo-dv  нужно удалить из ответа remember и messages
                 return {
                     userId: res.data.userId,
                     accessToken: res.data.accessToken,
-                    email: res.data.email,
-                    remember: res.data.remember,
-                    message: res.data.message
+                    email: res.data.email
                 }
             })
             .catch((e:AxiosError<IApiErrorResponse>) => {

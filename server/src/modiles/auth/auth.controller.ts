@@ -1,6 +1,6 @@
 import {Body, Controller, Get, Param, Post} from '@nestjs/common';
-import {AuthService} from "./auth.service";
 import {ApiBadRequestResponse, ApiCreatedResponse, ApiQuery, ApiTags} from "@nestjs/swagger";
+import {AuthService} from "./auth.service";
 import {AuthorizeDTO} from "./dto/authorize.dto";
 import {ForgetDTO} from "./dto/forget.dto";
 import {NewPasswordDTO} from "./dto/newPassword.dto";
@@ -8,8 +8,8 @@ import {RegisterDTO} from "./dto/register.dto";
 import {MessageRO} from "./dto/authorize.ro";
 import {UserRO} from "../user/dto/user.ro";
 
-@ApiTags('auth')
 @Controller('auth')
+@ApiTags('auth')
 export class AuthController {
 
     constructor(

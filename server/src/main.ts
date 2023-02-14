@@ -3,6 +3,7 @@ import {AppModule} from './app.module';
 import {ValidationPipe} from "@nestjs/common";
 import {NestExpressApplication} from "@nestjs/platform-express";
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
+import {AuthMiddleware} from "./middleware/AuthMiddleware";
 
 async function start() {
     let port = process.env.PORT || 5000
