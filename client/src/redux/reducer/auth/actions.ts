@@ -56,10 +56,10 @@ export const actionsAuth = {
         } as const),
 
     // авторизация пользователя
-    authUserRequest: ({email, password, remember}: TUser) => ({
+    authUserRequest: ({email, password}: TUser) => ({
         type: AUTH_USER_REQUEST,
         payload: {
-            user: {email, password, remember}
+            user: {email, password}
         }
     } as const),
     authUserSuccess: ({userId, accessToken}: TUser) => ({
@@ -77,10 +77,10 @@ export const actionsAuth = {
 
     // аутентификация пользователя по токену
     authUserDataRequest: () => ({ type: CHECK_AUTH_USER_REQUEST } as const),
-    authUserDataSuccess: ({userId, email, accessToken}: TUser) => ({
+    authUserDataSuccess: ({userId, email, accessToken, avatarUrl, role}: TUser) => ({
         type: CHECK_AUTH_USER_SUCCESS,
         payload: {
-            user: {userId, email, accessToken}
+            user: {userId, email, accessToken, avatarUrl, role}
         }
     } as const),
     authUserDataFail: () => ({ type: CHECK_AUTH_USER_FAIL } as const),

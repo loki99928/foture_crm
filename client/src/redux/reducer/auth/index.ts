@@ -29,8 +29,9 @@ export type TUser = {
     userId?:  number
     email?: string
     password?: string
-    remember?: boolean
     accessToken?: string
+    avatarUrl?: string
+    role?: string
 }
 
 export type TInitialStateAuth = {
@@ -54,7 +55,6 @@ export let initialStateAuth = {
         userId: undefined,
         email: undefined,
         password: undefined,
-        remember: undefined,
         accessToken: undefined,
     }
 } as TInitialStateAuth
