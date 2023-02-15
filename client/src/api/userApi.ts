@@ -25,11 +25,13 @@ export const userApi = {
             }
         )
             .then(res => {
+                console.log(res.data)
                 return {
                     userId: res.data.id,
                     email: res.data.email,
                     avatarUrl: res.data.avatarUrl,
                     role: res.data.role,
+                    login: res.data.login,
                     accessToken: res.data.accessToken
                 }
             })

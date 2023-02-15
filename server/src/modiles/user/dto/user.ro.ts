@@ -27,4 +27,10 @@ export class UserRO {
     @IsNotEmpty()
     @ApiProperty()
     role: string
+
+    @IsString()
+    @ApiProperty()
+    login: string
+
+
 }

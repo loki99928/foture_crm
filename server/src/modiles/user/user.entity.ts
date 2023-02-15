@@ -44,6 +44,24 @@ export class UserEntity extends BaseEntity {
     @ApiProperty()
     public email: string
 
+    @Column({
+        type: 'varchar',
+        length: 20,
+        nullable: true,
+        default: undefined
+    })
+    @ApiProperty()
+    public firstName: string
+
+    @Column({
+        type: 'varchar',
+        length: 20,
+        nullable: true,
+        default: undefined
+    })
+    @ApiProperty()
+    public lastName: string
+
     @Column( {
         type: 'varchar',
         length: 100,
@@ -125,8 +143,17 @@ export class UserEntity extends BaseEntity {
     }
 
     toResponseObject(showToken: boolean = true) {
-        const {id, email, role} = this
+        const {id, email, role, firstName, lastName} = this
         const responseObject: any = {id, email, role}
+
+        responseObject.login = ''
+        if (typeof(lastName) === "string" && lastName.length > 0) {
+            responseObject.login = `${lastName}`;
+        }
+        if (typeof(firstName) === "string" && firstName.length > 0){
+            responseObject.login += ` ${firstName}`;
+        }
+
         if (this.avatar){
             responseObject.avatarUrl = this.avatar.url;
         }

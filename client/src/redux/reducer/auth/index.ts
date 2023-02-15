@@ -32,6 +32,7 @@ export type TUser = {
     accessToken?: string
     avatarUrl?: string
     role?: string
+    login?: string
 }
 
 export type TInitialStateAuth = {

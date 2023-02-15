@@ -56,6 +56,7 @@ export interface IApiUsersGetResponse {
     id?: string
     accessToken?: string
     email?: string
+    login?: string
     avatarUrl?: string
     role?: string
 }
