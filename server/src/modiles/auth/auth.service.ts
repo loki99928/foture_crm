@@ -28,7 +28,7 @@ export class AuthService {
     // max time change
     private readonly maxTimeHasGone = 15
 
-    private sendErrorCode(text: string): Error{
+    private sendErrorCode(text: string): Error {
         throw new HttpException([text], HttpStatus.BAD_REQUEST);
     }
 
@@ -37,7 +37,8 @@ export class AuthService {
         @InjectRepository(ImagesEntity) private ImageRepository: Repository<ImagesEntity>,
         private readonly mailerService: MailerService,
         private jwtService: JwtService,
-    ) {}
+    ) {
+    }
 
     /**
      * регистрация пользователя
@@ -50,20 +51,20 @@ export class AuthService {
         try {
             // verification of the user's confirmed email
             let confirmUser = await this.UserRepository.findOneBy({email: data.email, confirm: true})
-            if (confirmUser){
+            if (confirmUser) {
                 this.sendErrorCode('Email busy')
             }
 
             // verification of unconfirmed user email
             let User = await this.UserRepository.findOneBy({email: data.email, confirm: false})
-            if (!User){
+            if (!User) {
                 const image = await this.ImageRepository.findOne({
                     where: {
                         id: Math.ceil((Math.random() * 10))
                     }
                 });
 
-                let arrUser  = {
+                let arrUser = {
                     email: data.email,
                     password: data.password
                 } as UserEntity
@@ -72,7 +73,7 @@ export class AuthService {
                  * check for the presence of a superadmin, if not, then create the first user with super rights
                  */
                 const isSuperAdmin = await this.UserRepository.findOneBy({role: UserRole.SUPERADMIN})
-                if (!isSuperAdmin){
+                if (!isSuperAdmin) {
                     arrUser.role = UserRole.SUPERADMIN
                 }
 
@@ -97,13 +98,13 @@ export class AuthService {
      */
     async userConfirmation(hashUser): Promise<MessageRO> {
         const user = await this.UserRepository.findOneBy({hashUser, confirm: false})
-        if (user){
+        if (user) {
             await this.UserRepository.update(user.id, {confirm: true})
             return {
                 message: ['Your email has been verified']
             }
         } else {
-            throw new HttpException({message:['User is not find']}, HttpStatus.BAD_REQUEST);
+            throw new HttpException({message: ['User is not find']}, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -115,8 +116,13 @@ export class AuthService {
      */
     async authorize(data: AuthorizeDTO): Promise<UserRO> {
         try {
-            let currentUser = await this.UserRepository.findOneBy({'email': data.email, confirm: true})
-            if (currentUser === null){
+            let currentUser = await this.UserRepository.findOne(
+                {
+                    where: {'email': data.email, confirm: true},
+                    relations: ['avatar']
+                }
+            )
+            if (currentUser === null) {
                 this.sendErrorCode('Email or password is incorrect')
             }
             const isValidPassword = bcrypt.compareSync(data.password, currentUser.password)
@@ -124,13 +130,11 @@ export class AuthService {
             if (!isValidPassword) {
                 this.sendErrorCode('Email or password is incorrect')
             }
-
-            const payload = { email: currentUser.email, id: currentUser.id};
-
+            const payload = {email: currentUser.email, id: currentUser.id};
+            const accessToken = this.jwtService.sign(payload, {expiresIn: '1d'})
             return {
-                userId: currentUser.id,
-                email: currentUser.email,
-                accessToken: this.jwtService.sign(payload, {expiresIn: '1d'})
+                ...currentUser.toResponseObject(),
+                accessToken
             };
 
         } catch (e) {
@@ -165,7 +169,11 @@ export class AuthService {
 
             let hashUser = getAlphaNumericRandom(20)
 
-            await this.UserRepository.update(currentUser.id, {attemptsNumber: this.attempts, lastModifiedTime, hashUser})
+            await this.UserRepository.update(currentUser.id, {
+                attemptsNumber: this.attempts,
+                lastModifiedTime,
+                hashUser
+            })
 
             currentUser.hashUser = hashUser
             await this.sendMailForgetUser(currentUser)
@@ -212,7 +220,12 @@ export class AuthService {
             // todo-dv нужно разобраться как обновлять данные
             const user = new UserEntity()
             let hasPas = await user.hashPassword(data.password)
-            await this.UserRepository.update(arrUser.id, {hashUser: '', lastModifiedTime: null, attemptsNumber: 0, password: hasPas})
+            await this.UserRepository.update(arrUser.id, {
+                hashUser: '',
+                lastModifiedTime: null,
+                attemptsNumber: 0,
+                password: hasPas
+            })
             return {
                 message: ['Password saved']
             }

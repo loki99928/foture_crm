@@ -20,6 +20,6 @@ export class UserController {
     @ApiCreatedResponse({type: UserRO})
     @ApiBadRequestResponse({type: MessageRO})
     get(@Req() req: Request){
-        return this.UserService.get(req.body)
+        return this.UserService.get(req.body.user)
     }
 }

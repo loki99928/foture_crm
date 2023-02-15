@@ -53,9 +53,11 @@ export interface IApiUsersChangeTokenNewPasswordResponse {
 
 // get
 export interface IApiUsersGetResponse {
-    userId?: string
+    id?: string
     accessToken?: string
     email?: string
+    avatarUrl?: string
+    role?: string
 }
 
 export interface IApiErrorResponse {

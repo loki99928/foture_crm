@@ -8,6 +8,11 @@ export class UserRO {
     @ApiProperty()
     userId: number
 
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty()
+    email: string
+
     @IsNotEmpty()
     @IsString()
     @ApiProperty()
@@ -16,7 +21,10 @@ export class UserRO {
     @IsString()
     @IsNotEmpty()
     @ApiProperty()
-    email: string
+    avatarUrl: string
 
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty()
+    role: string
 }
-

@@ -42,7 +42,7 @@ export function* workerUserAuthorization({payload}: TAuthorizationUser): Generat
         const user = payload.user as IApiUserLoginData
         const result = yield call(authApi.authorize, user);
         if (result.accessToken !== undefined) {
-            setCookieJWT(result.accessToken, user.remember)
+            setCookieJWT(result.accessToken, false)
             let data = {
                 userId: result.userId,
                 accessToken: result.accessToken
@@ -67,7 +67,7 @@ export function* workerUserAuthorizationCheck(): Generator<StrictEffect, void, a
     }
     try {
         const result = yield call(userApi.get, token)
-        setCookieJWT(result.accessToken, result.remember)
+        setCookieJWT(result.accessToken, false)
         yield putResolve(actionsAuth.authUserDataSuccess(result))
     } catch (err: any) {
         yield put(actionsAuth.authUserDataFail())

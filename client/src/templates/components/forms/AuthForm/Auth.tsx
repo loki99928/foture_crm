@@ -40,7 +40,7 @@ const Auth: React.FC = () => {
 
     const formik = useFormik({
         // initialValues: {email: '', password: '', remember: false, mainError: null},
-        initialValues: {email: 'loki99928@yandex.ru', password: '123Qw@', remember: false, mainError: null},
+        initialValues: {email: 'loki99928@yandex.ru', password: '123Qw@', mainError: null},
         onSubmit: async (values: IApiUsersRegisterData) => {
             formik.setSubmitting(true);
             dispatch(actionsAuth.authUserRequest(values))
@@ -73,13 +73,6 @@ const Auth: React.FC = () => {
                         label="Your password"
                         name="password"
                         data-testid="input_password"
-                    />
-                    <FormikControlFields
-                        formik={formik}
-                        className={cn(s.formFieldCheck)}
-                        type="checkbox"
-                        label="remember me"
-                        name="remember"
                     />
                     <ErrorResponse/>
                     <FormikControlBtn
