@@ -10,12 +10,16 @@ async function start() {
     const app = await NestFactory.create<NestExpressApplication>(
         AppModule,
         {
-            bufferLogs: true
+            // bufferLogs: true,
+            logger: ['debug'],
         }
     );
 
     // app.useGlobalGuards()
 
+    /**
+     * создание swagger документации http://localhost:5000/api
+     */
     const config = new DocumentBuilder()
         .setTitle('Feature CRM')
         .setDescription('The CRM API')
@@ -32,16 +36,21 @@ async function start() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
 
-    // todo-dv отключил подробное логирование
-    // app.useLogger(app.get(Logger));
-
+    /**
+     * валидация
+     */
     app.useGlobalPipes(
         new ValidationPipe({
             transform: true,
             whitelist: true,
         })
     )
+
+    /**
+     * включаем cors доменные запросы
+     */
     app.enableCors()
+
     await app.listen(port);
 }
 
