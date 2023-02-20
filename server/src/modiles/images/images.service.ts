@@ -22,7 +22,7 @@ export class ImagesService {
              */
             let arrImages = []
             for (let i = 1; i <= 10; i++){
-                arrImages.push({type: 'avatar', url: `/assets/images/avatar/avatar_${i}.jpg`})
+                arrImages.push({type: 'avatar', url: `/dist/assets/images/avatar/avatar_${i}.jpg`})
             }
             /**
              * создаем дефолтные автарки пользователей

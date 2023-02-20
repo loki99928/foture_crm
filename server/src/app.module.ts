@@ -25,7 +25,7 @@ import {ServeStaticModule} from "@nestjs/serve-static";
         }),
         ServeStaticModule.forRoot({
             rootPath: join(__dirname, 'assets'),
-            serveRoot: "/assets",
+            serveRoot: "/dist/assets",
         }),
         LoggerModule.forRoot({
             pinoHttp: {
