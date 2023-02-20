@@ -1,7 +1,7 @@
 import {Module} from '@nestjs/common';
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {MailerModule} from "@nestjs-modules/mailer";
+import {MailerModule, MailerService} from "@nestjs-modules/mailer";
 import {LoggerModule} from "nestjs-pino";
 import {AuthModule} from "./modiles/auth/auth.module";
 import {typeOrmConfigAsync} from "./config/typeorm.config";
@@ -56,5 +56,4 @@ import {ServeStaticModule} from "@nestjs/serve-static";
     ]
 })
 
-export class AppModule {
-}
+export class AppModule {}

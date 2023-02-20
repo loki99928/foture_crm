@@ -32,6 +32,7 @@ export const authApi = {
                 }
             })
             .catch((e) => {
+                console.log(e.response.data.message)
                 throw new Error(e.response?.data.message?.shift())
             })
     },

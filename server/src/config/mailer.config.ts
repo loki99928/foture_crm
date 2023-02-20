@@ -1,7 +1,6 @@
 import {EjsAdapter} from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 
 export const getMailConfig = async (): Promise<any> => {
-
     return {
         transport: {
             host: process.env.MAIL_HOST,

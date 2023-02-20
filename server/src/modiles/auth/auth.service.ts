@@ -28,8 +28,8 @@ export class AuthService {
     // max time change
     private readonly maxTimeHasGone = 15
 
-    private sendErrorCode(text: string): Error {
-        throw new HttpException([text], HttpStatus.BAD_REQUEST);
+    private sendErrorCode(text: string, code: HttpStatus = HttpStatus.BAD_REQUEST): Error {
+        throw new HttpException([text], code);
     }
 
     constructor(
@@ -47,7 +47,6 @@ export class AuthService {
      * @return Promise<MessageRO>
      */
     async register(data: RegisterDTO): Promise<MessageRO> {
-        // todo-dv Нужно реализовать что у первого пользователя role administrator
         try {
             // verification of the user's confirmed email
             let confirmUser = await this.UserRepository.findOneBy({email: data.email, confirm: true})
@@ -81,6 +80,7 @@ export class AuthService {
                 user.avatar = image;
                 await this.UserRepository.save(user);
             }
+
             await this.sendMailRegisterUser(User)
             return {
                 message: ['User created. Your email confirmation is required!']
@@ -247,7 +247,7 @@ export class AuthService {
                 },
             })
             .catch(() => {
-                throw new HttpException({message: ['Mail sending error']}, HttpStatus.UNPROCESSABLE_ENTITY);
+                this.sendErrorCode('Mail sending error', HttpStatus.UNPROCESSABLE_ENTITY)
             });
     }
 
@@ -256,15 +256,15 @@ export class AuthService {
         return await this.mailerService
             .sendMail({
                 to: user.email,
-                subject: 'Подтверждение регистрации',
                 from: 'sd213dddd@gmail.com',
+                subject: 'Подтверждение регистрации',
                 template: 'registerUserEmail',
                 context: {
                     url: process.env.PRODUCTION_LINK + '/confirm/' + user.hashUser,
                 },
             })
             .catch(() => {
-                throw new HttpException({message: ['Mail sending error']}, HttpStatus.UNPROCESSABLE_ENTITY);
+                this.sendErrorCode('Mail sending error', HttpStatus.UNPROCESSABLE_ENTITY)
             });
     }
 }
