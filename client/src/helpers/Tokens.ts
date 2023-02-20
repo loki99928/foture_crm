@@ -6,7 +6,7 @@ interface SettingsType {
     expires?: number
 }
 /**
- * set user static token to cookie
+ * set user assets token to cookie
  *
  * @param jwt string token user
  * @param remember boolean cookie token save status

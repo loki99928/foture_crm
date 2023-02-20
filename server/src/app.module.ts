@@ -24,8 +24,8 @@ import {ServeStaticModule} from "@nestjs/serve-static";
             useFactory: getMailConfig,
         }),
         ServeStaticModule.forRoot({
-            rootPath: join(__dirname, '..', 'static'),
-            serveRoot: "/static",
+            rootPath: join(__dirname, 'assets'),
+            serveRoot: "/assets",
         }),
         LoggerModule.forRoot({
             pinoHttp: {
