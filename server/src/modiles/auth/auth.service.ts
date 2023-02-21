@@ -4,6 +4,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {MailerService} from "@nestjs-modules/mailer";
 import * as bcrypt from "bcrypt";
 import {JwtService} from "@nestjs/jwt";
+import {EventEmitter2} from "@nestjs/event-emitter";
 
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 import {MyLogger} from "../../common/Logger";
@@ -35,6 +36,7 @@ export class AuthService {
     constructor(
         @InjectRepository(UserEntity) private UserRepository: Repository<UserEntity>,
         @InjectRepository(ImagesEntity) private ImageRepository: Repository<ImagesEntity>,
+        private readonly eventEmitter: EventEmitter2,
         private readonly mailerService: MailerService,
         private jwtService: JwtService,
     ) {
@@ -81,7 +83,8 @@ export class AuthService {
                 await this.UserRepository.save(user);
             }
 
-            await this.sendMailRegisterUser(User)
+            this.eventEmitter.emit('registered.user', User);
+
             return {
                 message: ['User created. Your email confirmation is required!']
             }
@@ -89,7 +92,6 @@ export class AuthService {
             throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
         }
     }
-
     /**
      * подтверждение почты пользователя
      *
@@ -176,7 +178,8 @@ export class AuthService {
             })
 
             currentUser.hashUser = hashUser
-            await this.sendMailForgetUser(currentUser)
+
+            this.eventEmitter.emit('forget.user', currentUser);
 
             return {
                 message: ['Message sent to your email']
@@ -232,39 +235,5 @@ export class AuthService {
         } catch (e) {
             throw new HttpException({message: e.response}, HttpStatus.BAD_REQUEST);
         }
-    }
-
-    // todo-dv нужно перенести отправку почты в отдельный файл
-    async sendMailForgetUser(user: UserEntity) {
-        return await this.mailerService
-            .sendMail({
-                to: user.email,
-                subject: 'Восстановление пароля',
-                from: 'sd213dddd@gmail.com',
-                template: 'forgetUserEmail',
-                context: {
-                    url: process.env.PRODUCTION_LINK + '/new_password/' + user.hashUser,
-                },
-            })
-            .catch(() => {
-                this.sendErrorCode('Mail sending error', HttpStatus.UNPROCESSABLE_ENTITY)
-            });
-    }
-
-    // todo-dv нужно перенести отправку почты в отдельный файл
-    async sendMailRegisterUser(user: UserEntity) {
-        return await this.mailerService
-            .sendMail({
-                to: user.email,
-                from: 'sd213dddd@gmail.com',
-                subject: 'Подтверждение регистрации',
-                template: 'registerUserEmail',
-                context: {
-                    url: process.env.PRODUCTION_LINK + '/confirm/' + user.hashUser,
-                },
-            })
-            .catch(() => {
-                this.sendErrorCode('Mail sending error', HttpStatus.UNPROCESSABLE_ENTITY)
-            });
     }
 }

@@ -10,6 +10,7 @@ import {UserModule} from "./modiles/user/user.module";
 import {ImagesModule} from "./modiles/images/images.module";
 import {join} from "path";
 import {ServeStaticModule} from "@nestjs/serve-static";
+import {EventEmitterModule} from "@nestjs/event-emitter";
 
 @Module({
     imports: [
@@ -50,6 +51,7 @@ import {ServeStaticModule} from "@nestjs/serve-static";
                 },
             },
         }),
+        EventEmitterModule.forRoot(),
         AuthModule,
         UserModule,
         ImagesModule

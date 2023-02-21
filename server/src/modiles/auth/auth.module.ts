@@ -5,6 +5,7 @@ import {AuthController} from './../auth/auth.controller';
 import {AuthService} from './../auth/auth.service';
 import {UserEntity} from "../user/user.entity";
 import {ImagesEntity} from "../images/images.entity";
+import {UserEvent} from "../user/user.event";
 
 @Module({
     imports: [
@@ -12,7 +13,7 @@ import {ImagesEntity} from "../images/images.entity";
         JwtModule.register({
             secret: `${process.env.JWT_SECRET}`,
             signOptions: {expiresIn: `${process.env.JWT_EXPIRES_IN}`},
-        }),
+        })
     ],
     exports: [AuthService],
     controllers: [AuthController],

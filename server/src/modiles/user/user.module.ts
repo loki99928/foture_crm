@@ -7,11 +7,13 @@ import {UserService} from './user.service';
 import {UserEntity} from "./user.entity";
 import {AuthMiddleware} from "../../middleware/AuthMiddleware";
 import {GlobalConstants} from "../../config/globalConstants";
+import {UserEvent} from "./user.event";
 
 @Module({
     providers: [
         UserService,
-        GlobalConstants
+        GlobalConstants,
+        UserEvent
     ],
     controllers: [UserController],
     imports: [
