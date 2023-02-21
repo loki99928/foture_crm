@@ -6,22 +6,12 @@ export class UserRO {
     @IsNumber()
     @IsNotEmpty()
     @ApiProperty()
-    userId: number
+    id: number
 
     @IsString()
     @IsNotEmpty()
     @ApiProperty()
     email: string
-
-    @IsNotEmpty()
-    @IsString()
-    @ApiProperty()
-    accessToken: string
-
-    @IsString()
-    @IsNotEmpty()
-    @ApiProperty()
-    avatarUrl: string
 
     @IsString()
     @IsNotEmpty()
@@ -30,7 +20,15 @@ export class UserRO {
 
     @IsString()
     @ApiProperty()
-    login: string
+    login?: string
 
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty()
+    avatarUrl?: string
 
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    accessToken?: string
 }

@@ -25,8 +25,7 @@ import {EventEmitterModule} from "@nestjs/event-emitter";
             useFactory: getMailConfig,
         }),
         ServeStaticModule.forRoot({
-            rootPath: join(__dirname, 'assets'),
-            serveRoot: "/dist/assets",
+            rootPath: join(__dirname, '/')
         }),
         LoggerModule.forRoot({
             pinoHttp: {
@@ -58,4 +57,8 @@ import {EventEmitterModule} from "@nestjs/event-emitter";
     ]
 })
 
-export class AppModule {}
+export class AppModule {
+    constructor() {
+        console.log(join(__dirname, 'assets'))
+    }
+}

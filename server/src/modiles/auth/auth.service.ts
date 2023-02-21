@@ -117,6 +117,7 @@ export class AuthService {
      * @return Promise<ResponseUser>
      */
     async authorize(data: AuthorizeDTO): Promise<UserRO> {
+
         try {
             let currentUser = await this.UserRepository.findOne(
                 {

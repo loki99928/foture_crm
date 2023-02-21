@@ -38,16 +38,14 @@ export class UserService {
                 height: 100
             }
 
-            let urlImage = join(global.homeDirectory, user.avatarUrl)
-            const stream = fs.createReadStream(urlImage)
-            let that = this
-            stream.on('data', async function (chunk) {
-                // console.log(chunk.toString());
-
-                let img = new Buffer(chunk.toString(), 'base64');
-                let imgResize = await that.imgResizeService.resize(img, resizeConfig)
-            console.log(imgResize)
-            });
+            // let urlImage = join(global.homeDirectory, user.avatarUrl)
+            // const stream = fs.createReadStream(urlImage)
+            // let that = this
+            // stream.on('data', async function (chunk) {
+            //
+            //     let img = new Buffer(chunk.toString(), 'base64');
+            //     let imgResize = await that.imgResizeService.resize(img, resizeConfig)
+            // });
             return {
                 ...user,
                 accessToken

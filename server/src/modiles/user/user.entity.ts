@@ -12,6 +12,7 @@ import * as bcrypt from "bcrypt";
 import {ApiProperty} from "@nestjs/swagger";
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
 import {ImagesEntity} from "../images/images.entity";
+import {UserRO} from "./dto/user.ro";
 
 export enum UserRole {
     SUPERADMIN = "superadmin",
@@ -144,7 +145,7 @@ export class UserEntity extends BaseEntity {
 
     toResponseObject(showToken: boolean = true) {
         const {id, email, role, firstName, lastName} = this
-        const responseObject: any = {id, email, role}
+        const responseObject: UserRO = {id, email, role}
 
         responseObject.login = ''
         if (typeof(lastName) === "string" && lastName.length > 0) {
@@ -153,7 +154,6 @@ export class UserEntity extends BaseEntity {
         if (typeof(firstName) === "string" && firstName.length > 0){
             responseObject.login += ` ${firstName}`;
         }
-
         if (this.avatar){
             responseObject.avatarUrl = this.avatar.url;
         }
