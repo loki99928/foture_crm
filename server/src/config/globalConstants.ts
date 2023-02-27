@@ -6,6 +6,6 @@ export class GlobalConstants {
         /**
          * @var string path to home directory
          */
-        global.homeDirectory = join(__dirname, '../../')
+        global.homeDirectory = join(__dirname, '../../dist')
     }
 }

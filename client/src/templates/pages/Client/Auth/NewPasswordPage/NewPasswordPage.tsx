@@ -20,11 +20,11 @@ export const NewPasswordPage = () => {
         dispatch(actionsAuth.checkTemporaryTokenRequest(hashUser))
     }, [])
 
-    // if (status === undefined){
-    //     return (
-    //         <Preloader/>
-    //     );
-    // }
+    if (status === undefined){
+        return (
+            <Preloader/>
+        );
+    }
 
     if (message){
         navigate('/message', {

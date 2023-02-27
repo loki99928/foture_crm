@@ -32,20 +32,6 @@ export class UserService {
         try {
             const payload = {email: user.email, id: user.id};
             const accessToken = this.jwtService.sign(payload, {expiresIn: '1d'})
-
-            let resizeConfig = {
-                width: 100,
-                height: 100
-            }
-
-            // let urlImage = join(global.homeDirectory, user.avatarUrl)
-            // const stream = fs.createReadStream(urlImage)
-            // let that = this
-            // stream.on('data', async function (chunk) {
-            //
-            //     let img = new Buffer(chunk.toString(), 'base64');
-            //     let imgResize = await that.imgResizeService.resize(img, resizeConfig)
-            // });
             return {
                 ...user,
                 accessToken

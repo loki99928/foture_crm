@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.0.0",
+    "@craco/types": "^7.0.0",
     "@redux-saga/testing-utils": "^1.1.5",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -28,7 +30,7 @@
     "react-redux": "^7.2.6",
     "react-router": "^6.0.2",
     "react-router-dom": "^6.0.2",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.1",
     "redis": "^3.1.2",
     "redux": "^4.1.2",
     "redux-saga": "^1.1.3",
@@ -41,10 +43,10 @@
   },
   "proxy": "http://127.0.0.1:5000",
   "scripts": {
-    "start:client_dev": "set PORT=3006 && react-scripts start",
-    "build": "react-scripts build",
-    "test:client": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start:client_dev": "set PORT=3006 && craco start",
+    "build": "craco build",
+    "test:client": "craco test",
+    "eject": "craco eject"
   },
   "eslintConfig": {
     "extends": [

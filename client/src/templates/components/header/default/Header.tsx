@@ -10,7 +10,7 @@ export const Header: React.FC = () => {
 
     const user = useSelector(getUser) as TUser
     return (
-        <header>
+        <header className={s.header}>
             <img src={user.avatarUrl} alt={user.login}/>
             Header
         </header>
