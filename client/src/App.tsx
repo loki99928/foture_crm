@@ -4,8 +4,6 @@ import {Provider, useDispatch, useSelector} from "react-redux";
 
 import store from "./redux/store";
 
-import "./templates/assets/scss/normalize.scss"
-import "./templates/assets/scss/settings.scss"
 import {Routers} from "./urlrewrite";
 import {Preloader} from "./templates/components/preloader/default/Preloader";
 import {actionsApp} from "./redux/reducer/app/actions";
