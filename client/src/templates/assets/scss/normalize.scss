@@ -28,7 +28,6 @@ a {
 abbr[title] {
     border-bottom: none;
     text-decoration: underline;
-    text-decoration: underline dotted;
 }
 b,strong {
     font-weight: bolder;
@@ -133,4 +132,11 @@ template {
 }
 [hidden] {
     display: none;
+}
+ul, ol{
+    margin: 0;
+    padding: 0;
+}
+li{
+    list-style-type: none;
 }

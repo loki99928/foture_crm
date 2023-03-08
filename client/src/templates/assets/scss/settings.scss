@@ -12,9 +12,12 @@ p, h1, h2, h3, h4{
   font-family: 'raleway';
   src: local('raleway'), url(../fonts/raleway.woff2) format('woff2');
 }
-header{
-  border: 1px solid red;
-}
-.row{
-  background: #000;
+
+:global {
+  .wrapper{
+    @include wrapper()
+  }
+  .row{
+    @include row-flex()
+  }
 }
