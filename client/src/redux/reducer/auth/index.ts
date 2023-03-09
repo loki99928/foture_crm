@@ -14,11 +14,13 @@ import {
     CONFIRM_USER_REQUEST,
     CONFIRM_USER_SUCCESS,
     CREATE_NEW_PASSWORD_FAIL,
-    CREATE_NEW_PASSWORD_REQUEST, CREATE_NEW_PASSWORD_SUCCESS,
+    CREATE_NEW_PASSWORD_REQUEST,
+    CREATE_NEW_PASSWORD_SUCCESS,
     FORGET_USER_FAIL,
     FORGET_USER_REQUEST,
     FORGET_USER_SUCCESS,
     InitialStateType,
+    LOGOUT_SUCCESS,
     REGISTER_USER_FAIL,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS
@@ -228,6 +230,12 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
                 status: ResultStatusCodeEnum.Error,
                 message: action.payload.message,
                 hashUser: undefined,
+            }
+        case LOGOUT_SUCCESS:
+            return {
+                ...state,
+                user: undefined,
+                isAuth: false
             }
         default:
             return state

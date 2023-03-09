@@ -9,7 +9,6 @@ import UserConfirmationPage from "./templates/pages/Client/Auth/UserConfirmation
 import {ErrorPage} from "./templates/pages/Client/ErrorPage/ErrorPage";
 import UserPage from "./templates/pages/Admin/UserPage/UserPage";
 import {NewPasswordPage} from "./templates/pages/Client/Auth/NewPasswordPage/NewPasswordPage";
-import LogoutPage from "./templates/pages/Admin/LogoutPage/LogoutPage";
 
 const routers = [
     {
@@ -51,11 +50,6 @@ const routers = [
         id: 'USER',
         path: '/user/',
         element: <UserPage/>
-    },
-    {
-        id: 'LOGOUT',
-        path: '/logout/',
-        element: <LogoutPage/>
     },
     {
         id: 'ERROR',

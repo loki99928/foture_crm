@@ -1,14 +1,22 @@
 import React from "react"
 import cn from "classnames"
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 
 import s from "./Header.module.scss"
 import {getUser} from "../../../../redux/reducer/auth/selectors";
 import {TUser} from "../../../../redux/reducer/auth";
 import logo from '../../../assets/images/logo_60.png'
+import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 
 export const Header: React.FC = () => {
+
+    const dispatch = useDispatch()
+
+    const userLogout = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault()
+        dispatch(actionsAuth.logoutRequest())
+    }
 
     const user = useSelector(getUser) as TUser
     return (
@@ -27,7 +35,7 @@ export const Header: React.FC = () => {
                                         <NavLink to="admin/user/settings">settings</NavLink>
                                     </li>
                                     <li className={s.menuItem}>
-                                        <NavLink to="logout">logout</NavLink>
+                                        <NavLink to="#" onClick={userLogout}>Logout</NavLink>
                                     </li>
                                 </ul>
                             </nav>

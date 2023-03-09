@@ -32,10 +32,13 @@ export const CREATE_NEW_PASSWORD_REQUEST = 'CRM/AUTH/CREATE_NEW_PASSWORD_REQUEST
 export const CREATE_NEW_PASSWORD_SUCCESS = 'CRM/AUTH/CREATE_NEW_PASSWORD_SUCCESS'
 export const CREATE_NEW_PASSWORD_FAIL = 'CRM/AUTH/CREATE_NEW_PASSWORD_FAIL'
 
+export const LOGOUT_REQUEST = 'CRM/AUTH/LOGOUT_REQUEST'
+export const LOGOUT_SUCCESS = 'CRM/AUTH/LOGOUT_SUCCESS'
+
 export const actionsAuth = {
 
     // сброс формы
-    clearForm: () => ({ type: AUTH_LOAD_FORM } as const),
+    clearForm: () => ({type: AUTH_LOAD_FORM} as const),
 
     // регистрация пользователя
     registerUserRequest: ({email, password}: TUser) => ({
@@ -49,7 +52,7 @@ export const actionsAuth = {
             type: REGISTER_USER_SUCCESS,
             payload: {message}
         } as const),
-    registerUserFail: ( {message}: IResponseServer) => (
+    registerUserFail: ({message}: IResponseServer) => (
         {
             type: REGISTER_USER_FAIL,
             payload: {message}
@@ -65,7 +68,7 @@ export const actionsAuth = {
     authUserSuccess: ({userId, accessToken}: TUser) => ({
         type: AUTH_USER_SUCCESS,
         payload: {
-            user: { userId, accessToken }
+            user: {userId, accessToken}
         }
     } as const),
     authUserFail: ({message}: IResponseServer) => ({
@@ -76,14 +79,14 @@ export const actionsAuth = {
     } as const),
 
     // аутентификация пользователя по токену
-    authUserDataRequest: () => ({ type: CHECK_AUTH_USER_REQUEST } as const),
+    authUserDataRequest: () => ({type: CHECK_AUTH_USER_REQUEST} as const),
     authUserDataSuccess: ({userId, email, accessToken, avatarUrl, role}: TUser) => ({
         type: CHECK_AUTH_USER_SUCCESS,
         payload: {
             user: {userId, email, accessToken, avatarUrl, role}
         }
     } as const),
-    authUserDataFail: () => ({ type: CHECK_AUTH_USER_FAIL } as const),
+    authUserDataFail: () => ({type: CHECK_AUTH_USER_FAIL} as const),
 
     // подтверждение почты пользователя
     confirmUserRequest: (hashUser: string | undefined) => ({
@@ -160,8 +163,15 @@ export const actionsAuth = {
         payload: {
             message
         }
-    } as const)
+    } as const),
 
+    // logout user
+    logoutRequest: () => ({
+        type: LOGOUT_REQUEST
+    } as const),
+    logoutSuccess: () => ({
+        type: LOGOUT_SUCCESS
+    } as const)
 }
 
 export type InitialStateType = typeof initialStateAuth

@@ -1,12 +1,7 @@
 import {call, put, putResolve, StrictEffect} from "redux-saga/effects";
 import {actionsAuth} from "../../reducer/auth/actions";
 import {authApi} from "../../../api/authApi";
-import {
-    IApiUserLoginData,
-    IApiUserLoginResponse,
-    IApiUsersForgetData,
-    IApiUsersRegisterData
-} from "../../../types/ApiUsersTypes";
+import {IApiUserLoginData, IApiUserLoginResponse, IApiUsersForgetData} from "../../../types/ApiUsersTypes";
 import {setCookieJWT} from "../../../helpers/Tokens";
 
 import Cookies from "js-cookie";
@@ -151,4 +146,12 @@ export function* workerCreateNewPassword(action: TCreateNewPassword): Generator<
     } catch (err: any) {
         yield put(actionsAuth.createNewPasswordFail({message : err.message}))
     }
+}
+
+/**
+ * logout user
+ */
+export function* workerLogout() {
+    Cookies.set('token', '', {expires: 0});
+    yield put(actionsAuth.logoutSuccess())
 }
