@@ -7,7 +7,6 @@ import {JwtService} from "@nestjs/jwt";
 import {EventEmitter2} from "@nestjs/event-emitter";
 
 import {GET_ALPHA_NUMERIC_RANDOM as getAlphaNumericRandom} from "../../app.utils";
-import {MyLogger} from "../../common/Logger";
 import {UserEntity, UserRole} from "../user/user.entity";
 import {ImagesEntity} from "../images/images.entity";
 import {RegisterDTO} from "./dto/register.dto";
@@ -115,7 +114,8 @@ export class AuthService {
      * @return Promise<ResponseUser>
      */
     async authorize(data: AuthorizeDTO): Promise<UserRO> {
-        // await delay(10000)
+        // await delay(2000)
+        console.log('authorize')
         try {
             let currentUser = await this.UserRepository.findOne(
                 {

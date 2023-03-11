@@ -10,6 +10,7 @@ import {UserConfirmationPage} from "./templates/pages/Client/Auth/UserConfirmati
 import {ErrorPage} from "./templates/pages/Client/ErrorPage/ErrorPage";
 import {UserPage} from "./templates/pages/Admin/UserPage/UserPage";
 import {NewPasswordPage} from "./templates/pages/Client/Auth/NewPasswordPage/NewPasswordPage";
+import {Navigate} from "react-router";
 
 export interface IRoute {
     id: string
@@ -51,19 +52,19 @@ export const publicRouters: IRoute[] = [
     {
         id: 'ERROR',
         path: '*',
-        element: <AuthPage/>
+        element: <Navigate to="/auth" replace/>
     },
 ]
 
 export const privatesRouters: IRoute[] = [
     {
         id: 'USER',
-        path: '/crm/',
+        path: '/crm',
         element: <HomePage/>
     },
     {
         id: 'USER',
-        path: '/crm/user/',
+        path: '/crm/user',
         element: <UserPage/>
     },
     {
