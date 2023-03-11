@@ -1,12 +1,9 @@
-import {takeEvery, all} from "redux-saga/effects";
+import {all, takeEvery} from "redux-saga/effects";
+import {authEnum} from "../../reducer/auth/actions";
 import {
-    AUTH_USER_REQUEST,
-    CHECK_AUTH_USER_REQUEST, CHECK_TEMPORARY_TOKEN_REQUEST,
-    CONFIRM_USER_REQUEST, CREATE_NEW_PASSWORD_REQUEST, FORGET_USER_REQUEST, LOGOUT_REQUEST,
-    REGISTER_USER_REQUEST
-} from "../../reducer/auth/actions";
-import {
-    workerCheckTemporaryToken, workerCreateNewPassword, workerLogout,
+    workerCheckTemporaryToken,
+    workerCreateNewPassword,
+    workerLogout,
     workerUserAuthorization,
     workerUserAuthorizationCheck,
     workerUserConfirmEmail,
@@ -19,13 +16,13 @@ import {
  */
 export function* watchUserAuthorization() {
     yield all([
-        takeEvery(REGISTER_USER_REQUEST, workerUserRegister),
-        takeEvery(AUTH_USER_REQUEST, workerUserAuthorization),
-        takeEvery(CONFIRM_USER_REQUEST, workerUserConfirmEmail),
-        takeEvery(CHECK_AUTH_USER_REQUEST, workerUserAuthorizationCheck),
-        takeEvery(FORGET_USER_REQUEST, workerUserForget),
-        takeEvery(CHECK_TEMPORARY_TOKEN_REQUEST, workerCheckTemporaryToken),
-        takeEvery(CREATE_NEW_PASSWORD_REQUEST, workerCreateNewPassword),
-        takeEvery(LOGOUT_REQUEST, workerLogout),
+        takeEvery(authEnum.REGISTER_USER_REQUEST, workerUserRegister),
+        takeEvery(authEnum.AUTH_USER_REQUEST, workerUserAuthorization),
+        takeEvery(authEnum.CONFIRM_USER_REQUEST, workerUserConfirmEmail),
+        takeEvery(authEnum.CHECK_AUTH_USER_REQUEST, workerUserAuthorizationCheck),
+        takeEvery(authEnum.FORGET_USER_REQUEST, workerUserForget),
+        takeEvery(authEnum.CHECK_TEMPORARY_TOKEN_REQUEST, workerCheckTemporaryToken),
+        takeEvery(authEnum.CREATE_NEW_PASSWORD_REQUEST, workerCreateNewPassword),
+        takeEvery(authEnum.LOGOUT_REQUEST, workerLogout),
     ])
 }

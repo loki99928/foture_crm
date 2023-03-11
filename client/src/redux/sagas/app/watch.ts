@@ -1,5 +1,5 @@
 import {all, takeEvery} from "redux-saga/effects";
-import {SET_INITIALIZED_REQUEST} from "../../reducer/app/actions";
+import {appEnum} from "../../reducer/app/actions";
 import {workerInitialized} from "./worker";
 
 /**
@@ -7,6 +7,6 @@ import {workerInitialized} from "./worker";
  */
 export function* watchInitialized() {
     yield all([
-        takeEvery(SET_INITIALIZED_REQUEST, workerInitialized),
+        takeEvery(appEnum.SET_INITIALIZED_REQUEST, workerInitialized),
     ])
 }

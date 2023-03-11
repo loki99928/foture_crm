@@ -1,4 +1,4 @@
-import {ActionTypeApp, InitialStateType, SET_INITIALIZED_SUCCESS,} from "./actions";
+import {ActionTypeApp, appEnum, InitialStateType} from "./actions";
 
 export let initialStateApp = {
     initialized: false as boolean,
@@ -6,7 +6,7 @@ export let initialStateApp = {
 
 const AppReducer = (state = initialStateApp, action: ActionTypeApp): InitialStateType => {
     switch (action.type) {
-        case SET_INITIALIZED_SUCCESS:
+        case appEnum.SET_INITIALIZED_SUCCESS:
             return {
                 ...state,
                 initialized: true

@@ -32,23 +32,25 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Auth: React.FC = () => {
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(actionsAuth.clearForm())
-    }, [])
+    // const dispatch = useDispatch()
+    //
+    // useEffect(() => {
+    //     dispatch(actionsAuth.clearForm())
+    // }, [])
 
     const formik = useFormik({
         // initialValues: {email: '', password: '', remember: false, mainError: null},
         initialValues: {email: 'loki99928@yandex.ru', password: '123Qw@', mainError: null},
         onSubmit: async (values: IApiUsersRegisterData) => {
             formik.setSubmitting(true);
-            dispatch(actionsAuth.authUserRequest(values))
+            // dispatch(actionsAuth.authUserRequest(values))
         },
         validationSchema: SignupSchema,
         validateOnBlur: true,
         validateOnChange: true
     });
+
+    console.log(formik.isSubmitting)
 
     return (
         <div className={s.blockForm}>

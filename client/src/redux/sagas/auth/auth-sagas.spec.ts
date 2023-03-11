@@ -1,4 +1,4 @@
-import {expectSaga, testSaga} from 'redux-saga-test-plan';
+import {testSaga} from 'redux-saga-test-plan';
 import Cookies from "js-cookie";
 import {
     workerCheckTemporaryToken,
@@ -10,25 +10,14 @@ import {
     workerUserRegister
 } from "./worker";
 import {authApi} from "../../../api/authApi";
-import {
-    actionsAuth,
-    AUTH_USER_REQUEST, CHECK_AUTH_USER_SUCCESS,
-    CHECK_TEMPORARY_TOKEN_REQUEST,
-    CONFIRM_USER_REQUEST,
-    CREATE_NEW_PASSWORD_REQUEST,
-    FORGET_USER_REQUEST,
-    REGISTER_USER_REQUEST
-} from "../../reducer/auth/actions";
+import {actionsAuth, authEnum} from "../../reducer/auth/actions";
 import {userApi} from "../../../api/userApi";
-import {call, put, putResolve} from "redux-saga/effects";
-import {IApiUserLoginData} from "../../../types/ApiUsersTypes";
-import {setCookieJWT} from "../../../helpers/Tokens";
 
 describe('Sagas auth', () => {
 
     describe('workerUserRegister', function () {
         const action = {
-            type: REGISTER_USER_REQUEST,
+            type: authEnum.REGISTER_USER_REQUEST,
             payload: {
                 user: {
                     email: 'test@mail.ru',
@@ -73,7 +62,7 @@ describe('Sagas auth', () => {
 
     describe('workerUserAuthorization', function () {
         const action = {
-            type: AUTH_USER_REQUEST,
+            type: authEnum.AUTH_USER_REQUEST,
             payload: {
                 user: {
                     email: 'test@mail.ru',
@@ -154,7 +143,7 @@ describe('Sagas auth', () => {
 
     describe('workerUserConfirmEmail', function () {
         const action = {
-            type: CONFIRM_USER_REQUEST,
+            type: authEnum.CONFIRM_USER_REQUEST,
             payload: {
                 hashUser: 'test3353463463'
             }
@@ -191,7 +180,7 @@ describe('Sagas auth', () => {
     describe('workerUserForget', function () {
 
         const action = {
-            type: FORGET_USER_REQUEST,
+            type: authEnum.FORGET_USER_REQUEST,
             payload: {
                 user: {
                     email: 'test@mail.ru'
@@ -230,7 +219,7 @@ describe('Sagas auth', () => {
     describe('workerCheckTemporaryToken', function () {
 
         const action = {
-            type: CHECK_TEMPORARY_TOKEN_REQUEST,
+            type: authEnum.CHECK_TEMPORARY_TOKEN_REQUEST,
             payload: {
                 hashUser: 'test3353463463'
             }
@@ -267,7 +256,7 @@ describe('Sagas auth', () => {
     describe('workerCreateNewPassword', function () {
 
         const action = {
-            type: CREATE_NEW_PASSWORD_REQUEST,
+            type: authEnum.CREATE_NEW_PASSWORD_REQUEST,
             payload: {
                 password: '1314@tvwD',
                 double_password: '1314@tvwD',
