@@ -1,5 +1,4 @@
 import {all, takeEvery} from "redux-saga/effects";
-import {authEnum} from "../../reducer/auth/actions";
 import {
     workerCheckTemporaryToken,
     workerCreateNewPassword,
@@ -10,6 +9,7 @@ import {
     workerUserForget,
     workerUserRegister
 } from "./worker";
+import {authEnum} from "../../reducer/auth/types";
 
 /**
  * authorization user

@@ -1,29 +1,9 @@
 import {
     ActionTypeAuth,
-    authEnum,
     InitialStateType
 } from "./actions";
 import {ResultStatusCodeEnum} from "../../../types/ApiUsersTypes";
-
-export type TUser = {
-    userId?: number
-    email?: string
-    password?: string
-    accessToken?: string
-    avatarUrl?: string
-    role?: string
-    login?: string
-}
-
-export type TInitialStateAuth = {
-    isLoad?: boolean
-    isAuth?: boolean
-    message?: string
-    status?: number
-    typeRequest?: string
-    hashUser?: string
-    user?: TUser
-}
+import {authEnum, TInitialStateAuth} from "./types";
 
 export let initialStateAuth = {
     isLoad: false,

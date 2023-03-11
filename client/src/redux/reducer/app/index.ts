@@ -1,4 +1,5 @@
-import {ActionTypeApp, appEnum, InitialStateType} from "./actions";
+import {ActionTypeApp, InitialStateType} from "./actions";
+import {appEnum} from "./types";
 
 export let initialStateApp = {
     initialized: false as boolean,

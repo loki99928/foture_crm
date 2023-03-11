@@ -10,8 +10,9 @@ import {
     workerUserRegister
 } from "./worker";
 import {authApi} from "../../../api/authApi";
-import {actionsAuth, authEnum} from "../../reducer/auth/actions";
+import {actionsAuth} from "../../reducer/auth/actions";
 import {userApi} from "../../../api/userApi";
+import {authEnum} from "../../reducer/auth/types";
 
 describe('Sagas auth', () => {
 

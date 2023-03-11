@@ -1,6 +1,6 @@
 import {all, takeEvery} from "redux-saga/effects";
-import {appEnum} from "../../reducer/app/actions";
 import {workerInitialized} from "./worker";
+import {appEnum} from "../../reducer/app/types";
 
 /**
  * authorization user

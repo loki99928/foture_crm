@@ -1,7 +1,8 @@
 import {testSaga} from 'redux-saga-test-plan';
-import {actionsApp, appEnum} from "../../reducer/app/actions";
+import {actionsApp} from "../../reducer/app/actions";
 import {workerInitialized} from "./worker";
 import {workerUserAuthorizationCheck} from "../auth/worker";
+import {appEnum} from "../../reducer/app/types";
 
 describe('Sagas app', () => {
 

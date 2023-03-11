@@ -1,10 +1,7 @@
 import {InferActionTypes} from "../../store";
 import {initialStateApp} from "./index";
+import {appEnum} from "./types";
 
-export enum appEnum {
-    SET_INITIALIZED_REQUEST = 'CRM/APP/SET_INITIALIZED_REQUEST',
-    SET_INITIALIZED_SUCCESS = 'CRM/APP/SET_INITIALIZED_SUCCESS'
-}
 
 export const actionsApp = {
     initializedRequest: () => ({type: appEnum.SET_INITIALIZED_REQUEST} as const),

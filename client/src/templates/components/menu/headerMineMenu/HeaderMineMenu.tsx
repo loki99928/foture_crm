@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import s from "./HeaderMineMenu.module.scss";
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 import {getUser} from "../../../../redux/reducer/auth/selectors";
-import {TUser} from "../../../../redux/reducer/auth";
+import {TUser} from "../../../../redux/reducer/auth/types";
 
 export const HeaderMineMenu = () => {
     const dispatch = useDispatch()
