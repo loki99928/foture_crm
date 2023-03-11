@@ -1,15 +1,13 @@
 import React from "react";
-import {compose} from "redux";
+import {useNavigate} from "react-router";
+import {useSelector} from "react-redux";
 
 import s from "../../../../components/forms/Form.module.scss";
 import Forget from "../../../../components/forms/ForgetForm/Forget";
-import {withAuthRedirect} from "../../../../../hoc/AuthRedirect";
-import {useNavigate} from "react-router";
-import {useSelector} from "react-redux";
 import {getMessage, getStatus} from "../../../../../redux/reducer/auth/selectors";
 import {ResultStatusCodeEnum} from "../../../../../types/ApiUsersTypes";
 
-const ForgetPasswordPage = () => {
+export const ForgetPasswordPage = () => {
 
     const navigate = useNavigate()
     const message = useSelector(getMessage)
@@ -27,7 +25,3 @@ const ForgetPasswordPage = () => {
         </main>
     )
 }
-
-export default compose(
-    withAuthRedirect,
-)(ForgetPasswordPage)

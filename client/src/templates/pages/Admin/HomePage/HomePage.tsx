@@ -1,11 +1,8 @@
 import React from "react";
-import {compose} from "redux";
-
-import {withNotAuthRedirect} from "../../../../hoc/AuthRedirect";
 import {Sidebar} from "../../../components/sidebar/default/Sidebar";
 import {Header} from "../../../components/header/default/Header";
 
-const HomePage = () => {
+export const HomePage = () => {
     return (
         <React.Fragment>
             <Header/>
@@ -18,7 +15,3 @@ const HomePage = () => {
         </React.Fragment>
     )
 }
-
-export default compose<React.ComponentType>(
-    withNotAuthRedirect,
-)(HomePage)

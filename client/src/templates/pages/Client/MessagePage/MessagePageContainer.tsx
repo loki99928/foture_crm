@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import Message from "../../../components/main/Message/Message";
 import {getMessage} from "../../../../redux/reducer/auth/selectors";
 
-let MessagePageContainer: React.FC = () => {
+export const MessagePageContainer: React.FC = () => {
 
     const navigate = useNavigate()
     const message = useSelector(getMessage);
@@ -21,5 +21,3 @@ let MessagePageContainer: React.FC = () => {
         </main>
     )
 }
-
-export default MessagePageContainer

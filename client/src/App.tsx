@@ -4,7 +4,7 @@ import {Provider, useDispatch, useSelector} from "react-redux";
 
 import store from "./redux/store";
 
-import {Routers} from "./urlrewrite";
+import {privatesRouters, publicRouters, Routers} from "./urlrewrite";
 import {Preloader} from "./templates/components/preloader/default/Preloader";
 import {actionsApp} from "./redux/reducer/app/actions";
 import {getInitialized} from "./redux/reducer/app/selectors";
@@ -19,24 +19,26 @@ const MineApp: React.FC = () => {
         dispatch(actionsApp.initializedRequest())
     }, [statusAuth])
 
-    if (!isInitialized){
+    if (!isInitialized) {
         return (
             <Preloader/>
         );
     }
+
+    const routers = statusAuth ?  privatesRouters : publicRouters
     return (
-        <Routers/>
+        <Routers routers={routers}/>
     );
 
 }
 
-const App = () => {
+const App: React.FC = () => {
     return (
-        <BrowserRouter>
-            <Provider store={store}>
+        <Provider store={store}>
+            <BrowserRouter>
                 <MineApp/>
-            </Provider>
-        </BrowserRouter>
+            </BrowserRouter>
+        </Provider>
     )
 }
 export default App

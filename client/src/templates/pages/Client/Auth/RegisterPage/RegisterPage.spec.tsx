@@ -5,7 +5,7 @@ import {Router} from "react-router";
 import {Provider} from "react-redux";
 
 import store from "../../../../../redux/store";
-import RegisterPage from "./RegisterPage";
+import {RegisterPage} from "./RegisterPage";
 
 
 describe('auth page', () => {

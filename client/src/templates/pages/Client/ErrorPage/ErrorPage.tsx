@@ -15,7 +15,7 @@ export const ErrorPage = () => {
                     <h2>404 - Page not found</h2>
                     <p>The page you are looking for might have been removed had its name changed or is temporarily
                         unavailable.</p>
-                    <NavLink to="/">home page</NavLink>
+                    <NavLink to="/crm/">home page</NavLink>
                 </div>
             </div>
         </main>

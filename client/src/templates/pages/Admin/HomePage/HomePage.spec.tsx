@@ -4,7 +4,7 @@ import {render} from "@testing-library/react";
 import {Router} from "react-router";
 import {Provider} from "react-redux";
 
-import HomePage from "./HomePage";
+import {HomePage} from "./HomePage";
 import store from "../../../../redux/store";
 
 describe('auth page', () => {

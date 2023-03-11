@@ -20,8 +20,6 @@ import {UserRO} from "../user/dto/user.ro";
 @Injectable()
 export class AuthService {
 
-    private readonly logger = new MyLogger(AuthService.name);
-
     // number of password recovery attempts
     private attempts
     // max number of password recovery attempts
@@ -117,7 +115,7 @@ export class AuthService {
      * @return Promise<ResponseUser>
      */
     async authorize(data: AuthorizeDTO): Promise<UserRO> {
-
+        // await delay(10000)
         try {
             let currentUser = await this.UserRepository.findOne(
                 {

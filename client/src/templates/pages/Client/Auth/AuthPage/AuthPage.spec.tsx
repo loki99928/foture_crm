@@ -4,7 +4,7 @@ import {render} from "@testing-library/react";
 import {Router} from "react-router";
 import {Provider} from "react-redux";
 
-import AuthPage from "./AuthPage";
+import {AuthPage} from "./AuthPage";
 import store from "../../../../../redux/store";
 
 describe('auth page', () => {

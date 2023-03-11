@@ -5,7 +5,7 @@ import {Router} from "react-router";
 import {Provider} from "react-redux";
 
 import store from "../../../../../redux/store";
-import ForgetPasswordPage from "./ForgetPasswordPage";
+import {ForgetPasswordPage} from "./ForgetPasswordPage";
 
 describe('auth page', () => {
     it('render', function () {
