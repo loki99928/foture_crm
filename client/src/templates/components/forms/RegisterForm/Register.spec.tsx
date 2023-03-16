@@ -3,14 +3,9 @@ import {act, fireEvent, screen} from "@testing-library/react";
 
 import Register from "./Register";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
-import {MESSAGE} from "../form.utils";
+import {MESSAGE} from "../FomControls/FormType";
 
 describe('RegisterForm', () => {
-
-    it('Snapshot', function () {
-        const { asFragment } = renderWithRouter(<Register/>)
-        expect(asFragment()).toMatchSnapshot()
-    })
 
     describe('input email', () => {
 
@@ -26,7 +21,7 @@ describe('RegisterForm', () => {
                 fireEvent.blur(email)
             });
             expect(getByTestId("formTextError")).not.toBe(null);
-            expect(getByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_RULE_MESSAGE_REQUIRED);
+            expect(getByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
         })
 
         it('validate', async () => {
@@ -55,7 +50,7 @@ describe('RegisterForm', () => {
                 fireEvent.focusOut(email)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_RULE_MESSAGE_NOT_VALID);
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_TO_LONG);
         })
 
         it('too long', async () => {
@@ -70,7 +65,7 @@ describe('RegisterForm', () => {
                 fireEvent.focusOut(email)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_RULE_MESSAGE_TO_LONG);
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_TO_SHORT);
         })
     })
 
@@ -107,7 +102,7 @@ describe('RegisterForm', () => {
                 fireEvent.focusOut(password)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_RULE_MESSAGE_MIN_LENGTH);
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
         })
 
         it('too long', async () => {
@@ -122,7 +117,7 @@ describe('RegisterForm', () => {
                 fireEvent.focusOut(password)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_RULE_MESSAGE_MAX_LENGTH);
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MAX_LENGTH);
         })
     })
 

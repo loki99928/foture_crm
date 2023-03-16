@@ -70,7 +70,7 @@ export const privatesRouters: IRoute[] = [
     {
         id: 'ERROR',
         path: '*',
-        element: <ErrorPage/>
+        element: <Navigate to="/crm" replace/>
     },
 ]
 

@@ -4,6 +4,7 @@ import {
 } from "./actions";
 import {ResultStatusCodeEnum} from "../../../types/ApiUsersTypes";
 import {authEnum, TInitialStateAuth} from "./types";
+import {isAuth} from "./selectors";
 
 export let initialStateAuth = {
     isLoad: false,
@@ -34,18 +35,21 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.REGISTER_USER_REQUEST:
             return {
                 ...state,
+                isLoad: true,
                 status: undefined,
                 message: undefined,
             }
         case authEnum.REGISTER_USER_SUCCESS:
             return {
                 ...state,
+                isLoad: false,
                 status: ResultStatusCodeEnum.Success,
                 message: action.payload.message,
             }
         case authEnum.REGISTER_USER_FAIL:
             return {
                 ...state,
+                isLoad: false,
                 status: ResultStatusCodeEnum.Error,
                 message: action.payload.message,
             }
@@ -54,6 +58,8 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.AUTH_USER_REQUEST:
             return {
                 ...state,
+                isLoad: true,
+                isAuth: false,
                 status: undefined,
                 message: undefined,
                 user: action.payload.user
@@ -61,6 +67,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.AUTH_USER_SUCCESS:
             return {
                 ...state,
+                isLoad: false,
                 isAuth: true,
                 status: undefined,
                 message: undefined,
@@ -69,6 +76,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.AUTH_USER_FAIL:
             return {
                 ...state,
+                isLoad: false,
                 isAuth: false,
                 status: undefined,
                 message: action.payload.message,
@@ -79,6 +87,8 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.CHECK_AUTH_USER_REQUEST:
             return {
                 ...state,
+                isLoad: true,
+                isAuth: false,
                 status: undefined,
                 message: undefined,
                 user: undefined
@@ -86,6 +96,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.CHECK_AUTH_USER_SUCCESS:
             return {
                 ...state,
+                isLoad: false,
                 isAuth: true,
                 message: undefined,
                 status: undefined,
@@ -94,6 +105,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.CHECK_AUTH_USER_FAIL:
             return {
                 ...state,
+                isLoad: false,
                 isAuth: false,
                 status: undefined,
                 message: undefined,
@@ -104,6 +116,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.CONFIRM_USER_REQUEST:
             return {
                 ...state,
+                isLoad: true,
                 message: undefined,
                 status: undefined,
                 hashUser: action.payload.hashUser,
@@ -111,6 +124,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.CONFIRM_USER_SUCCESS:
             return {
                 ...state,
+                isLoad: false,
                 message: action.payload.message,
                 status: ResultStatusCodeEnum.Success,
                 hashUser: undefined
@@ -118,6 +132,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.CONFIRM_USER_FAIL:
             return {
                 ...state,
+                isLoad: false,
                 message: action.payload.message,
                 status: ResultStatusCodeEnum.Error,
                 hashUser: undefined
@@ -127,12 +142,14 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.FORGET_USER_REQUEST:
             return {
                 ...state,
+                isLoad: true,
                 message: undefined,
                 user: action.payload.user
             }
         case authEnum.FORGET_USER_SUCCESS:
             return {
                 ...state,
+                isLoad: false,
                 status: ResultStatusCodeEnum.Success,
                 message: action.payload.message,
                 user: undefined
@@ -140,6 +157,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.FORGET_USER_FAIL:
             return {
                 ...state,
+                isLoad: false,
                 status: ResultStatusCodeEnum.Error,
                 message: action.payload.message,
                 user: undefined
@@ -149,6 +167,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.CHECK_TEMPORARY_TOKEN_REQUEST:
             return {
                 ...state,
+                isLoad: true,
                 message: undefined,
                 status: undefined,
                 hashUser: action.payload.hashUser,
@@ -156,12 +175,14 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.CHECK_TEMPORARY_TOKEN_SUCCESS:
             return {
                 ...state,
+                isLoad: false,
                 message: undefined,
                 status: ResultStatusCodeEnum.Success
             }
         case authEnum.CHECK_TEMPORARY_TOKEN_FAIL:
             return {
                 ...state,
+                isLoad: false,
                 message: action.payload.message,
                 status: ResultStatusCodeEnum.Error,
                 hashUser: undefined
@@ -171,6 +192,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.CREATE_NEW_PASSWORD_REQUEST:
             return {
                 ...state,
+                isLoad: true,
                 status: undefined,
                 message: undefined,
                 hashUser: action.payload.hashUser,
@@ -178,6 +200,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.CREATE_NEW_PASSWORD_SUCCESS:
             return {
                 ...state,
+                isLoad: false,
                 status: ResultStatusCodeEnum.Success,
                 message: action.payload.message,
                 hashUser: undefined,
@@ -185,6 +208,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
         case authEnum.CREATE_NEW_PASSWORD_FAIL:
             return {
                 ...state,
+                isLoad: false,
                 status: ResultStatusCodeEnum.Error,
                 message: action.payload.message,
                 hashUser: undefined,

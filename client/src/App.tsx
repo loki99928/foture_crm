@@ -17,6 +17,7 @@ const MineApp: React.FC = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(actionsApp.initializedRequest())
+    console.log(statusAuth)
     }, [statusAuth])
 
     if (!isInitialized) {
@@ -24,6 +25,7 @@ const MineApp: React.FC = () => {
             <Preloader/>
         );
     }
+
 
     const routers = statusAuth ?  privatesRouters : publicRouters
     return (

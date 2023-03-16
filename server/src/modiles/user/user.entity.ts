@@ -114,7 +114,7 @@ export class UserEntity extends BaseEntity {
      * Half-day password change request time
      */
     @Column({
-        type: 'date',
+        type: 'timestamp',
         default: null
     })
     @ApiProperty()

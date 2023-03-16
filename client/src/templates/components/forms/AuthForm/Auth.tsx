@@ -1,56 +1,53 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
-import {useFormik} from "formik";
 import cn from "classnames"
+import {SubmitHandler, useForm} from "react-hook-form";
 import * as Yup from "yup";
-import {useDispatch} from "react-redux";
 
-import s from "../Form.module.scss"
+import s from "../FomControls/Form.module.scss"
 import bannerForm from "../../../assets/images/bg-head-form.jpg"
-import {FormikControlBtn, FormikControlFields} from "../formFields/FormikControl";
-import {IApiUsersRegisterData} from "../../../../types/ApiUsersTypes";
+import {fieldsForm, MESSAGE, RULE} from "../FomControls/FormType";
+import Input from "../FomControls/Input";
+import {Button} from "../FomControls/Button";
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
-import {ErrorResponse} from "../formFields/error";
-import {MESSAGE, REGEX} from "../form.utils";
+import {TUser} from "../../../../redux/reducer/auth/types";
+import {validate} from "../FomControls/Validate";
+import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
+import {FieldError} from "../FomControls/FeidError";
+import {yupResolver} from "@hookform/resolvers/yup";
+
 
 const SignupSchema = Yup.object().shape({
-    email: Yup
-        .string()
-        .max(REGEX.EMAIL_MAX_LENGTH, MESSAGE.EMAIL_RULE_MESSAGE_TO_LONG)
-        .email(MESSAGE.EMAIL_RULE_MESSAGE_NOT_VALID)
-        .required(MESSAGE.EMAIL_RULE_MESSAGE_REQUIRED)
-    ,
-    password: Yup
-        .string()
-        .min(REGEX.PASSWORD_MIN_LENGTH, MESSAGE.PASSWORD_RULE_MESSAGE_MIN_LENGTH)
-        .max(REGEX.PASSWORD_MAX_LENGTH, MESSAGE.PASSWORD_RULE_MESSAGE_MAX_LENGTH)
-        .matches( REGEX.PASSWORD_LOWERCASE, MESSAGE.PASSWORD_RULE_MESSAGE_LOWERCASE )
-        .matches( REGEX.PASSWORD_UPPERCASE, MESSAGE.PASSWORD_RULE_MESSAGE_UPPERCASE )
-        .matches( REGEX.PASSWORD_NUMBER, MESSAGE.PASSWORD_RULE_MESSAGE_NUMBER )
-        .matches( REGEX.PASSWORD_SPECIAL_CASE, MESSAGE.PASSWORD_RULE_MESSAGE_SPECIAL_CASE)
-        .required(MESSAGE.PASSWORD_RULE_MESSAGE_REQUIRED)
+    email: validate.email,
+    password: validate.password
 });
 
 const Auth: React.FC = () => {
-    // const dispatch = useDispatch()
-    //
-    // useEffect(() => {
-    //     dispatch(actionsAuth.clearForm())
-    // }, [])
 
-    const formik = useFormik({
-        // initialValues: {email: '', password: '', remember: false, mainError: null},
-        initialValues: {email: 'loki99928@yandex.ru', password: '123Qw@', mainError: null},
-        onSubmit: async (values: IApiUsersRegisterData) => {
-            formik.setSubmitting(true);
-            // dispatch(actionsAuth.authUserRequest(values))
+    useEffect(() => {
+        dispatch(actionsAuth.clearForm())
+    }, [])
+
+    const {handleSubmit, formState: {errors, isValid}, ...handlers} = useForm<fieldsForm>({
+        defaultValues: {
+            email: 'loki99928@yandex.ru',
+            password: '123Qw@',
         },
-        validationSchema: SignupSchema,
-        validateOnBlur: true,
-        validateOnChange: true
+        mode: "onChange",
+        resolver: yupResolver(SignupSchema)
     });
 
-    console.log(formik.isSubmitting)
+    const dispatch = useDispatch()
+    const message = useSelector(getMessage)
+    const isLoad = useSelector(getIsLoad)
+
+    const [isDisabled, setDisabled] = useState(false)
+
+    const onSubmit: SubmitHandler<fieldsForm> = (data: TUser) => {
+        setDisabled(true)
+        dispatch(actionsAuth.authUserRequest(data))
+    };
 
     return (
         <div className={s.blockForm}>
@@ -59,29 +56,19 @@ const Auth: React.FC = () => {
             </div>
             <div className={s.containerFields}>
                 <h2 className={s.formTitle}>Authorize Info</h2>
-                <form onSubmit={formik.handleSubmit}>
-                    <FormikControlFields
-                        formik={formik}
-                        className={cn(s.formField)}
-                        type="text"
-                        label="Your email"
-                        name="email"
-                        data-testid="input_email"
-                    />
-                    <FormikControlFields
-                        formik={formik}
-                        className={cn(s.formField)}
-                        type="password"
-                        label="Your password"
-                        name="password"
-                        data-testid="input_password"
-                    />
-                    <ErrorResponse/>
-                    <FormikControlBtn
-                        label="Send"
-                        type="submit"
-                        disabled={formik.isSubmitting || !formik.isValid}
-                    />
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Input errors={errors}
+                           field='email'
+                           handlers={handlers}
+                           type='text'
+                           label='Your email'/>
+                    <Input errors={errors}
+                           field='password'
+                           handlers={handlers}
+                           type='password'
+                           label='Your password'/>
+                    <FieldError message={message}/>
+                    <Button disabled={isLoad || !isValid}/>
                 </form>
                 <div className={cn(s.formFooter, s.footer__form)}>
                     <NavLink to="/registration/">registration</NavLink>
@@ -89,7 +76,6 @@ const Auth: React.FC = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 }
-
 export default Auth

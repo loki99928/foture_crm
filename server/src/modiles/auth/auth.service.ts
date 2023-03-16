@@ -114,8 +114,6 @@ export class AuthService {
      * @return Promise<ResponseUser>
      */
     async authorize(data: AuthorizeDTO): Promise<UserRO> {
-        // await delay(2000)
-        console.log('authorize')
         try {
             let currentUser = await this.UserRepository.findOne(
                 {
@@ -153,13 +151,16 @@ export class AuthService {
         try {
             let currentUser = await this.UserRepository.findOneBy({email: data.email})
 
-            if (!currentUser) this.sendErrorCode('User is not find')
+            if (!currentUser) {
+                this.sendErrorCode('User is not find')
+            }
 
             let lastModifiedTime = currentUser.lastModifiedTime ?? new Date
 
             let timeHasGone = (Date.now() - lastModifiedTime.getTime()) / 1000 / 60
 
             this.attempts = currentUser.attemptsNumber + 1
+
 
             if (currentUser.attemptsNumber >= this.maxAttempts && Math.ceil(timeHasGone) <= this.maxTimeHasGone) { // если количество попыток запросов на восстановление пароля превысило мак допустимое за промежуток времени lastModifiedTime
                 this.sendErrorCode(`The number of password recovery attempts has been exceeded. try again in ${this.maxTimeHasGone - Math.ceil(timeHasGone)} minutes`)
@@ -195,6 +196,7 @@ export class AuthService {
      * @return Promise<IResponse>
      */
     async changeTokenNewPassword(hashUser: string): Promise<MessageRO> {
+        console.log(hashUser)
         try {
             const user = await this.UserRepository.findOneBy({hashUser, confirm: true})
             if (!user) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу
@@ -218,8 +220,6 @@ export class AuthService {
         try {
             let arrUser = await this.UserRepository.findOneBy({hashUser: data.hashUser, confirm: true})
             if (!arrUser) this.sendErrorCode('Token is not valid') // если не нашли пользователя по хешу
-
-            // todo-dv нужно разобраться как обновлять данные
             const user = new UserEntity()
             let hasPas = await user.hashPassword(data.password)
             await this.UserRepository.update(arrUser.id, {

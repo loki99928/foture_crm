@@ -6,7 +6,14 @@ import {setCookieJWT} from "../../../helpers/Tokens";
 
 import Cookies from "js-cookie";
 import {userApi} from "../../../api/userApi";
-import {TRegisterUser} from "./types";
+import {
+    TAuthorizationUser,
+    TConfirmUser,
+    TCreateNewPassword,
+    TForgetUser,
+    TRegisterUser,
+    TTemporaryToken
+} from "./types";
 
 
 /**
@@ -16,9 +23,10 @@ export function* workerUserRegister({payload}: TRegisterUser): Generator<StrictE
     try {
         const result = yield call(authApi.register, payload.user)
         console.log(result)
-        yield put(actionsAuth.registerUserSuccess({message : result.message.shift()}))
+        yield put(actionsAuth.registerUserSuccess({message: result.message.shift()}))
     } catch (err: any) {
-        yield put(actionsAuth.registerUserFail({message : err.message}))
+        const message = err.message || 'Internal Server Error'
+        yield put(actionsAuth.registerUserFail({message}))
     }
 }
 
@@ -27,12 +35,6 @@ export function* workerUserRegister({payload}: TRegisterUser): Generator<StrictE
  *
  * @param payload
  */
-type TAuthorizationUser = {
-    type: string,
-    payload: {
-        user: IApiUserLoginData
-    }
-}
 export function* workerUserAuthorization({payload}: TAuthorizationUser): Generator<StrictEffect, void, IApiUserLoginResponse> {
     try {
         const user = payload.user as IApiUserLoginData
@@ -48,7 +50,8 @@ export function* workerUserAuthorization({payload}: TAuthorizationUser): Generat
             new Error('token is not validation')
         }
     } catch (err: any) {
-        yield put(actionsAuth.authUserFail({message : err.message}))
+        const message = err.message || 'Internal Server Error'
+        yield put(actionsAuth.authUserFail({message}))
     }
 }
 
@@ -73,38 +76,28 @@ export function* workerUserAuthorizationCheck(): Generator<StrictEffect, void, a
 /**
  * подтверждение почты пользователя
  */
-type TConfirmUser = {
-    type: string,
-    payload: {
-        hashUser: string
-    }
-}
 export function* workerUserConfirmEmail(action: TConfirmUser): Generator<StrictEffect, void, any> {
     const hashUser = action.payload.hashUser
     try {
         const result = yield call(authApi.confirmUser, hashUser)
-        yield put(actionsAuth.confirmUserSuccess({message : result.message.shift()}))
-    } catch (err:any) {
-        yield put(actionsAuth.confirmUserFail({message : err.message}))
+        yield put(actionsAuth.confirmUserSuccess({message: result.message.shift()}))
+    } catch (err: any) {
+        const message = err.message || 'Internal Server Error'
+        yield put(actionsAuth.confirmUserFail({message}))
     }
 }
 
 /**
  * запрос на восстановление пароля
  */
-type TForgetUser = {
-    type: string,
-    payload: {
-        user: IApiUsersForgetData
-    }
-}
 export function* workerUserForget(action: TForgetUser): Generator<StrictEffect, void, any> {
     const email = action.payload.user.email
     try {
         const result = yield call(authApi.forget, {email})
-        yield put(actionsAuth.forgetUserSuccess({message : result.message.shift()}))
+        yield put(actionsAuth.forgetUserSuccess({message: result.message.shift()}))
     } catch (err: any) {
-        yield put(actionsAuth.forgetUserFail({message : err.message}))
+        const message = err.message || 'Internal Server Error'
+        yield put(actionsAuth.forgetUserFail({message}))
     }
 }
 
@@ -112,39 +105,26 @@ export function* workerUserForget(action: TForgetUser): Generator<StrictEffect, 
 /**
  * проверка временного токена из ссылки на восстановление пароля
  */
-type TTemporaryToken = {
-    type: string,
-    payload: {
-        hashUser: string
-    }
-}
 export function* workerCheckTemporaryToken(action: TTemporaryToken): Generator<StrictEffect, void, any> {
     const hashUser = action.payload.hashUser
     try {
         const result = yield call(authApi.changeTokenNewPassword, hashUser)
-        yield put(actionsAuth.checkTemporaryTokenSuccess({message : result.message.shift()}))
+        yield put(actionsAuth.checkTemporaryTokenSuccess({message: result.message.shift()}))
     } catch (err: any) {
-        yield put(actionsAuth.checkTemporaryTokenFail({message : err.message}))
+        yield put(actionsAuth.checkTemporaryTokenFail({message: err.message}))
     }
 }
 
 /**
  * сохранение нового пароля
  */
-type TCreateNewPassword = {
-    type: string,
-    payload: {
-        password: string
-        double_password: string
-        hashUser: string
-    }
-}
-export function* workerCreateNewPassword(action: TCreateNewPassword): Generator<StrictEffect, void, any>{
+export function* workerCreateNewPassword(action: TCreateNewPassword): Generator<StrictEffect, void, any> {
     try {
         const result = yield call(authApi.createNewPasswordApi, action.payload)
-        yield put(actionsAuth.createNewPasswordSuccess({message : result.message.shift()}))
+        yield put(actionsAuth.createNewPasswordSuccess({message: result.message.shift()}))
     } catch (err: any) {
-        yield put(actionsAuth.createNewPasswordFail({message : err.message}))
+        const message = err.message || 'Internal Server Error'
+        yield put(actionsAuth.createNewPasswordFail({message}))
     }
 }
 

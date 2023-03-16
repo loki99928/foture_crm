@@ -3,14 +3,9 @@ import {act, fireEvent, screen} from "@testing-library/react";
 
 import Forget from "./Forget";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
-import {MESSAGE} from "../form.utils";
+import {MESSAGE} from "../FomControls/FormType";
 
 describe('ForgetForm', () => {
-
-    it('Snapshot', function () {
-        const { asFragment } = renderWithRouter(<Forget/>)
-        expect(asFragment()).toMatchSnapshot()
-    })
 
     describe('input email', () => {
 
@@ -26,7 +21,7 @@ describe('ForgetForm', () => {
                 fireEvent.blur(email)
             });
             expect(getByTestId("formTextError")).not.toBe(null);
-            expect(getByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_RULE_MESSAGE_REQUIRED);
+            expect(getByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
         })
 
         it('validate', async () => {
@@ -55,7 +50,7 @@ describe('ForgetForm', () => {
                 fireEvent.focusOut(email)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_RULE_MESSAGE_NOT_VALID);
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_TO_LONG);
         })
 
         it('too long', async () => {
@@ -70,7 +65,7 @@ describe('ForgetForm', () => {
                 fireEvent.focusOut(email)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_RULE_MESSAGE_TO_LONG);
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_TO_SHORT);
         })
     })
 

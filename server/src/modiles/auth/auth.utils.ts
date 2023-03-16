@@ -1,9 +1,5 @@
 const PASSWORD_RULE = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#\$%\^&\*])/
 
-export const REGEX = {
-    PASSWORD_RULE
-}
-
 const PASSWORD_RULE_MESSAGE_REGEX = 'Password should have 1 lowercase, uppercase a number and one special case character(@, #, $, %, ^ ,&, *)'
 const PASSWORD_RULE_MESSAGE_REQUIRED = 'Password is required'
 const HASH_RULE_MESSAGE_REQUIRED = 'Token is required'
@@ -15,6 +11,9 @@ const EMAIL_RULE_MESSAGE_INCORRECT = 'Incorrect email'
 
 const REMEMBER_RULE_MESSAGE_REQUIRED = 'Data is not validate'
 
+export const REGEX = {
+    PASSWORD_RULE
+}
 
 export const MESSAGE = {
     PASSWORD_RULE_MESSAGE_REGEX,

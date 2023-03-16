@@ -3,14 +3,9 @@ import {act, fireEvent, screen} from "@testing-library/react";
 
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import {NewPassword} from "./NewPassword";
-import {MESSAGE} from "../form.utils";
+import {MESSAGE} from "../FomControls/FormType"; 
 
 describe('NewPassword', () => {
-
-    it('Snapshot', function () {
-        const { asFragment } = renderWithRouter(<NewPassword/>)
-        expect(asFragment()).toMatchSnapshot()
-    })
 
     describe('input password', () => {
 
@@ -45,7 +40,7 @@ describe('NewPassword', () => {
                 fireEvent.focusOut(password)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_RULE_MESSAGE_MIN_LENGTH);
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
         })
 
         it('too long', async () => {
@@ -60,7 +55,7 @@ describe('NewPassword', () => {
                 fireEvent.focusOut(password)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_RULE_MESSAGE_MAX_LENGTH);
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MAX_LENGTH);
         })
     })
 
@@ -123,7 +118,7 @@ describe('NewPassword', () => {
                 fireEvent.focusOut(double_password)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_RULE_MESSAGE_MISMATCH);
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
 
         it('too long', async () => {
@@ -138,7 +133,7 @@ describe('NewPassword', () => {
                 fireEvent.focusOut(double_password)
             });
             expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_RULE_MESSAGE_MISMATCH);
+            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
     })
 

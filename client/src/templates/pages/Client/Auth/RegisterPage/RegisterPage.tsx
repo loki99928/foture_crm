@@ -2,7 +2,7 @@ import React from "react";
 import {useNavigate} from "react-router";
 import {useSelector} from "react-redux";
 
-import s from "../../../../components/forms/Form.module.scss";
+import s from "../../../../components/forms/FomControls/Form.module.scss";
 import Register from "../../../../components/forms/RegisterForm/Register";
 import {getMessage, getStatus} from "../../../../../redux/reducer/auth/selectors";
 import {ResultStatusCodeEnum} from "../../../../../types/ApiUsersTypes";
