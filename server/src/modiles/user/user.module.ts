@@ -23,7 +23,8 @@ import {UserEvent} from "./user.event";
             signOptions: {expiresIn: `${process.env.JWT_EXPIRES_IN}`},
         }),
         NestjsImgResizeModule
-    ]
+    ],
+    exports: [TypeOrmModule]
 })
 export class UserModule implements NestModule {
     configure(consumer: MiddlewareConsumer): any {
