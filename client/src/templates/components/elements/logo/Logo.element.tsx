@@ -1,8 +1,9 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-import s from "./Avatar.module.scss";
-import logo from "../../assets/images/logo_60.png";
 import cn from "classnames";
+
+import logo from "../../../assets/images/logo_60.png";
+import s from "./Logo.element.module.scss";
 
 export const Logo = () => {
     return (

@@ -3,7 +3,7 @@ import cn from "classnames"
 
 import s from "./Header.module.scss"
 import {HeaderMineMenu} from "../../menu/headerMineMenu/HeaderMineMenu";
-import {Logo} from "../../logo/Avatar";
+import {Logo} from "../../elements/logo/Logo.element";
 
 export const Header: React.FC = () => {
     return (
