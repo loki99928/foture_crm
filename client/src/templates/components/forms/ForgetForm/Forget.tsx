@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import cn from "classnames";
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -16,6 +16,7 @@ import {FieldError} from "../FomControls/FeidError";
 import {Button} from "../FomControls/Button";
 import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
 import {TUser} from "../../../../redux/reducer/auth/types";
+import {useClearForm} from "../../../../hooks/useClearForm";
 
 const SignupSchema = Yup.object().shape({
     email: validate.email
@@ -23,9 +24,7 @@ const SignupSchema = Yup.object().shape({
 
 const Forget: React.FC = () => {
 
-    useEffect(() => {
-        dispatch(actionsAuth.clearForm())
-    }, [])
+    useClearForm()
 
     const {handleSubmit, formState: {errors, isValid}, ...handlers} = useForm<fieldsForm>({
         mode: "onChange",

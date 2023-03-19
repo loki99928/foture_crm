@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 import cn from "classnames"
 import {SubmitHandler, useForm} from "react-hook-form";
 import * as Yup from "yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 
 import s from "../FomControls/Form.module.scss"
 import bannerForm from "../../../assets/images/bg-head-form.jpg"
-import {fieldsForm, MESSAGE, RULE} from "../FomControls/FormType";
+import {fieldsForm} from "../FomControls/FormType";
 import Input from "../FomControls/Input";
 import {Button} from "../FomControls/Button";
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
@@ -15,7 +16,7 @@ import {TUser} from "../../../../redux/reducer/auth/types";
 import {validate} from "../FomControls/Validate";
 import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
 import {FieldError} from "../FomControls/FeidError";
-import {yupResolver} from "@hookform/resolvers/yup";
+import {useClearForm} from "../../../../hooks/useClearForm";
 
 const SignupSchema = Yup.object().shape({
     email: validate.email,
@@ -24,9 +25,7 @@ const SignupSchema = Yup.object().shape({
 
 const Auth: React.FC = () => {
 
-    useEffect(() => {
-        dispatch(actionsAuth.clearForm())
-    }, [])
+    useClearForm()
 
     const {handleSubmit, formState: {errors, isValid}, ...handlers} = useForm<fieldsForm>({
         defaultValues: {
