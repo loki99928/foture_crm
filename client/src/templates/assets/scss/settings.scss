@@ -13,6 +13,9 @@ p, h1, h2, h3, h4{
   src: local('raleway'), url(../fonts/raleway.woff2) format('woff2');
 }
 
+$text-main-color: #333333;
+$bg-color: #726BB9;
+
 :global {
   .wrapper{
     @include wrapper()
@@ -20,4 +23,29 @@ p, h1, h2, h3, h4{
   .row{
     @include row-flex()
   }
+  .containerMenuSelect{
+    cursor: pointer;
+    &:hover > .menuSelect{
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+      transition: .3s;
+    }
+  }
+  .menuSelect{
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 200px;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.1);
+  }
+  .menuSvg{
+    width: 25px;
+    height: 25px;
+    fill: $bg-color
+  }
 }
+

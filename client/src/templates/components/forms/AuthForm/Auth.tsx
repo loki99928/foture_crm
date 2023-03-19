@@ -17,7 +17,6 @@ import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
 import {FieldError} from "../FomControls/FeidError";
 import {yupResolver} from "@hookform/resolvers/yup";
 
-
 const SignupSchema = Yup.object().shape({
     email: validate.email,
     password: validate.password
