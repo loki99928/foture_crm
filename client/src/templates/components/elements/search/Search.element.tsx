@@ -7,7 +7,7 @@ export const SearchElement = () => {
     return (
         <React.Fragment>
             <form className={cn(s.formSearch, s.search__form)} action="">
-                <input className={s.searchField} type="text" placeholder="Search"/>
+                <input className={s.searchField} type="text" placeholder="Search for results..."/>
                 <button type='submit' className={s.btnSearch}>
                     <svg viewBox="0 0 50 50" width="50px" height="50px">
                         <path
