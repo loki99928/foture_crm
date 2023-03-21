@@ -13,11 +13,10 @@ import {isAuth} from "./redux/reducer/auth/selectors";
 const MineApp: React.FC = () => {
     const isInitialized = useSelector(getInitialized)
     const statusAuth = useSelector(isAuth)
-
     const dispatch = useDispatch()
+
     useEffect(() => {
         dispatch(actionsApp.initializedRequest())
-    console.log(statusAuth)
     }, [statusAuth])
 
     if (!isInitialized) {
@@ -26,8 +25,7 @@ const MineApp: React.FC = () => {
         );
     }
 
-
-    const routers = statusAuth ?  privatesRouters : publicRouters
+    const routers = statusAuth ? privatesRouters : publicRouters
     return (
         <Routers routers={routers}/>
     );

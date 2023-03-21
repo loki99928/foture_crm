@@ -6,19 +6,19 @@ import s from './SearchForm.module.scss'
 import {fieldsSearchForm} from "../FomControls/FormType";
 
 export const SearchForm: React.FC = () => {
-    const {handleSubmit, register, formState: {errors}} = useForm<fieldsSearchForm>({
+    const {register, handleSubmit} = useForm<fieldsSearchForm>({
         mode: "onChange",
     });
 
-    const onSubmit: SubmitHandler<fieldsSearchForm> = (data: string) => {
+    const onSubmit: SubmitHandler<fieldsSearchForm> = (data: any) => {
         console.log(data);
     };
 
     return (
         <React.Fragment>
             <form className={cn(s.formSearch, s.search__form)} onSubmit={handleSubmit(onSubmit)}>
-                <input className={s.searchField} type="text" placeholder="Search for results..."/>
-                <input {register('search', {required: true})}
+                <input {...register('search', {required: true})}
+                       className={s.searchField}
                        autoComplete="on"
                        placeholder="Search for results..."
                        type="text"

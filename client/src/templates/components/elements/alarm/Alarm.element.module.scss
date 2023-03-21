@@ -1,16 +1,19 @@
-.menuSvg{
+.menuSvg {
     width: 25px;
     height: 25px;
     padding: 7px 0;
-    path{
+
+    path {
         fill: $bg-color;
     }
 }
-.menu__alarm{
+
+.menu__alarm {
     margin-left: 30px;
 }
-.alarm_active{
-    path{
+
+.alarm_active {
+    path {
         fill: red
     }
 }
