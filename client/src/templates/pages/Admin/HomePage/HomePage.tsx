@@ -5,12 +5,14 @@ import {Header} from "../../../components/header/default/Header";
 export const HomePage = () => {
     return (
         <React.Fragment>
-            <Header/>
-            <div className="content">
-                <Sidebar/>
-                <main>
-                    Home
-                </main>
+            <div className="wrapper container">
+                <Header/>
+                <div className="row">
+                    <Sidebar/>
+                    <main className="content">
+                        Home
+                    </main>
+                </div>
             </div>
         </React.Fragment>
     )

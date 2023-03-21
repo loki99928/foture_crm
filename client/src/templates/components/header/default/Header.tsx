@@ -7,13 +7,11 @@ import {Logo} from "../../elements/logo/Logo.element";
 
 export const Header: React.FC = () => {
     return (
-        <div className="wrapper">
-            <div className="row">
-                <header className={cn(s.header)}>
-                    <Logo/>
-                    <HeaderMineMenu/>
-                </header>
-            </div>
+        <div className="row">
+            <header className={cn(s.header)}>
+                <Logo/>
+                <HeaderMineMenu/>
+            </header>
         </div>
     )
 }

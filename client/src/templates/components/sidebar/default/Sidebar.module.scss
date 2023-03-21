@@ -1,6 +1,18 @@
-.sidebar{
-  min-height: 100%;
-  max-width: 300px;
-  width: 100%;
-  border: 1px solid #000;
+.sidebar {
+    position: relative;
+    min-height: 100%;
+    max-width: 320px;
+    width: 100%;
+    padding: 20px 30px;
+    box-sizing: border-box;
+
+    &:before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 10px;
+        height: 1px;
+        background: #F1F0F5;
+        content: '';
+    }
 }
