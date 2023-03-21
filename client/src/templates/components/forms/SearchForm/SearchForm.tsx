@@ -10,7 +10,7 @@ export const SearchForm: React.FC = () => {
         mode: "onChange",
     });
 
-    const onSubmit: SubmitHandler<fieldsSearchForm> = (data: any) => {
+    const onSubmit: SubmitHandler<fieldsSearchForm> = (data: { search: string }) => {
         console.log(data);
     };
 
