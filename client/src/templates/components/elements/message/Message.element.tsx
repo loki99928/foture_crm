@@ -2,7 +2,7 @@ import React from "react";
 import s from "./Message.element.module.scss";
 import cn from "classnames";
 
-export const MessageElement = () => {
+export const MessageElement: React.FC = () => {
     return (
         <React.Fragment>
             <div className="">

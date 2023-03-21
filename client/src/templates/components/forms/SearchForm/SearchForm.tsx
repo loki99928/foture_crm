@@ -1,13 +1,28 @@
 import React from 'react';
-
-import s from './Search.element.module.scss'
 import cn from "classnames";
+import {SubmitHandler, useForm} from "react-hook-form";
 
-export const SearchElement = () => {
+import s from './SearchForm.module.scss'
+import {fieldsSearchForm} from "../FomControls/FormType";
+
+export const SearchForm: React.FC = () => {
+    const {handleSubmit, register, formState: {errors}} = useForm<fieldsSearchForm>({
+        mode: "onChange",
+    });
+
+    const onSubmit: SubmitHandler<fieldsSearchForm> = (data: string) => {
+        console.log(data);
+    };
+
     return (
         <React.Fragment>
-            <form className={cn(s.formSearch, s.search__form)} action="">
+            <form className={cn(s.formSearch, s.search__form)} onSubmit={handleSubmit(onSubmit)}>
                 <input className={s.searchField} type="text" placeholder="Search for results..."/>
+                <input {register('search', {required: true})}
+                       autoComplete="on"
+                       placeholder="Search for results..."
+                       type="text"
+                />
                 <button type='submit' className={s.btnSearch}>
                     <svg viewBox="0 0 50 50" width="50px" height="50px">
                         <path

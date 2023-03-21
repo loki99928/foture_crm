@@ -33,6 +33,10 @@ export interface fieldsForm {
     password: string
 }
 
+export interface fieldsSearchForm {
+    search: string
+}
+
 export type FormikType = {
     setFieldError: (field: string, errorMsg: string) => void
     setSubmitting: (isSubmitting: boolean) => void
