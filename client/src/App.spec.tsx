@@ -1,12 +1,14 @@
 import React from 'react';
 import MineApp from './App';
-import {render} from "@testing-library/react";
+import {act, render} from "@testing-library/react";
 
 
 describe('App', () => {
 
-  it('render', () => {
-    render(<MineApp/>)
-  });
+    it('render', async () => {
+        await act(async () => {
+            render(<MineApp/>)
+        })
+    });
 
 })
