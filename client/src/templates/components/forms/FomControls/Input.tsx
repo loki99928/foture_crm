@@ -20,7 +20,7 @@ const Input: React.FC<any> = props => {
                    {...rest}
             />
             {error && (
-                <div className={cn(s.formTextError, s.form__error)} data-testid="formTextError">
+                <div className={cn(s.formTextError, s.form__error)} data-testid={`test_${field}`}>
                     <div className={cn(s.formTextError, s.formServer__error)}>
                         {error.message}
                     </div>

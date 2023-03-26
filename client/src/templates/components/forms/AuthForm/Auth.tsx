@@ -65,7 +65,7 @@ const Auth: React.FC = () => {
                            handlers={handlers}
                            type='password'
                            label='Your password'/>
-                    <FieldError message={message}/>
+                    {message && <FieldError message={message}/>}
                     <Button disabled={isLoad || !isValid}/>
                 </form>
                 <div className={cn(s.formFooter, s.footer__form)}>

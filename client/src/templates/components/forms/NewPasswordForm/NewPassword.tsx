@@ -60,7 +60,7 @@ export const NewPassword: React.FC = () => {
                            handlers={handlers}
                            type='password'
                            label='Password confirmation'/>
-                    <FieldError message={message}/>
+                    {message && <FieldError message={message}/>}
                     <Button disabled={isLoad || !isValid}/>
                 </form>
                 <div className={cn(s.formFooter, s.footer__form)}>

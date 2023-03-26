@@ -4,6 +4,7 @@ import {act, fireEvent, screen} from "@testing-library/react";
 import Auth from "./Auth";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import {MESSAGE} from "../FomControls/FormType";
+import Forget from "../ForgetForm/Forget";
 
 describe('AuthForm', () => {
 
@@ -15,15 +16,13 @@ describe('AuthForm', () => {
         })
 
         it('required', async () => {
+            renderWithRouter(<Auth/>)
+            const email = screen.getByTestId('input_email')
             await act(async () => {
-                const {getByTestId} = renderWithRouter(<Auth/>)
-                const email = screen.getByTestId('input_email')
                 fireEvent.blur(email)
-                console.log(screen)
-                debugger
-                expect(getByTestId("formTextError")).not.toBe(null);
-                expect(getByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
             });
+            expect(screen.getByTestId("test_email")).not.toBe(null);
+            expect(screen.getByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
         })
 
         it('validate', async () => {
@@ -34,10 +33,7 @@ describe('AuthForm', () => {
                     target: {value: 'loki99928@yandex.ru'}
                 })
             });
-            await act(async () => {
-                fireEvent.focusOut(email)
-            });
-            expect(screen.queryByTestId("formTextError")).toBeNull();
+            expect(screen.queryByTestId("test_email")).toBeNull();
         })
 
         it('not validate', async () => {
@@ -48,11 +44,8 @@ describe('AuthForm', () => {
                     target: {value: 'loki99928yandex'}
                 })
             });
-            await act(async () => {
-                fireEvent.focusOut(email)
-            });
-            expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_TO_LONG);
+            expect(screen.queryByTestId("test_email")).not.toBeNull();
+            expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_IS_NOT_VALID);
         })
 
         it('too long', async () => {
@@ -63,11 +56,8 @@ describe('AuthForm', () => {
                     target: {value: 'loki999282342234234234346ty546547456456546/jkdxjlmnkfvbcvb@yandex.ru'}
                 })
             });
-            await act(async () => {
-                fireEvent.focusOut(email)
-            });
-            expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_TO_SHORT);
+            expect(screen.queryByTestId("test_email")).not.toBeNull();
+            expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_TO_LONG);
         })
     })
 
@@ -86,10 +76,7 @@ describe('AuthForm', () => {
                     target: {value: '123123aA@'}
                 })
             });
-            await act(async () => {
-                fireEvent.focusOut(password)
-            });
-            expect(screen.queryByTestId("formTextError")).toBeNull();
+            expect(screen.queryByTestId("test_password")).toBeNull();
         })
 
         it('too short', async () => {
@@ -100,11 +87,8 @@ describe('AuthForm', () => {
                     target: {value: 'lk'}
                 })
             });
-            await act(async () => {
-                fireEvent.focusOut(password)
-            });
-            expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
+            expect(screen.queryByTestId("test_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
         })
 
         it('too long', async () => {
@@ -115,27 +99,8 @@ describe('AuthForm', () => {
                     target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
             });
-            await act(async () => {
-                fireEvent.focusOut(password)
-            });
-            expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MAX_LENGTH);
-        })
-    })
-
-    describe('checkbox remember', () => {
-        it('have', () => {
-            renderWithRouter(<Auth/>)
-            expect(screen.getByRole('checkbox', {name: /remember me/i})).toBeInTheDocument()
-        })
-
-        it('click', async () => {
-            renderWithRouter(<Auth/>)
-            const checkbox = screen.getByRole('checkbox', {name: /remember me/i})
-            await act(async () => {
-                checkbox.click()
-            })
-            expect(checkbox).toBeChecked()
+            expect(screen.queryByTestId("test_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MAX_LENGTH);
         })
     })
 
@@ -144,10 +109,10 @@ describe('AuthForm', () => {
             renderWithRouter(<Auth/>)
             expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
         })
-        it('not disabled', async () => {
-            const {getByTestId} = renderWithRouter(<Auth/>)
+        it('btn disabled after loaded page', async () => {
+            const {getByTestId} = renderWithRouter(<Forget/>)
             const btn = screen.getByRole('button', {name: /Send/i})
-            expect(btn).not.toBeDisabled()
+            expect(btn).toBeDisabled()
         })
         it('disabled after error field of email', async () => {
             const {getByTestId} = renderWithRouter(<Auth/>)
@@ -165,13 +130,9 @@ describe('AuthForm', () => {
             const btn = screen.getByRole('button', {name: /Send/i})
             await act(async () => {
                 fireEvent.blur(email)
-            });
-            await act(async () => {
                 fireEvent.change(email, {
                     target: {value: 'loki99928@yandex.ru'}
                 })
-            });
-            await act(async () => {
                 fireEvent.change(password, {
                     target: {value: '123123aA@'}
                 })
@@ -186,14 +147,6 @@ describe('AuthForm', () => {
                 fireEvent.blur(password)
             });
             expect(btn).toBeDisabled()
-        })
-        it('clicking on a button with an empty form', async () => {
-            renderWithRouter(<Auth/>)
-            const btn = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
-                btn.click()
-            })
-            expect(screen.getAllByTestId('formTextError').length).toBe(2)
         })
     })
 

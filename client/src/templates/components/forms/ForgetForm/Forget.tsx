@@ -56,7 +56,7 @@ const Forget: React.FC = () => {
                         handlers={handlers}
                         type='text'
                         label='Your email'/>
-                    <FieldError message={message}/>
+                    {message && <FieldError message={message}/>}
                     <Button disabled={isLoad || !isValid}/>
                 </form>
                 <div className={cn(s.formFooter, s.footer__form)}>

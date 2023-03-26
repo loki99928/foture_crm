@@ -3,195 +3,167 @@ import {act, fireEvent, screen} from "@testing-library/react";
 
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import {NewPassword} from "./NewPassword";
-import {MESSAGE} from "../FomControls/FormType"; 
+import {MESSAGE} from "../FomControls/FormType";
+import Forget from "../ForgetForm/Forget";
 
 describe('NewPassword', () => {
 
     describe('input password', () => {
 
-        it('have',  () => {
+        it('have', () => {
             renderWithRouter(<NewPassword/>)
             expect(screen.getByTestId('input_password')).toBeInTheDocument()
         })
 
-        it('validate',  async () => {
+        it('validate', async () => {
             renderWithRouter(<NewPassword/>)
             const password = screen.getByTestId('input_password')
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(password, {
-                    target: { value: '123123aA@' }
+                    target: {value: '123123aA@'}
                 })
             });
-            await act( async () => {
-                fireEvent.focusOut(password)
-            });
-            expect(screen.queryByTestId("formTextError")).toBeNull();
+            expect(screen.queryByTestId("test_password")).toBeNull();
         })
 
         it('too short', async () => {
             renderWithRouter(<NewPassword/>)
             const password = screen.getByTestId('input_password')
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(password, {
-                    target: { value: 'lk' }
+                    target: {value: 'lk'}
                 })
             });
-            await act( async () => {
-                fireEvent.focusOut(password)
-            });
-            expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
+            expect(screen.queryByTestId("test_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
         })
 
         it('too long', async () => {
             renderWithRouter(<NewPassword/>)
             const password = screen.getByTestId('input_password')
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(password, {
-                    target: { value: '1232133554756786788566345345345345456756878989008907890678' }
+                    target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
             });
-            await act( async () => {
-                fireEvent.focusOut(password)
-            });
-            expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MAX_LENGTH);
+            expect(screen.queryByTestId("test_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MAX_LENGTH);
         })
     })
 
     describe('input double password', () => {
 
-        it('have',  () => {
+        it('have', () => {
             renderWithRouter(<NewPassword/>)
             expect(screen.getByTestId('input_double_password')).toBeInTheDocument()
         })
 
-        it('validate',  async () => {
+        it('validate', async () => {
             renderWithRouter(<NewPassword/>)
             const password = screen.getByTestId('input_password')
             const double_password = screen.getByTestId('input_double_password')
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(password, {
-                    target: { value: '123123aA@' }
+                    target: {value: '123123aA@'}
                 })
             });
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(double_password, {
-                    target: { value: '123123aA@' }
+                    target: {value: '123123aA@'}
                 })
             });
-            await act( async () => {
-                fireEvent.focusOut(double_password)
-            });
-            expect(screen.queryByTestId("formTextError")).toBeNull();
+            expect(screen.queryByTestId("test_password")).toBeNull();
+            expect(screen.queryByTestId("test_double_password")).toBeNull();
         })
 
-        it('different passwords',  async () => {
+        it('different passwords', async () => {
             renderWithRouter(<NewPassword/>)
             const password = screen.getByTestId('input_password')
             const double_password = screen.getByTestId('input_double_password')
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(password, {
-                    target: { value: '123123aA@' }
+                    target: {value: '123123aA@'}
                 })
-            });
-            await act( async () => {
                 fireEvent.change(double_password, {
-                    target: { value: '123pass456345' }
+                    target: {value: '123pass456345'}
                 })
             });
-            await act( async () => {
-                fireEvent.focusOut(double_password)
-            });
-            expect(screen.queryByTestId("formTextError")).not.toBeNull();
+            expect(screen.queryByTestId("test_double_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_double_password")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
 
         it('too short', async () => {
             renderWithRouter(<NewPassword/>)
             const double_password = screen.getByTestId('input_double_password')
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(double_password, {
-                    target: { value: 'lk' }
+                    target: {value: 'lk'}
                 })
             });
-            await act( async () => {
-                fireEvent.focusOut(double_password)
-            });
-            expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
+            expect(screen.queryByTestId("test_double_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_double_password")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
 
         it('too long', async () => {
             renderWithRouter(<NewPassword/>)
             const double_password = screen.getByTestId('input_double_password')
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(double_password, {
-                    target: { value: '1232133554756786788566345345345345456756878989008907890678' }
+                    target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
             });
-            await act( async () => {
-                fireEvent.focusOut(double_password)
-            });
-            expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
+            expect(screen.queryByTestId("test_double_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_double_password")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
     })
 
     describe('btn Send', () => {
         it('have btn Send', () => {
             renderWithRouter(<NewPassword/>)
-            expect(screen.getByRole('button', { name: /Send/i} )).toBeInTheDocument()
+            expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
         })
-        it('not disabled', async () => {
-            const { getByTestId } = renderWithRouter(<NewPassword/>)
-            const btn = screen.getByRole('button', { name: /Send/i} )
-            expect(btn).not.toBeDisabled()
+        it('btn disabled after loaded page', async () => {
+            const {getByTestId} = renderWithRouter(<Forget/>)
+            const btn = screen.getByRole('button', {name: /Send/i})
+            expect(btn).toBeDisabled()
         })
         it('disabled after error field of password', async () => {
-            const { getByTestId } = renderWithRouter(<NewPassword/>)
+            const {getByTestId} = renderWithRouter(<NewPassword/>)
             const password = screen.getByTestId('input_password')
-            const btn = screen.getByRole('button', { name: /Send/i} )
-            await act( async () => {
+            const btn = screen.getByRole('button', {name: /Send/i})
+            await act(async () => {
                 fireEvent.blur(password)
             });
             expect(btn).toBeDisabled()
         })
         it('disabled after error field of double password', async () => {
-            const { getByTestId } = renderWithRouter(<NewPassword/>)
+            const {getByTestId} = renderWithRouter(<NewPassword/>)
             const double_password = screen.getByTestId('input_double_password')
-            const btn = screen.getByRole('button', { name: /Send/i} )
-            await act( async () => {
+            const btn = screen.getByRole('button', {name: /Send/i})
+            await act(async () => {
                 fireEvent.blur(double_password)
             });
             expect(btn).toBeDisabled()
         })
         it('not disabled after the error disappears', async () => {
-            const { getByTestId } = renderWithRouter(<NewPassword/>)
+            const {getByTestId} = renderWithRouter(<NewPassword/>)
             const password = screen.getByTestId('input_password')
             const double_password = screen.getByTestId('input_double_password')
-            const btn = screen.getByRole('button', { name: /Send/i} )
-            await act( async () => {
+            const btn = screen.getByRole('button', {name: /Send/i})
+            await act(async () => {
                 fireEvent.blur(password)
             });
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(password, {
-                    target: { value: '123123aA@' }
+                    target: {value: '123123aA@'}
                 })
             });
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(double_password, {
-                    target: { value: '123123aA@' }
+                    target: {value: '123123aA@'}
                 })
             });
             expect(btn).not.toBeDisabled()
-        })
-        it('clicking on a button with an empty form', async () => {
-            renderWithRouter(<NewPassword/>)
-            const btn = screen.getByRole('button', { name: /Send/i} )
-            await act(async () => {
-                btn.click()
-            })
-            expect(screen.getAllByTestId('formTextError').length).toBe(2)
         })
     })
 
@@ -205,7 +177,7 @@ describe('NewPassword', () => {
         })
 
         describe('forget', () => {
-            it('to have',  () => {
+            it('to have', () => {
                 renderWithRouter(<NewPassword/>)
                 expect(screen.getByRole('link', {name: /Authorize/i}).closest('a')).toHaveAttribute('href', '/auth/')
             })

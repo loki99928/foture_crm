@@ -28,10 +28,10 @@ const Register: React.FC = () => {
     useClearForm()
 
     const {handleSubmit, formState: {errors, isValid}, ...handlers} = useForm<fieldsForm>({
-        defaultValues: {
-            email: 'loki99928@yandex.ru',
-            password: '123Qw@',
-        },
+        // defaultValues: {
+        //     email: 'loki99928@yandex.ru',
+        //     password: '123Qw@',
+        // },
         mode: "all",
         resolver: yupResolver(SignupSchema)
     });
@@ -66,7 +66,7 @@ const Register: React.FC = () => {
                         handlers={handlers}
                         type='password'
                         label='Your password'/>
-                    <FieldError message={message}/>
+                    {message && <FieldError message={message}/>}
                     <Button disabled={isLoad || !isValid}/>
                 </form>
                 <div className={cn(s.formFooter, s.footer__form)}>

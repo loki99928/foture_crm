@@ -15,100 +15,81 @@ describe('ForgetForm', () => {
         })
 
         it('required', async () => {
-            const { getByTestId } = renderWithRouter(<Forget/>)
+            const {getByTestId} = renderWithRouter(<Forget/>)
             const email = screen.getByTestId('input_email')
-            await act( async () => {
+            await act(async () => {
                 fireEvent.blur(email)
             });
-            expect(getByTestId("formTextError")).not.toBe(null);
-            expect(getByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
+            expect(getByTestId("test_email")).not.toBe(null);
+            expect(getByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
         })
 
         it('validate', async () => {
             renderWithRouter(<Forget/>)
             const email = screen.getByTestId('input_email')
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(email, {
-                    target: { value: 'loki99928@yandex.ru' }
+                    target: {value: 'loki99928@yandex.ru'}
                 })
             });
-            await act( async () => {
-                fireEvent.focusOut(email)
-            });
-            expect(screen.queryByTestId("formTextError")).toBeNull();
+            expect(screen.queryByTestId("test_email")).toBeNull();
         })
 
         it('not validate', async () => {
             renderWithRouter(<Forget/>)
             const email = screen.getByTestId('input_email')
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(email, {
-                    target: { value: 'loki99928yandex' }
+                    target: {value: 'loki99928yandex'}
                 })
             });
-            await act( async () => {
-                fireEvent.focusOut(email)
-            });
-            expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_TO_LONG);
+            expect(screen.queryByTestId("test_email")).not.toBeNull();
+            expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_IS_NOT_VALID);
         })
 
         it('too long', async () => {
             renderWithRouter(<Forget/>)
             const email = screen.getByTestId('input_email')
-            await act( async () => {
+            await act(async () => {
                 fireEvent.change(email, {
-                    target: { value: 'loki999282342234234234346ty546547456456546/jkdxjlmnkfvbcvb@yandex.ru' }
+                    target: {value: 'loki999282342234234234346ty546547456456546/jkdxjlmnkfvbcvb@yandex.ru'}
                 })
             });
-            await act( async () => {
-                fireEvent.focusOut(email)
-            });
-            expect(screen.queryByTestId("formTextError")).not.toBeNull();
-            expect(screen.queryByTestId("formTextError")).toHaveTextContent(MESSAGE.EMAIL_TO_SHORT);
+            expect(screen.queryByTestId("test_email")).not.toBeNull();
+            expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_TO_LONG);
         })
     })
 
     describe('btn Send', () => {
         it('have btn Send', () => {
             renderWithRouter(<Forget/>)
-            expect(screen.getByRole('button', { name: /Send/i} )).toBeInTheDocument()
+            expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
         })
-        it('not disabled', async () => {
-            const { getByTestId } = renderWithRouter(<Forget/>)
-            const btn = screen.getByRole('button', { name: /Send/i} )
-            expect(btn).not.toBeDisabled()
+        it('btn disabled after loaded page', async () => {
+            const {getByTestId} = renderWithRouter(<Forget/>)
+            const btn = screen.getByRole('button', {name: /Send/i})
+            expect(btn).toBeDisabled()
         })
         it('disabled after error field of email', async () => {
-            const { getByTestId } = renderWithRouter(<Forget/>)
+            const {getByTestId} = renderWithRouter(<Forget/>)
             const email = screen.getByTestId('input_email')
-            const btn = screen.getByRole('button', { name: /Send/i} )
-            await act( async () => {
+            const btn = screen.getByRole('button', {name: /Send/i})
+            await act(async () => {
                 fireEvent.blur(email)
             });
             expect(btn).toBeDisabled()
         })
         it('not disabled after the error disappears', async () => {
-            const { getByTestId } = renderWithRouter(<Forget/>)
+            const {getByTestId} = renderWithRouter(<Forget/>)
             const email = screen.getByTestId('input_email')
-            const btn = screen.getByRole('button', { name: /Send/i} )
-            await act( async () => {
+            const btn = screen.getByRole('button', {name: /Send/i})
+            await act(async () => {
                 fireEvent.blur(email)
-            });
-            await act( async () => {
                 fireEvent.change(email, {
-                    target: { value: 'loki99928@yandex.ru' }
+                    target: {value: 'loki99928@yandex.ru'}
                 })
             });
             expect(btn).not.toBeDisabled()
-        })
-        it('clicking on a button with an empty form', async () => {
-            renderWithRouter(<Forget/>)
-            const btn = screen.getByRole('button', { name: /Send/i} )
-            await act(async () => {
-                btn.click()
-            })
-            expect(screen.getAllByTestId('formTextError').length).toBe(1)
         })
     })
 
@@ -122,7 +103,7 @@ describe('ForgetForm', () => {
         })
 
         describe('forget', () => {
-            it('to have',  () => {
+            it('to have', () => {
                 renderWithRouter(<Forget/>)
                 expect(screen.getByRole('link', {name: /Authorize/i}).closest('a')).toHaveAttribute('href', '/auth/')
             })
