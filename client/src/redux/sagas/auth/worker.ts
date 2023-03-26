@@ -1,7 +1,7 @@
 import {call, put, putResolve, StrictEffect} from "redux-saga/effects";
 import {actionsAuth} from "../../reducer/auth/actions";
 import {authApi} from "../../../api/authApi";
-import {IApiUserLoginData, IApiUserLoginResponse, IApiUsersForgetData} from "../../../types/ApiUsersTypes";
+import {IApiUserLoginData, IApiUserLoginResponse} from "../../../types/ApiUsersTypes";
 import {setCookieJWT} from "../../../helpers/Tokens";
 
 import Cookies from "js-cookie";
@@ -22,7 +22,6 @@ import {
 export function* workerUserRegister({payload}: TRegisterUser): Generator<StrictEffect, void, any> {
     try {
         const result = yield call(authApi.register, payload.user)
-        console.log(result)
         yield put(actionsAuth.registerUserSuccess({message: result.message.shift()}))
     } catch (err: any) {
         const message = err.message || 'Internal Server Error'
