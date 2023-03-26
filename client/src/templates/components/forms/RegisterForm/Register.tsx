@@ -32,7 +32,7 @@ const Register: React.FC = () => {
             email: 'loki99928@yandex.ru',
             password: '123Qw@',
         },
-        mode: "onChange",
+        mode: "all",
         resolver: yupResolver(SignupSchema)
     });
 

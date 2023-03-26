@@ -7,7 +7,7 @@ import {fieldsSearchForm} from "../FomControls/FormType";
 
 export const SearchForm: React.FC = () => {
     const {register, handleSubmit} = useForm<fieldsSearchForm>({
-        mode: "onChange",
+        mode: "all",
     });
 
     const onSubmit: SubmitHandler<fieldsSearchForm> = (data: { search: string }) => {

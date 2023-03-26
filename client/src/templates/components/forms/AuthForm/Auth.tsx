@@ -28,11 +28,11 @@ const Auth: React.FC = () => {
     useClearForm()
 
     const {handleSubmit, formState: {errors, isValid}, ...handlers} = useForm<fieldsForm>({
-        defaultValues: {
-            email: 'loki99928@yandex.ru',
-            password: '123Qw@',
-        },
-        mode: "onChange",
+        // defaultValues: {
+        //     email: 'loki99928@yandex.ru',
+        //     password: '123Qw@',
+        // },
+        mode: "all",
         resolver: yupResolver(SignupSchema)
     });
 

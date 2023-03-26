@@ -27,7 +27,7 @@ const Forget: React.FC = () => {
     useClearForm()
 
     const {handleSubmit, formState: {errors, isValid}, ...handlers} = useForm<fieldsForm>({
-        mode: "onChange",
+        mode: "all",
         resolver: yupResolver(SignupSchema)
     });
 

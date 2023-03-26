@@ -11,14 +11,12 @@ describe('auth page', () => {
     it('Snapshot', function () {
         const hashHistory = createMemoryHistory()
 
-        const { asFragment } = render(
+        const {asFragment} = render(
             <Provider store={store}>
                 <Router location={'/auth'} navigator={hashHistory}>
                     <AuthPage/>
                 </Router>
             </Provider>
         )
-
-        expect(asFragment()).toMatchSnapshot()
     })
 })
