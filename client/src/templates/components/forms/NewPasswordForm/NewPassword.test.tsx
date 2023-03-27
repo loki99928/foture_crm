@@ -123,12 +123,12 @@ describe('NewPassword', () => {
             expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
         })
         it('btn disabled after loaded page', async () => {
-            const {getByTestId} = renderWithRouter(<Forget/>)
+            renderWithRouter(<Forget/>)
             const btn = screen.getByRole('button', {name: /Send/i})
             expect(btn).toBeDisabled()
         })
         it('disabled after error field of password', async () => {
-            const {getByTestId} = renderWithRouter(<NewPassword/>)
+            renderWithRouter(<NewPassword/>)
             const password = screen.getByTestId('input_password')
             const btn = screen.getByRole('button', {name: /Send/i})
             await act(async () => {
@@ -137,7 +137,7 @@ describe('NewPassword', () => {
             expect(btn).toBeDisabled()
         })
         it('disabled after error field of double password', async () => {
-            const {getByTestId} = renderWithRouter(<NewPassword/>)
+            renderWithRouter(<NewPassword/>)
             const double_password = screen.getByTestId('input_double_password')
             const btn = screen.getByRole('button', {name: /Send/i})
             await act(async () => {
@@ -146,7 +146,7 @@ describe('NewPassword', () => {
             expect(btn).toBeDisabled()
         })
         it('not disabled after the error disappears', async () => {
-            const {getByTestId} = renderWithRouter(<NewPassword/>)
+            renderWithRouter(<NewPassword/>)
             const password = screen.getByTestId('input_password')
             const double_password = screen.getByTestId('input_double_password')
             const btn = screen.getByRole('button', {name: /Send/i})
