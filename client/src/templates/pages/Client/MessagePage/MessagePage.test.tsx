@@ -1,8 +1,9 @@
 import React from "react";
 import {createMemoryHistory} from "history";
-import {render, screen} from "@testing-library/react";
-import {MemoryRouter} from "react-router";
-import {MessagePage} from "./MessagePage";
+
+import MessagePage from "./";
+import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
+import AlarmElement from "../../../components/elements/alarm";
 
 // jest.mock('react-router', () => ({
 //     useLocation: jest.fn().mockReturnValue({
@@ -19,20 +20,17 @@ describe('MessagePage', () => {
     it('render', function () {
         const hashHistory = createMemoryHistory()
 
+        renderWithRouter(<AlarmElement/>)
         // render(
-        //     <MessagePage/>
+        //         <MessagePage/>
+        //     // <MemoryRouter initialEntries={[{pathname: '/', search: '?value=teresa_teng'}]}>
+        //     // </MemoryRouter>
+        //     // <Provider store={store}>
+        //     //     <Router location={'/'} navigator={hashHistory}>
+        //     //         <MessagePage/>
+        //     //     </Router>
+        //     // </Provider>
         // )
-
-        render(
-            <MemoryRouter initialEntries={[{ pathname: '/', search: '?value=teresa_teng' }]}>
-                <MessagePage />
-            </MemoryRouter>
-            // <Provider store={store}>
-            //     <Router location={'/'} navigator={hashHistory}>
-            //         <MessagePage/>
-            //     </Router>
-            // </Provider>
-        )
         // screen.debug()
         // expect(asFragment()).toMatchSnapshot()
     })

@@ -3,11 +3,11 @@ import {useNavigate} from "react-router";
 import {useSelector} from "react-redux";
 
 import s from "../../../../components/forms/FomControls/Form.module.scss";
-import Register from "../../../../components/forms/RegisterForm/Register";
+import Register from "../../../../components/forms/RegisterForm";
 import {getMessage, getStatus} from "../../../../../redux/reducer/auth/selectors";
 import {ResultStatusCodeEnum} from "../../../../../types/ApiUsersTypes";
 
-export const RegisterPage = () => {
+const RegisterPage = () => {
 
     const navigate = useNavigate()
     const message = useSelector(getMessage)
@@ -25,3 +25,5 @@ export const RegisterPage = () => {
         </main>
     )
 }
+
+export default RegisterPage

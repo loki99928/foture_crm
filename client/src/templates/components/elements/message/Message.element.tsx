@@ -1,8 +1,9 @@
 import React from "react";
-import s from "./Message.element.module.scss";
 import cn from "classnames";
 
-export const MessageElement: React.FC = () => {
+import s from "./Message.element.module.scss";
+
+const MessageElement: React.FC = () => {
     return (
         <React.Fragment>
             <div className="">
@@ -16,3 +17,5 @@ export const MessageElement: React.FC = () => {
         </React.Fragment>
     )
 }
+
+export default MessageElement;

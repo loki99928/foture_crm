@@ -5,7 +5,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import s from './SearchForm.module.scss'
 import {fieldsSearchForm} from "../FomControls/FormType";
 
-export const SearchForm: React.FC = () => {
+const SearchForm: React.FC = () => {
     const {register, handleSubmit} = useForm<fieldsSearchForm>({
         mode: "all",
     });
@@ -33,3 +33,5 @@ export const SearchForm: React.FC = () => {
         </React.Fragment>
     )
 }
+
+export default SearchForm;

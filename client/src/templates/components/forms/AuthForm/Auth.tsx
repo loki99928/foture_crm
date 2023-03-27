@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 import cn from "classnames"
@@ -6,17 +6,17 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import * as Yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 
+import {TUser} from "../../../../redux/reducer/auth/types";
+import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
+import {actionsAuth} from "../../../../redux/reducer/auth/actions";
+import {useClearForm} from "../../../../hooks/useClearForm";
 import s from "../FomControls/Form.module.scss"
 import bannerForm from "../../../assets/images/bg-head-form.jpg"
 import {fieldsForm} from "../FomControls/FormType";
 import Input from "../FomControls/Input";
 import {Button} from "../FomControls/Button";
-import {actionsAuth} from "../../../../redux/reducer/auth/actions";
-import {TUser} from "../../../../redux/reducer/auth/types";
 import {validate} from "../FomControls/Validate";
-import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
 import {FieldError} from "../FomControls/FeidError";
-import {useClearForm} from "../../../../hooks/useClearForm";
 
 const SignupSchema = Yup.object().shape({
     email: validate.email,
@@ -40,10 +40,7 @@ const Auth: React.FC = () => {
     const message = useSelector(getMessage)
     const isLoad = useSelector(getIsLoad)
 
-    const [isDisabled, setDisabled] = useState(false)
-
     const onSubmit: SubmitHandler<fieldsForm> = (data: TUser) => {
-        setDisabled(true)
         dispatch(actionsAuth.authUserRequest(data))
     };
 

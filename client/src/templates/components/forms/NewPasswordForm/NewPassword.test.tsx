@@ -2,9 +2,8 @@ import React from "react";
 import {act, fireEvent, screen} from "@testing-library/react";
 
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
-import {NewPassword} from "./NewPassword";
+import NewPassword from "./";
 import {MESSAGE} from "../FomControls/FormType";
-import Forget from "../ForgetForm/Forget";
 
 describe('NewPassword', () => {
 
@@ -123,7 +122,7 @@ describe('NewPassword', () => {
             expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
         })
         it('btn disabled after loaded page', async () => {
-            renderWithRouter(<Forget/>)
+            renderWithRouter(<NewPassword/>)
             const btn = screen.getByRole('button', {name: /Send/i})
             expect(btn).toBeDisabled()
         })

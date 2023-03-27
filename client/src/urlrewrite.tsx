@@ -1,16 +1,15 @@
 import React from "react";
 import {Route, Routes} from "react-router-dom";
-
-import {HomePage} from "./templates/pages/Admin/HomePage/HomePage";
-import {AuthPage} from "./templates/pages/Client/Auth/AuthPage/AuthPage";
-import {RegisterPage} from "./templates/pages/Client/Auth/RegisterPage/RegisterPage";
-import {MessagePageContainer} from "./templates/pages/Client/MessagePage/MessagePageContainer";
-import {ForgetPasswordPage} from "./templates/pages/Client/Auth/ForgetFormPage/ForgetPasswordPage";
-import {UserConfirmationPage} from "./templates/pages/Client/Auth/UserConfirmationPage/UserConfirmationPage";
-import {ErrorPage} from "./templates/pages/Client/ErrorPage/ErrorPage";
-import {UserPage} from "./templates/pages/Admin/UserPage/UserPage";
-import {NewPasswordPage} from "./templates/pages/Client/Auth/NewPasswordPage/NewPasswordPage";
 import {Navigate} from "react-router";
+
+import HomePage from "./templates/pages/Admin/HomePage";
+import AuthPage from "./templates/pages/Client/Auth/AuthPage";
+import RegisterPage from "./templates/pages/Client/Auth/RegisterPage";
+import MessagePage from "./templates/pages/Client/MessagePage";
+import ForgetPasswordPage from "./templates/pages/Client/Auth/ForgetFormPage";
+import UserConfirmationPage from "./templates/pages/Client/Auth/UserConfirmationPage";
+import UserPage from "./templates/pages/Admin/UserPage";
+import NewPasswordPage from "./templates/pages/Client/Auth/NewPasswordPage";
 
 export interface IRoute {
     id: string
@@ -47,7 +46,7 @@ export const publicRouters: IRoute[] = [
     {
         id: 'MESSAGE',
         path: '/message',
-        element: <MessagePageContainer/>
+        element: <MessagePage/>
     },
     {
         id: 'ERROR',

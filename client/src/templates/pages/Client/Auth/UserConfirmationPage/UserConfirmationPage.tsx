@@ -3,9 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
 
 import {actionsAuth} from "../../../../../redux/reducer/auth/actions";
-import {getMessage, getStatus} from "../../../../../redux/reducer/auth/selectors";
+import {getMessage} from "../../../../../redux/reducer/auth/selectors";
 
-export const UserConfirmationPage: React.FC = () => {
+const UserConfirmationPage: React.FC = () => {
 
     const navigate = useNavigate()
     const {hashUser} = useParams()
@@ -29,3 +29,5 @@ export const UserConfirmationPage: React.FC = () => {
         </main>
     )
 }
+
+export default UserConfirmationPage

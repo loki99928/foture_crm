@@ -2,7 +2,7 @@ import React from 'react';
 import cn from "classnames";
 import s from "./Alarm.element.module.scss"
 
-export const AlarmElement: React.FC = () => {
+const AlarmElement: React.FC = () => {
 
     const isAlarm = false
 
@@ -17,3 +17,5 @@ export const AlarmElement: React.FC = () => {
         </React.Fragment>
     )
 }
+
+export default AlarmElement

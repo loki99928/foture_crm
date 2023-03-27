@@ -5,7 +5,7 @@ import {Provider, useDispatch, useSelector} from "react-redux";
 import store from "./redux/store";
 
 import {privatesRouters, publicRouters, Routers} from "./urlrewrite";
-import {Preloader} from "./templates/components/elements/preloader/default/Preloader";
+import Preloader from "./templates/components/elements/preloader/default";
 import {actionsApp} from "./redux/reducer/app/actions";
 import {getInitialized} from "./redux/reducer/app/selectors";
 import {isAuth} from "./redux/reducer/auth/selectors";

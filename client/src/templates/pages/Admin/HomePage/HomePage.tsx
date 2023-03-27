@@ -1,8 +1,8 @@
 import React from "react";
-import {Sidebar} from "../../../components/sidebar/default/Sidebar";
-import {Header} from "../../../components/header/default/Header";
+import Sidebar from "../../../components/sidebar/default";
+import Header from "../../../components/header/default";
 
-export const HomePage = () => {
+const HomePage = () => {
     return (
         <React.Fragment>
             <div className="wrapper container">
@@ -17,3 +17,5 @@ export const HomePage = () => {
         </React.Fragment>
     )
 }
+
+export default HomePage;

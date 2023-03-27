@@ -1,7 +1,7 @@
 import React from "react";
 import {act, fireEvent, screen} from "@testing-library/react";
 
-import Forget from "./Forget";
+import Forget from "./";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import {MESSAGE} from "../FomControls/FormType";
 
@@ -66,12 +66,12 @@ describe('ForgetForm', () => {
             expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
         })
         it('btn disabled after loaded page', async () => {
-            const {getByTestId} = renderWithRouter(<Forget/>)
+            renderWithRouter(<Forget/>)
             const btn = screen.getByRole('button', {name: /Send/i})
             expect(btn).toBeDisabled()
         })
         it('disabled after error field of email', async () => {
-            const {getByTestId} = renderWithRouter(<Forget/>)
+            renderWithRouter(<Forget/>)
             const email = screen.getByTestId('input_email')
             const btn = screen.getByRole('button', {name: /Send/i})
             await act(async () => {
@@ -80,7 +80,7 @@ describe('ForgetForm', () => {
             expect(btn).toBeDisabled()
         })
         it('not disabled after the error disappears', async () => {
-            const {getByTestId} = renderWithRouter(<Forget/>)
+            renderWithRouter(<Forget/>)
             const email = screen.getByTestId('input_email')
             const btn = screen.getByRole('button', {name: /Send/i})
             await act(async () => {

@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router";
 import {useSelector} from "react-redux";
-import Message from "../../../components/main/Message/Message";
+import Message from "../../../components/main/Message";
 import {getMessage} from "../../../../redux/reducer/auth/selectors";
 
-export const MessagePageContainer: React.FC = () => {
+const MessagePageContainer: React.FC = () => {
 
     const navigate = useNavigate()
     const message = useSelector(getMessage);
@@ -21,3 +21,6 @@ export const MessagePageContainer: React.FC = () => {
         </main>
     )
 }
+
+
+export default MessagePageContainer;

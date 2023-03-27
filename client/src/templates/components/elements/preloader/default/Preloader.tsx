@@ -3,7 +3,7 @@ import cn from "classnames"
 
 import s from "./Preloader.module.scss"
 
-export const Preloader: React.FC = () => {
+const Preloader: React.FC = () => {
     return (
         <div className={s.containerLoader}>
             <div className={s.blockLoader}>
@@ -14,3 +14,5 @@ export const Preloader: React.FC = () => {
         </div>
     )
 }
+
+export default Preloader

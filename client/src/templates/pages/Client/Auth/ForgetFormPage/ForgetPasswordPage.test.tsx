@@ -5,13 +5,13 @@ import {Router} from "react-router";
 import {Provider} from "react-redux";
 
 import store from "../../../../../redux/store";
-import {ForgetPasswordPage} from "./ForgetPasswordPage";
+import ForgetPasswordPage from "./";
 
 describe('auth page', () => {
     it('render', function () {
         const hashHistory = createMemoryHistory()
 
-        const {asFragment} = render(
+        render(
             <Provider store={store}>
                 <Router location={'/forget'} navigator={hashHistory}>
                     <ForgetPasswordPage/>

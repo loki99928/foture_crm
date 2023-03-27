@@ -8,7 +8,7 @@ import {getUser} from "../../../../redux/reducer/auth/selectors";
 import {TUser} from "../../../../redux/reducer/auth/types";
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 
-export const UserMenu = () => {
+const UserMenu = () => {
 
     const dispatch = useDispatch()
     const user = useSelector(getUser) as TUser
@@ -35,3 +35,5 @@ export const UserMenu = () => {
         </React.Fragment>
     )
 }
+
+export default UserMenu

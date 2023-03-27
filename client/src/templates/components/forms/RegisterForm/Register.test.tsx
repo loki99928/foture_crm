@@ -1,9 +1,8 @@
 import React from "react";
 import {act, fireEvent, screen} from "@testing-library/react";
 
-import Register from "./Register";
+import Register from "./";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
-import Forget from "../ForgetForm/Forget";
 import {MESSAGE} from "../FomControls/FormType";
 
 describe('RegisterForm', () => {
@@ -117,7 +116,7 @@ describe('RegisterForm', () => {
         })
         it('btn disabled after loaded page', async () => {
             await act(async () => {
-                renderWithRouter(<Forget/>)
+                renderWithRouter(<Register/>)
                 const btn = screen.getByRole('button', {name: /Send/i})
                 expect(btn).toBeDisabled()
             })

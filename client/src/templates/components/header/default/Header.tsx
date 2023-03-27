@@ -2,10 +2,10 @@ import React from "react"
 import cn from "classnames"
 
 import s from "./Header.module.scss"
-import {HeaderMineMenu} from "../../menu/headerMineMenu/HeaderMineMenu";
-import {Logo} from "../../elements/logo/Logo.element";
+import HeaderMineMenu from "../../menu/headerMineMenu";
+import Logo from "../../elements/logo";
 
-export const Header: React.FC = () => {
+const Header: React.FC = () => {
     return (
         <div className="row">
             <header className={cn(s.header)}>
@@ -15,3 +15,5 @@ export const Header: React.FC = () => {
         </div>
     )
 }
+
+export default Header

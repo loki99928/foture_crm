@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {NavLink} from "react-router-dom";
 import cn from "classnames"
 import * as Yup from "yup";
@@ -23,7 +23,7 @@ const SignupSchema = Yup.object().shape({
     double_password: validate.double_password
 });
 
-export const NewPassword: React.FC = () => {
+const NewPassword: React.FC = () => {
 
     useClearForm()
 
@@ -36,10 +36,7 @@ export const NewPassword: React.FC = () => {
     const message = useSelector(getMessage)
     const isLoad = useSelector(getIsLoad)
 
-    const [isDisabled, setDisabled] = useState(false)
-
     const onSubmit: SubmitHandler<fieldsForm> = (data: TUser) => {
-        setDisabled(true)
         dispatch(actionsAuth.createNewPasswordResponse(data))
     };
     return (
@@ -71,3 +68,5 @@ export const NewPassword: React.FC = () => {
         </div>
     )
 }
+
+export default NewPassword

@@ -2,13 +2,13 @@ import React from "react";
 import cn from "classnames";
 
 import s from "./HeaderMineMenu.module.scss";
-import {UserMenu} from "../userMenu/UserMenu";
-import {SettingsMenu} from "../settingsMenu/SettingsMenu";
-import {AlarmElement} from "../../elements/alarm/Alarm.element";
-import {MessageElement} from "../../elements/message/Message.element";
-import {SearchForm} from "../../forms/SearchForm/SearchForm";
+import UserMenu from "../userMenu";
+import SettingsMenu from "../settingsMenu";
+import AlarmElement from "../../elements/alarm/";
+import MessageElement from "../../elements/message";
+import SearchForm from "../../forms/SearchForm";
 
-export const HeaderMineMenu = () => {
+const HeaderMineMenu = () => {
 
     return (
         <React.Fragment>
@@ -22,3 +22,5 @@ export const HeaderMineMenu = () => {
         </React.Fragment>
     )
 }
+
+export default HeaderMineMenu;

@@ -1,9 +1,11 @@
 import React from "react";
 
-export const UserPage = () => {
+const UserPage = () => {
     return (
         <main>
             User
         </main>
     )
 }
+
+export default UserPage;

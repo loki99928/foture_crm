@@ -1,10 +1,9 @@
 import React from "react";
 import {act, fireEvent, screen} from "@testing-library/react";
 
-import Auth from "./Auth";
+import Auth from "./";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import {MESSAGE} from "../FomControls/FormType";
-import Forget from "../ForgetForm/Forget";
 
 describe('AuthForm', () => {
 
@@ -110,7 +109,7 @@ describe('AuthForm', () => {
             expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
         })
         it('btn disabled after loaded page', async () => {
-            renderWithRouter(<Forget/>)
+            renderWithRouter(<Auth/>)
             const btn = screen.getByRole('button', {name: /Send/i})
             expect(btn).toBeDisabled()
         })

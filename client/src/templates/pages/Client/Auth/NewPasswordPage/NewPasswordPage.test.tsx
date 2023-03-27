@@ -3,18 +3,16 @@ import {createMemoryHistory} from "history";
 import {render} from "@testing-library/react";
 import {Router} from "react-router";
 import {Provider} from "react-redux";
-
-import {AuthPage} from "./AuthPage";
 import store from "../../../../../redux/store";
+import NewPasswordPage from "./";
 
 describe('auth page', () => {
-    it('Snapshot', function () {
+    it('render', function () {
         const hashHistory = createMemoryHistory()
-
-        const {asFragment} = render(
+        render(
             <Provider store={store}>
-                <Router location={'/auth'} navigator={hashHistory}>
-                    <AuthPage/>
+                <Router location={'/new_password/:token'} navigator={hashHistory}>
+                    <NewPasswordPage/>
                 </Router>
             </Provider>
         )
