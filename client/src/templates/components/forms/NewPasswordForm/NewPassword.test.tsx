@@ -33,7 +33,7 @@ describe('NewPassword', () => {
                     target: {value: 'lk'}
                 })
             });
-            expect(screen.queryByTestId("test_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_password")).toBeInTheDocument();
             expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
         })
 
@@ -45,7 +45,7 @@ describe('NewPassword', () => {
                     target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
             });
-            expect(screen.queryByTestId("test_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_password")).toBeInTheDocument();
             expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MAX_LENGTH);
         })
     })
@@ -87,7 +87,7 @@ describe('NewPassword', () => {
                     target: {value: '123pass456345'}
                 })
             });
-            expect(screen.queryByTestId("test_double_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_double_password")).toBeInTheDocument();
             expect(screen.queryByTestId("test_double_password")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
 
@@ -99,7 +99,7 @@ describe('NewPassword', () => {
                     target: {value: 'lk'}
                 })
             });
-            expect(screen.queryByTestId("test_double_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_double_password")).toBeInTheDocument();
             expect(screen.queryByTestId("test_double_password")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
 
@@ -111,7 +111,7 @@ describe('NewPassword', () => {
                     target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
             });
-            expect(screen.queryByTestId("test_double_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_double_password")).toBeInTheDocument();
             expect(screen.queryByTestId("test_double_password")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
     })

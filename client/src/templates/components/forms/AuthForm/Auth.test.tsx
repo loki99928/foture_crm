@@ -18,9 +18,10 @@ describe('AuthForm', () => {
             renderWithRouter(<Auth/>)
             const email = screen.getByTestId('input_email')
             await act(async () => {
+                // userEvent.
                 fireEvent.blur(email)
             });
-            expect(screen.getByTestId("test_email")).not.toBe(null);
+            expect(screen.getByTestId("test_email")).toBeInTheDocument();
             expect(screen.getByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
         })
 
@@ -43,7 +44,7 @@ describe('AuthForm', () => {
                     target: {value: 'loki99928yandex'}
                 })
             });
-            expect(screen.queryByTestId("test_email")).not.toBeNull();
+            expect(screen.queryByTestId("test_email")).toBeInTheDocument();
             expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_IS_NOT_VALID);
         })
 
@@ -55,7 +56,7 @@ describe('AuthForm', () => {
                     target: {value: 'loki999282342234234234346ty546547456456546/jkdxjlmnkfvbcvb@yandex.ru'}
                 })
             });
-            expect(screen.queryByTestId("test_email")).not.toBeNull();
+            expect(screen.queryByTestId("test_email")).toBeInTheDocument();
             expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_TO_LONG);
         })
     })
@@ -86,7 +87,7 @@ describe('AuthForm', () => {
                     target: {value: 'lk'}
                 })
             });
-            expect(screen.queryByTestId("test_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_password")).toBeInTheDocument();
             expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
         })
 
@@ -98,7 +99,7 @@ describe('AuthForm', () => {
                     target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
             });
-            expect(screen.queryByTestId("test_password")).not.toBeNull();
+            expect(screen.queryByTestId("test_password")).toBeInTheDocument();
             expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MAX_LENGTH);
         })
     })
