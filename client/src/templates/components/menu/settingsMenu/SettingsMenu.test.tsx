@@ -1,8 +1,8 @@
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
-import HomePage from "./";
+import SettingsMenu from "./";
 
 describe('Message element', () => {
     it('render', () => {
-        renderWithRouter(<HomePage/>)
+        renderWithRouter(<SettingsMenu/>)
     })
 })

@@ -18,7 +18,6 @@ describe('AuthForm', () => {
             renderWithRouter(<Auth/>)
             const email = screen.getByTestId('input_email')
             await act(async () => {
-                // userEvent.
                 fireEvent.blur(email)
             });
             expect(screen.getByTestId("test_email")).toBeInTheDocument();

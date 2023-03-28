@@ -1,10 +1,9 @@
 import React from "react";
-
-import AuthPage from "./";
 import {renderWithRouter} from "../../../../../helpers/test/renderWithRouter";
+import UserConfirmationPage from "./";
 
 describe('auth page', () => {
     it('render', function () {
-        renderWithRouter(<AuthPage/>)
+        renderWithRouter(<UserConfirmationPage/>)
     })
 })
