@@ -20,7 +20,6 @@ describe('ForgetForm', () => {
             await act(async () => {
                 fireEvent.blur(email)
             });
-            expect(getByTestId("test_email")).toBeInTheDocument();
             expect(getByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
         })
 
@@ -43,7 +42,6 @@ describe('ForgetForm', () => {
                     target: {value: 'loki99928yandex'}
                 })
             });
-            expect(screen.queryByTestId("test_email")).toBeInTheDocument();
             expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_IS_NOT_VALID);
         })
 
@@ -55,7 +53,6 @@ describe('ForgetForm', () => {
                     target: {value: 'loki999282342234234234346ty546547456456546/jkdxjlmnkfvbcvb@yandex.ru'}
                 })
             });
-            expect(screen.queryByTestId("test_email")).toBeInTheDocument();
             expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_TO_LONG);
         })
     })
