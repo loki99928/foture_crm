@@ -7,6 +7,28 @@ import {MESSAGE} from "../FomControls/FormType";
 
 describe('AuthForm', () => {
 
+    describe('event', () => {
+        it('submit', async () => {
+
+
+            // renderWithRouter(<Auth/>)
+            // const email = screen.getByTestId('input_email')
+            // const password = screen.getByTestId('input_password')
+            // const btn = screen.getByRole('button', {name: /Send/i})
+            // await act(async () => {
+            //     fireEvent.change(email, {
+            //         target: {value: 'loki99928@yandex'}
+            //     })
+            //     fireEvent.change(password, {
+            //         target: {value: '123123aA@'}
+            //     })
+            //     fireEvent.submit(btn)
+            // });
+            // expect(mockLogin).toBeCalled();
+            // screen.debug()
+        })
+    })
+
     describe('input email', () => {
 
         it('have', function () {

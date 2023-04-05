@@ -1,10 +1,6 @@
-import {
-    ActionTypeAuth,
-    InitialStateType
-} from "./actions";
+import {ActionTypeAuth, InitialStateType} from "./actions";
 import {ResultStatusCodeEnum} from "../../../types/ApiUsersTypes";
 import {authEnum, TInitialStateAuth} from "./types";
-import {isAuth} from "./selectors";
 
 export let initialStateAuth = {
     isLoad: false,
