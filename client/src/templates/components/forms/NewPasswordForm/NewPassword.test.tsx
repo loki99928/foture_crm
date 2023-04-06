@@ -5,19 +5,19 @@ import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import NewPassword from "./";
 import {MESSAGE} from "../FomControls/FormType";
 
-describe('NewPassword', () => {
+describe('NewPassword', (): void => {
 
-    describe('input password', () => {
+    describe('input password', (): void => {
 
-        it('have', () => {
+        it('have', (): void => {
             renderWithRouter(<NewPassword/>)
             expect(screen.getByTestId('input_password')).toBeInTheDocument()
         })
 
-        it('validate', async () => {
+        it('validate', async (): Promise<void> => {
             renderWithRouter(<NewPassword/>)
-            const password = screen.getByTestId('input_password')
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: '123123aA@'}
                 })
@@ -25,10 +25,10 @@ describe('NewPassword', () => {
             expect(screen.queryByTestId("test_password")).toBeNull();
         })
 
-        it('too short', async () => {
+        it('too short', async (): Promise<void> => {
             renderWithRouter(<NewPassword/>)
-            const password = screen.getByTestId('input_password')
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: 'lk'}
                 })
@@ -36,10 +36,10 @@ describe('NewPassword', () => {
             expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
         })
 
-        it('too long', async () => {
+        it('too long', async (): Promise<void> => {
             renderWithRouter(<NewPassword/>)
-            const password = screen.getByTestId('input_password')
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
@@ -48,23 +48,23 @@ describe('NewPassword', () => {
         })
     })
 
-    describe('input double password', () => {
+    describe('input double password', (): void => {
 
-        it('have', () => {
+        it('have', (): void => {
             renderWithRouter(<NewPassword/>)
             expect(screen.getByTestId('input_double_password')).toBeInTheDocument()
         })
 
-        it('validate', async () => {
+        it('validate', async (): Promise<void> => {
             renderWithRouter(<NewPassword/>)
-            const password = screen.getByTestId('input_password')
-            const double_password = screen.getByTestId('input_double_password')
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            const double_password: HTMLElement = screen.getByTestId('input_double_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: '123123aA@'}
                 })
             });
-            await act(async () => {
+            await act(async (): Promise<void> => {
                 fireEvent.change(double_password, {
                     target: {value: '123123aA@'}
                 })
@@ -73,11 +73,11 @@ describe('NewPassword', () => {
             expect(screen.queryByTestId("test_double_password")).toBeNull();
         })
 
-        it('different passwords', async () => {
+        it('different passwords', async (): Promise<void> => {
             renderWithRouter(<NewPassword/>)
-            const password = screen.getByTestId('input_password')
-            const double_password = screen.getByTestId('input_double_password')
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            const double_password: HTMLElement = screen.getByTestId('input_double_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: '123123aA@'}
                 })
@@ -88,10 +88,10 @@ describe('NewPassword', () => {
             expect(screen.queryByTestId("test_double_password")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
 
-        it('too short', async () => {
+        it('too short', async (): Promise<void> => {
             renderWithRouter(<NewPassword/>)
-            const double_password = screen.getByTestId('input_double_password')
-            await act(async () => {
+            const double_password: HTMLElement = screen.getByTestId('input_double_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(double_password, {
                     target: {value: 'lk'}
                 })
@@ -99,10 +99,10 @@ describe('NewPassword', () => {
             expect(screen.queryByTestId("test_double_password")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
 
-        it('too long', async () => {
+        it('too long', async (): Promise<void> => {
             renderWithRouter(<NewPassword/>)
-            const double_password = screen.getByTestId('input_double_password')
-            await act(async () => {
+            const double_password: HTMLElement = screen.getByTestId('input_double_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(double_password, {
                     target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
@@ -111,48 +111,48 @@ describe('NewPassword', () => {
         })
     })
 
-    describe('btn Send', () => {
-        it('have btn Send', () => {
+    describe('btn Send', (): void => {
+        it('have btn Send', (): void => {
             renderWithRouter(<NewPassword/>)
             expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
         })
-        it('btn disabled after loaded page', async () => {
+        it('btn disabled after loaded page', async (): Promise<void> => {
             renderWithRouter(<NewPassword/>)
-            const btn = screen.getByRole('button', {name: /Send/i})
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
             expect(btn).toBeDisabled()
         })
-        it('disabled after error field of password', async () => {
+        it('disabled after error field of password', async (): Promise<void> => {
             renderWithRouter(<NewPassword/>)
-            const password = screen.getByTestId('input_password')
-            const btn = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            await act(async (): Promise<void> => {
                 fireEvent.blur(password)
             });
             expect(btn).toBeDisabled()
         })
-        it('disabled after error field of double password', async () => {
+        it('disabled after error field of double password', async (): Promise<void> => {
             renderWithRouter(<NewPassword/>)
-            const double_password = screen.getByTestId('input_double_password')
-            const btn = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
+            const double_password: HTMLElement = screen.getByTestId('input_double_password')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            await act(async (): Promise<void> => {
                 fireEvent.blur(double_password)
             });
             expect(btn).toBeDisabled()
         })
-        it('not disabled after the error disappears', async () => {
+        it('not disabled after the error disappears', async (): Promise<void> => {
             renderWithRouter(<NewPassword/>)
-            const password = screen.getByTestId('input_password')
-            const double_password = screen.getByTestId('input_double_password')
-            const btn = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            const double_password: HTMLElement = screen.getByTestId('input_double_password')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            await act(async (): Promise<void> => {
                 fireEvent.blur(password)
             });
-            await act(async () => {
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: '123123aA@'}
                 })
             });
-            await act(async () => {
+            await act(async (): Promise<void> => {
                 fireEvent.change(double_password, {
                     target: {value: '123123aA@'}
                 })
@@ -162,16 +162,16 @@ describe('NewPassword', () => {
     })
 
     // todo-dv нужно разобраться как тестировать переход по ссылкам
-    describe('link', () => {
-        describe('registration', () => {
-            it('to have', () => {
+    describe('link', (): void => {
+        describe('registration', (): void => {
+            it('to have', (): void => {
                 renderWithRouter(<NewPassword/>)
                 expect(screen.getByRole('link', {name: /registration/i}).closest('a')).toHaveAttribute('href', '/registration/')
             })
         })
 
-        describe('forget', () => {
-            it('to have', () => {
+        describe('forget', (): void => {
+            it('to have', (): void => {
                 renderWithRouter(<NewPassword/>)
                 expect(screen.getByRole('link', {name: /Authorize/i}).closest('a')).toHaveAttribute('href', '/auth/')
             })

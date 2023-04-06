@@ -2,8 +2,8 @@ import React from "react";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import UserPage from "./";
 
-describe('auth page', () => {
-    it('render', function () {
+describe('auth page', (): void => {
+    it('render', function (): void {
         renderWithRouter(<UserPage/>)
     })
 })

@@ -1,7 +1,6 @@
 import React from "react";
 import {createMemoryHistory} from "history";
 
-import MessagePage from "./";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import AlarmElement from "../../../components/elements/alarm";
 
@@ -16,8 +15,8 @@ import AlarmElement from "../../../components/elements/alarm";
 //     }),
 // }));
 // todo-dv разобраться с отображение текста ошибки
-describe('MessagePage', () => {
-    it('render', function () {
+describe('MessagePage', (): void => {
+    it('render', function (): void {
         const hashHistory = createMemoryHistory()
 
         renderWithRouter(<AlarmElement/>)

@@ -8,47 +8,51 @@ import {MESSAGE} from "../FomControls/FormType";
 describe('AuthForm', () => {
 
     describe('event', () => {
+        const setState = jest.fn();
         it('submit', async () => {
-
-
-            // renderWithRouter(<Auth/>)
-            // const email = screen.getByTestId('input_email')
-            // const password = screen.getByTestId('input_password')
-            // const btn = screen.getByRole('button', {name: /Send/i})
-            // await act(async () => {
-            //     fireEvent.change(email, {
-            //         target: {value: 'loki99928@yandex'}
-            //     })
-            //     fireEvent.change(password, {
-            //         target: {value: '123123aA@'}
-            //     })
-            //     fireEvent.submit(btn)
-            // });
+            jest
+                .spyOn(React, 'useState')
+            // @ts-ignore
+            // .mockImplementationOnce((initState: any) => [initState, setState]);
+            renderWithRouter(<Auth/>)
+            screen.debug()
+            const email: HTMLElement = screen.getByTestId('input_email')
+            const password: HTMLElement = screen.getByTestId('input_password')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            await act(async () => {
+                fireEvent.change(email, {
+                    target: {value: 'loki99928@yandex.ru'}
+                })
+                fireEvent.change(password, {
+                    target: {value: '123123aA@'}
+                })
+                fireEvent.submit(btn)
+            });
             // expect(mockLogin).toBeCalled();
-            // screen.debug()
+            screen.debug()
         })
     })
 
-    describe('input email', () => {
+    describe('input email', (): void => {
 
-        it('have', function () {
+        it('have', function (): void {
             renderWithRouter(<Auth/>)
             expect(screen.queryByTestId('input_email')).toBeInTheDocument()
         })
 
-        it('required', async () => {
+        it('required', async (): Promise<void> => {
             renderWithRouter(<Auth/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.blur(email)
             });
             expect(screen.getByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
         })
 
-        it('validate', async () => {
+        it('validate', async (): Promise<void> => {
             renderWithRouter(<Auth/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.change(email, {
                     target: {value: 'loki99928@yandex.ru'}
                 })
@@ -56,10 +60,10 @@ describe('AuthForm', () => {
             expect(screen.queryByTestId("test_email")).toBeNull();
         })
 
-        it('not validate', async () => {
+        it('not validate', async (): Promise<void> => {
             renderWithRouter(<Auth/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.change(email, {
                     target: {value: 'loki99928yandex'}
                 })
@@ -67,10 +71,10 @@ describe('AuthForm', () => {
             expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_IS_NOT_VALID);
         })
 
-        it('too long', async () => {
+        it('too long', async (): Promise<void> => {
             renderWithRouter(<Auth/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.change(email, {
                     target: {value: 'loki999282342234234234346ty546547456456546/jkdxjlmnkfvbcvb@yandex.ru'}
                 })
@@ -79,17 +83,17 @@ describe('AuthForm', () => {
         })
     })
 
-    describe('input password', () => {
+    describe('input password', (): void => {
 
         it('have', () => {
             renderWithRouter(<Auth/>)
             expect(screen.getByTestId('input_password')).toBeInTheDocument()
         })
 
-        it('validate', async () => {
+        it('validate', async (): Promise<void> => {
             renderWithRouter(<Auth/>)
-            const password = screen.getByTestId('input_password')
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: '123123aA@'}
                 })
@@ -97,10 +101,10 @@ describe('AuthForm', () => {
             expect(screen.queryByTestId("test_password")).toBeNull();
         })
 
-        it('too short', async () => {
+        it('too short', async (): Promise<void> => {
             renderWithRouter(<Auth/>)
-            const password = screen.getByTestId('input_password')
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: 'lk'}
                 })
@@ -108,10 +112,10 @@ describe('AuthForm', () => {
             expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
         })
 
-        it('too long', async () => {
+        it('too long', async (): Promise<void> => {
             renderWithRouter(<Auth/>)
-            const password = screen.getByTestId('input_password')
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
@@ -120,31 +124,31 @@ describe('AuthForm', () => {
         })
     })
 
-    describe('btn Send', () => {
-        it('have btn Send', () => {
+    describe('btn Send', (): void => {
+        it('have btn Send', (): void => {
             renderWithRouter(<Auth/>)
             expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
         })
-        it('btn disabled after loaded page', async () => {
+        it('btn disabled after loaded page', async (): Promise<void> => {
             renderWithRouter(<Auth/>)
-            const btn = screen.getByRole('button', {name: /Send/i})
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
             expect(btn).toBeDisabled()
         })
-        it('disabled after error field of email', async () => {
+        it('disabled after error field of email', async (): Promise<void> => {
             renderWithRouter(<Auth/>)
-            const email = screen.getByTestId('input_email')
-            const btn = screen.getByRole('button', {name: /Send/i})
+            const email: HTMLElement = screen.getByTestId('input_email')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
             await act(async () => {
                 fireEvent.blur(email)
             });
             expect(btn).toBeDisabled()
         })
-        it('not disabled after the error disappears', async () => {
+        it('not disabled after the error disappears', async (): Promise<void> => {
             renderWithRouter(<Auth/>)
-            const email = screen.getByTestId('input_email')
-            const password = screen.getByTestId('input_password')
-            const btn = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            const password: HTMLElement = screen.getByTestId('input_password')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            await act(async (): Promise<void> => {
                 fireEvent.blur(email)
                 fireEvent.change(email, {
                     target: {value: 'loki99928@yandex.ru'}
@@ -155,11 +159,11 @@ describe('AuthForm', () => {
             });
             expect(btn).not.toBeDisabled()
         })
-        it('disabled after error field of password', async () => {
+        it('disabled after error field of password', async (): Promise<void> => {
             renderWithRouter(<Auth/>)
-            const password = screen.getByTestId('input_password')
-            const btn = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            await act(async (): Promise<void> => {
                 fireEvent.blur(password)
             });
             expect(btn).toBeDisabled()
@@ -167,16 +171,16 @@ describe('AuthForm', () => {
     })
 
     // todo-dv нужно разобраться как тестировать переход по ссылкам
-    describe('link', () => {
-        describe('registration', () => {
+    describe('link', (): void => {
+        describe('registration', (): void => {
             it('to have', () => {
                 renderWithRouter(<Auth/>)
                 expect(screen.getByRole('link', {name: /registration/i}).closest('a')).toHaveAttribute('href', '/registration/')
             })
         })
 
-        describe('forget', () => {
-            it('to have', () => {
+        describe('forget', (): void => {
+            it('to have', (): void => {
                 renderWithRouter(<Auth/>)
                 expect(screen.getByRole('link', {name: /forget password/i}).closest('a')).toHaveAttribute('href', '/forget/')
             })

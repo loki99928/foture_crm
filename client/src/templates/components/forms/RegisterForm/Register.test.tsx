@@ -5,30 +5,30 @@ import Register from "./";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import {MESSAGE} from "../FomControls/FormType";
 
-describe('RegisterForm', () => {
+describe('RegisterForm', (): void => {
 
-    describe('input email', () => {
+    describe('input email', (): void => {
 
-        it('have', async () => {
-            await act(async () => {
+        it('have', async (): Promise<void> => {
+            await act(async (): Promise<void> => {
                 renderWithRouter(<Register/>)
                 expect(screen.queryByTestId('input_email')).toBeInTheDocument()
             })
         })
 
-        it('required', async () => {
+        it('required', async (): Promise<void> => {
             renderWithRouter(<Register/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.blur(email)
             });
             expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
         })
 
-        it('validate', async () => {
+        it('validate', async (): Promise<void> => {
             renderWithRouter(<Register/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.change(email, {
                     target: {value: 'loki99928@yandex.ru'}
                 })
@@ -36,10 +36,10 @@ describe('RegisterForm', () => {
             expect(screen.queryByTestId("test_email")).toBeNull();
         })
 
-        it('not validate', async () => {
+        it('not validate', async (): Promise<void> => {
             renderWithRouter(<Register/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.change(email, {
                     target: {value: 'loki99928yandex'}
                 })
@@ -47,10 +47,10 @@ describe('RegisterForm', () => {
             expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_IS_NOT_VALID);
         })
 
-        it('too long', async () => {
+        it('too long', async (): Promise<void> => {
             renderWithRouter(<Register/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.change(email, {
                     target: {value: 'loki999282342234234234346ty546547456456546/jkdxjlmnkfvbcvb@yandex.ru'}
                 })
@@ -59,19 +59,19 @@ describe('RegisterForm', () => {
         })
     })
 
-    describe('input password', () => {
+    describe('input password', (): void => {
 
-        it('have', async () => {
-            await act(async () => {
+        it('have', async (): Promise<void> => {
+            await act(async (): Promise<void> => {
                 renderWithRouter(<Register/>)
                 expect(screen.getByTestId('input_password')).toBeInTheDocument()
             })
         })
 
-        it('validate', async () => {
+        it('validate', async (): Promise<void> => {
             renderWithRouter(<Register/>)
-            const password = screen.getByTestId('input_password')
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: '123123aA@'}
                 })
@@ -79,10 +79,10 @@ describe('RegisterForm', () => {
             expect(screen.queryByTestId("test_password")).toBeNull();
         })
 
-        it('too short', async () => {
+        it('too short', async (): Promise<void> => {
             renderWithRouter(<Register/>)
-            const password = screen.getByTestId('input_password')
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: 'lk'}
                 })
@@ -90,10 +90,10 @@ describe('RegisterForm', () => {
             expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
         })
 
-        it('too long', async () => {
+        it('too long', async (): Promise<void> => {
             renderWithRouter(<Register/>)
-            const password = screen.getByTestId('input_password')
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            await act(async (): Promise<void> => {
                 fireEvent.change(password, {
                     target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
@@ -102,35 +102,35 @@ describe('RegisterForm', () => {
         })
     })
 
-    describe('btn Send', () => {
-        it('have btn Send', async () => {
-            await act(async () => {
+    describe('btn Send', (): void => {
+        it('have btn Send', async (): Promise<void> => {
+            await act(async (): Promise<void> => {
                 renderWithRouter(<Register/>)
                 expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
             })
         })
-        it('btn disabled after loaded page', async () => {
-            await act(async () => {
+        it('btn disabled after loaded page', async (): Promise<void> => {
+            await act(async (): Promise<void> => {
                 renderWithRouter(<Register/>)
-                const btn = screen.getByRole('button', {name: /Send/i})
+                const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
                 expect(btn).toBeDisabled()
             })
         })
-        it('disabled after error field of email', async () => {
+        it('disabled after error field of email', async (): Promise<void> => {
             renderWithRouter(<Register/>)
-            const email = screen.getByTestId('input_email')
-            const btn = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            await act(async (): Promise<void> => {
                 fireEvent.blur(email)
             });
             expect(btn).toBeDisabled()
         })
-        it('not disabled after the error disappears', async () => {
+        it('not disabled after the error disappears', async (): Promise<void> => {
             renderWithRouter(<Register/>)
-            const email = screen.getByTestId('input_email')
-            const password = screen.getByTestId('input_password')
-            const btn = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            const password: HTMLElement = screen.getByTestId('input_password')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            await act(async (): Promise<void> => {
                 fireEvent.change(email, {
                     target: {value: 'loki99928@yandex.ru'}
                 })
@@ -140,11 +140,11 @@ describe('RegisterForm', () => {
             });
             expect(btn).not.toBeDisabled()
         })
-        it('disabled after error field of password', async () => {
+        it('disabled after error field of password', async (): Promise<void> => {
             renderWithRouter(<Register/>)
-            const password = screen.getByTestId('input_password')
-            const btn = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
+            const password: HTMLElement = screen.getByTestId('input_password')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            await act(async (): Promise<void> => {
                 fireEvent.blur(password)
             });
             expect(btn).toBeDisabled()
@@ -152,19 +152,19 @@ describe('RegisterForm', () => {
     })
 
     // todo-dv нужно разобраться как тестировать переход по ссылкам
-    describe('link', () => {
-        describe('registration', () => {
-            it('to have', async () => {
-                await act(async () => {
+    describe('link', (): void => {
+        describe('registration', (): void => {
+            it('to have', async (): Promise<void> => {
+                await act(async (): Promise<void> => {
                     renderWithRouter(<Register/>)
                     expect(screen.getByRole('link', {name: /Authorize/i}).closest('a')).toHaveAttribute('href', '/auth/')
                 })
             })
         })
 
-        describe('forget', () => {
-            it('to have', async () => {
-                await act(async () => {
+        describe('forget', (): void => {
+            it('to have', async (): Promise<void> => {
+                await act(async (): Promise<void> => {
                     renderWithRouter(<Register/>)
                     expect(screen.getByRole('link', {name: /forget password/i}).closest('a')).toHaveAttribute('href', '/forget/')
                 })

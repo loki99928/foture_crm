@@ -5,28 +5,28 @@ import Forget from "./";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import {MESSAGE} from "../FomControls/FormType";
 
-describe('ForgetForm', () => {
+describe('ForgetForm', (): void => {
 
-    describe('input email', () => {
+    describe('input email', (): void => {
 
-        it('have', function () {
+        it('have', function (): void {
             renderWithRouter(<Forget/>)
             expect(screen.queryByTestId('input_email')).toBeInTheDocument()
         })
 
-        it('required', async () => {
+        it('required', async (): Promise<void> => {
             const {getByTestId} = renderWithRouter(<Forget/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.blur(email)
             });
             expect(getByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
         })
 
-        it('validate', async () => {
+        it('validate', async (): Promise<void> => {
             renderWithRouter(<Forget/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.change(email, {
                     target: {value: 'loki99928@yandex.ru'}
                 })
@@ -34,10 +34,10 @@ describe('ForgetForm', () => {
             expect(screen.queryByTestId("test_email")).toBeNull();
         })
 
-        it('not validate', async () => {
+        it('not validate', async (): Promise<void> => {
             renderWithRouter(<Forget/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.change(email, {
                     target: {value: 'loki99928yandex'}
                 })
@@ -45,10 +45,10 @@ describe('ForgetForm', () => {
             expect(screen.queryByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_IS_NOT_VALID);
         })
 
-        it('too long', async () => {
+        it('too long', async (): Promise<void> => {
             renderWithRouter(<Forget/>)
-            const email = screen.getByTestId('input_email')
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            await act(async (): Promise<void> => {
                 fireEvent.change(email, {
                     target: {value: 'loki999282342234234234346ty546547456456546/jkdxjlmnkfvbcvb@yandex.ru'}
                 })
@@ -57,30 +57,30 @@ describe('ForgetForm', () => {
         })
     })
 
-    describe('btn Send', () => {
-        it('have btn Send', () => {
+    describe('btn Send', (): void => {
+        it('have btn Send', (): void => {
             renderWithRouter(<Forget/>)
             expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
         })
-        it('btn disabled after loaded page', async () => {
+        it('btn disabled after loaded page', async (): Promise<void> => {
             renderWithRouter(<Forget/>)
-            const btn = screen.getByRole('button', {name: /Send/i})
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
             expect(btn).toBeDisabled()
         })
-        it('disabled after error field of email', async () => {
+        it('disabled after error field of email', async (): Promise<void> => {
             renderWithRouter(<Forget/>)
-            const email = screen.getByTestId('input_email')
-            const btn = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            await act(async (): Promise<void> => {
                 fireEvent.blur(email)
             });
             expect(btn).toBeDisabled()
         })
-        it('not disabled after the error disappears', async () => {
+        it('not disabled after the error disappears', async (): Promise<void> => {
             renderWithRouter(<Forget/>)
-            const email = screen.getByTestId('input_email')
-            const btn = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
+            const email: HTMLElement = screen.getByTestId('input_email')
+            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            await act(async (): Promise<void> => {
                 fireEvent.blur(email)
                 fireEvent.change(email, {
                     target: {value: 'loki99928@yandex.ru'}
@@ -91,16 +91,16 @@ describe('ForgetForm', () => {
     })
 
     // todo-dv нужно разобраться как тестировать переход по ссылкам
-    describe('link', () => {
-        describe('registration', () => {
-            it('to have', () => {
+    describe('link', (): void => {
+        describe('registration', (): void => {
+            it('to have', (): void => {
                 renderWithRouter(<Forget/>)
                 expect(screen.getByRole('link', {name: /registration/i}).closest('a')).toHaveAttribute('href', '/registration/')
             })
         })
 
-        describe('forget', () => {
-            it('to have', () => {
+        describe('forget', (): void => {
+            it('to have', (): void => {
                 renderWithRouter(<Forget/>)
                 expect(screen.getByRole('link', {name: /Authorize/i}).closest('a')).toHaveAttribute('href', '/auth/')
             })
