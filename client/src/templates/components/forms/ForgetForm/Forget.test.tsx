@@ -3,7 +3,7 @@ import {act, fireEvent, screen} from "@testing-library/react";
 
 import Forget from "./";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
-import {MESSAGE} from "../FomControls/FormType";
+import {MESSAGE} from "../util/FormType";
 
 describe('ForgetForm', (): void => {
 

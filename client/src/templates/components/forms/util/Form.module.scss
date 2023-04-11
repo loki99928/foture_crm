@@ -39,7 +39,7 @@
 }
 
 .formTitle {
-  padding: 0px 0px 37px;
+  padding: 0 0 37px;
   font-size: 30px;
   //@include sm-block{
   //  padding: 0;
@@ -74,13 +74,13 @@
 
 .formLabelStatic {
   top: -15px;
-  left: 0px;
+  left: 0;
   font-size: 12px;
 }
 
 .formField:focus + .formLabel {
   top: -15px;
-  left: 0px;
+  left: 0;
   font-size: 12px;
 }
 
@@ -107,7 +107,7 @@
 
 .formLabelStatic {
   top: -15px;
-  left: 0px;
+  left: 0;
   //color: #666 !important;
 }
 
@@ -138,7 +138,7 @@
     top: 50%;
     left: 0;
     z-index: 1;
-    height: 0px;
+    height: 0;
     width: 100%;
     content: '';
     pointer-events: none;
@@ -187,7 +187,6 @@ input:-webkit-autofill:active {
   cursor: pointer;
   -ms-user-select: none;
   -moz-user-select: none;
-  -khtml-user-select: none;
   -webkit-user-select: none;
   label{
     cursor: pointer;

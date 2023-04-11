@@ -23,11 +23,6 @@ export const MESSAGE = {
     PASSWORD_NUMBER: 'Must One Number',
 }
 
-type Inputs = {
-    example: string,
-    exampleRequired: string,
-};
-
 export interface fieldsForm {
     email: string
     password: string

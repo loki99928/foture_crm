@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 
-import s from "../../../../components/forms/FomControls/Form.module.scss";
+import s from "../../../../components/forms/util/Form.module.scss";
 import NewPassword from "../../../../components/forms/NewPasswordForm/NewPassword";
 import {actionsAuth} from "../../../../../redux/reducer/auth/actions";
 import {getMessage} from "../../../../../redux/reducer/auth/selectors";

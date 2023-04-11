@@ -6,12 +6,12 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-import s from "../FomControls/Form.module.scss"
+import s from "../util/Form.module.scss"
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 import bannerForm from "../../../assets/images/bg-head-form.jpg";
-import {fieldsForm} from "../FomControls/FormType";
+import {fieldsForm} from "../util/FormType";
 import Input from "../FomControls/Input";
-import {validate} from "../FomControls/Validate";
+import {validate} from "../util/Validate";
 import {FieldError} from "../FomControls/FeidError";
 import {Button} from "../FomControls/Button";
 import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
@@ -35,10 +35,7 @@ const Forget: React.FC = () => {
     const message = useSelector(getMessage)
     const isLoad = useSelector(getIsLoad)
 
-    const [isDisabled, setDisabled] = useState(false)
-
     const onSubmit: SubmitHandler<fieldsForm> = (data: TUser) => {
-        setDisabled(true)
         dispatch(actionsAuth.forgetUserRequest(data))
     };
 

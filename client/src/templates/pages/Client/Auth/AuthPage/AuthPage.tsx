@@ -1,6 +1,6 @@
 import React from "react";
 
-import s from "../../../../components/forms/FomControls/Form.module.scss";
+import s from "../../../../components/forms/util/Form.module.scss";
 import Auth from "../../../../components/forms/AuthForm";
 
 const AuthPage = () => {

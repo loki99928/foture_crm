@@ -1,6 +1,6 @@
 import React from "react";
 import cn from "classnames";
-import s from "./Form.module.scss";
+import s from "../util/Form.module.scss";
 
 export const Button: React.FC<any> = props => {
     const {disabled, ...rest} = props

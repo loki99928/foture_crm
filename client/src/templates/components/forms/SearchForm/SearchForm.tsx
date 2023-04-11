@@ -3,7 +3,7 @@ import cn from "classnames";
 import {SubmitHandler, useForm} from "react-hook-form";
 
 import s from './SearchForm.module.scss'
-import {fieldsSearchForm} from "../FomControls/FormType";
+import {fieldsSearchForm} from "../util/FormType";
 
 const SearchForm: React.FC = () => {
     const {register, handleSubmit} = useForm<fieldsSearchForm>({

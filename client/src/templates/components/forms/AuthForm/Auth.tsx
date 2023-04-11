@@ -11,12 +11,12 @@ import {TUser} from "../../../../redux/reducer/auth/types";
 import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 import {useClearForm} from "../../../../hooks/useClearForm";
-import s from "../FomControls/Form.module.scss"
+import s from "../util/Form.module.scss"
 import bannerForm from "../../../assets/images/bg-head-form.jpg"
-import {fieldsForm} from "../FomControls/FormType";
+import {fieldsForm} from "../util/FormType";
 import Input from "../FomControls/Input";
 import {Button} from "../FomControls/Button";
-import {validate} from "../FomControls/Validate";
+import {validate} from "../util/Validate";
 import {FieldError} from "../FomControls/FeidError";
 
 const SignupSchema = Yup.object().shape({
@@ -41,7 +41,7 @@ const Auth: React.FC = () => {
     const message = useSelector(getMessage)
     const isLoad = useSelector(getIsLoad)
 
-    const onSubmit: SubmitHandler<fieldsForm> = (data: TUser) => {
+    const onSubmit: SubmitHandler<fieldsForm> = (data: TUser): void => {
         dispatch(actionsAuth.authUserRequest(data))
     };
 

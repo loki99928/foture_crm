@@ -6,14 +6,14 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {yupResolver} from "@hookform/resolvers/yup";
 
-import s from "../FomControls/Form.module.scss"
+import s from "../util/Form.module.scss"
 import bannerForm from "../../../assets/images/bg-head-form.jpg"
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 import Input from "../FomControls/Input";
-import {validate} from "../FomControls/Validate";
+import {validate} from "../util/Validate";
 import {FieldError} from "../FomControls/FeidError";
 import {Button} from "../FomControls/Button";
-import {fieldsForm} from "../FomControls/FormType";
+import {fieldsForm} from "../util/FormType";
 import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
 import {TUser} from "../../../../redux/reducer/auth/types";
 import {useClearForm} from "../../../../hooks/useClearForm";
