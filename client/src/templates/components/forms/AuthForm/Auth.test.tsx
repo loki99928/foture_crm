@@ -1,37 +1,18 @@
 import React from "react";
 import {act, fireEvent, screen} from "@testing-library/react";
+import axios, {AxiosStatic} from "axios";
+import configureStore from "redux-mock-store";
 
 import Auth from "./";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import {MESSAGE} from "../FomControls/FormType";
+import {initialStateAuth} from "../../../../redux/reducer/auth";
+import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 
-describe('AuthForm', () => {
+jest.mock('axios');
+const mockedAxios: jest.Mocked<AxiosStatic> = axios as jest.Mocked<typeof axios>;
 
-    describe('event', () => {
-        const setState = jest.fn();
-        it('submit', async () => {
-            jest
-                .spyOn(React, 'useState')
-            // @ts-ignore
-            // .mockImplementationOnce((initState: any) => [initState, setState]);
-            renderWithRouter(<Auth/>)
-            screen.debug()
-            const email: HTMLElement = screen.getByTestId('input_email')
-            const password: HTMLElement = screen.getByTestId('input_password')
-            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
-            await act(async () => {
-                fireEvent.change(email, {
-                    target: {value: 'loki99928@yandex.ru'}
-                })
-                fireEvent.change(password, {
-                    target: {value: '123123aA@'}
-                })
-                fireEvent.submit(btn)
-            });
-            // expect(mockLogin).toBeCalled();
-            screen.debug()
-        })
-    })
+describe('AuthForm', (): void => {
 
     describe('input email', (): void => {
 
