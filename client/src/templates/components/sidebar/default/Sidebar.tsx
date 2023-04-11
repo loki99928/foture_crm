@@ -6,10 +6,10 @@ import s from './Sidebar.module.scss'
 const Sidebar: React.FC = () => {
     return (
         <aside className={s.sidebar}>
-            <div className={s.itemMenu}>
-                <Link to={"/"}>Home</Link>
-                <Link to={"/User"}>User</Link>
-            </div>
+            <nav className={s.itemsMenu}>
+                <Link className={s.itemMenu} to={"/"}>Home</Link>
+                <Link className={s.itemMenu} to={"/User"}>User</Link>
+            </nav>
         </aside>
     )
 }
