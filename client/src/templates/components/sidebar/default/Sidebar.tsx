@@ -8,7 +8,7 @@ const Sidebar: React.FC = () => {
         <aside className={s.sidebar}>
             <nav className={s.itemsMenu}>
                 <Link className={s.itemMenu} to={"/"}>Home</Link>
-                <Link className={s.itemMenu} to={"/User"}>User</Link>
+                <Link className={s.itemMenu} to={"/crm/users"}>Users</Link>
             </nav>
         </aside>
     )

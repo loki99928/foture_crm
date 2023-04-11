@@ -1,16 +1,9 @@
 import React from "react";
 import {act, fireEvent, screen} from "@testing-library/react";
-import axios, {AxiosStatic} from "axios";
-import configureStore from "redux-mock-store";
 
 import Auth from "./";
 import {renderWithRouter} from "../../../../helpers/test/renderWithRouter";
 import {MESSAGE} from "../FomControls/FormType";
-import {initialStateAuth} from "../../../../redux/reducer/auth";
-import {actionsAuth} from "../../../../redux/reducer/auth/actions";
-
-jest.mock('axios');
-const mockedAxios: jest.Mocked<AxiosStatic> = axios as jest.Mocked<typeof axios>;
 
 describe('AuthForm', (): void => {
 

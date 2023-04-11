@@ -27,6 +27,9 @@ const UserMenu = () => {
                 <nav className={cn('menuSelect', s.userMenu)}>
                     <ul>
                         <li className={'menuItem'}>
+                            <NavLink to="/crm/user">Settings user</NavLink>
+                        </li>
+                        <li className={'menuItem'}>
                             <NavLink to="#" onClick={userLogout}>Logout</NavLink>
                         </li>
                     </ul>

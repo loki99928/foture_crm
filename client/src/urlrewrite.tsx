@@ -8,7 +8,7 @@ import RegisterPage from "./templates/pages/Client/Auth/RegisterPage";
 import MessagePage from "./templates/pages/Client/MessagePage";
 import ForgetPasswordPage from "./templates/pages/Client/Auth/ForgetFormPage";
 import UserConfirmationPage from "./templates/pages/Client/Auth/UserConfirmationPage";
-import UserPage from "./templates/pages/Admin/UserPage";
+import UserSettingPage from "./templates/pages/Admin/UserSettingPage";
 import NewPasswordPage from "./templates/pages/Client/Auth/NewPasswordPage";
 
 export interface IRoute {
@@ -64,7 +64,7 @@ export const privatesRouters: IRoute[] = [
     {
         id: 'USER',
         path: '/crm/user',
-        element: <UserPage/>
+        element: <UserSettingPage/>
     },
     {
         id: 'ERROR',
