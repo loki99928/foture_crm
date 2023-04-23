@@ -14,7 +14,7 @@ async function start() {
         }
     );
 
-    // app.useGlobalGuards()
+    app.useGlobalGuards()
 
     /**
      * создание swagger документации http://localhost:5000/api
