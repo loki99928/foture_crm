@@ -1,9 +1,9 @@
-import React from "react";
+import React, {FC} from "react";
 import cn from "classnames"
 
 import s from "./Preloader.module.scss"
 
-const Preloader: React.FC = () => {
+const Preloader: FC = () => {
     return (
         <div className={s.containerLoader}>
             <div className={s.blockLoader}>

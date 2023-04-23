@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import {NavLink} from "react-router-dom";
 import cn from "classnames"
 import * as Yup from "yup";
@@ -23,7 +23,7 @@ const SignupSchema = Yup.object().shape({
     double_password: validate.double_password
 });
 
-const NewPassword: React.FC = () => {
+const NewPassword: FC = () => {
 
     useClearForm()
 

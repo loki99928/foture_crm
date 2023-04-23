@@ -1,10 +1,10 @@
-import React from "react";
+import React, {FC} from "react";
 import {NavLink} from "react-router-dom";
 
 import logo from "../../../assets/images/logo.png";
 import s from "./Logo.element.module.scss";
 
-const Logo: React.FC = () => {
+const Logo: FC = () => {
     return (
         <React.Fragment>
             <NavLink to='/' className={s.logo}>

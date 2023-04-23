@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {FC} from 'react';
 import cn from "classnames";
 import s from "./Alarm.element.module.scss"
 
-const AlarmElement: React.FC = () => {
+const AlarmElement: FC = () => {
 
     const isAlarm = false
 

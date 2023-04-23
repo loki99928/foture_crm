@@ -1,11 +1,11 @@
-import React, {useEffect} from "react";
+import React, {useEffect, FC} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router";
 
 import {actionsAuth} from "../../../../../redux/reducer/auth/actions";
 import {getMessage} from "../../../../../redux/reducer/auth/selectors";
 
-const UserConfirmationPage: React.FC = () => {
+const UserConfirmationPage: FC = () => {
 
     const navigate = useNavigate()
     const {hashUser} = useParams()

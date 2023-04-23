@@ -1,10 +1,10 @@
-import React from "react";
+import React, {FC} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {fieldsForm} from "../util/FormType";
 import {useDispatch} from "react-redux";
 import Input from "../FomControls/Input";
 
-const UserSetting: React.FC = () => {
+const UserSetting: FC = () => {
 
     const dispatch = useDispatch()
 

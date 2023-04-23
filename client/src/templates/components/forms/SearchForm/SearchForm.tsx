@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {FC} from 'react';
 import cn from "classnames";
 import {SubmitHandler, useForm} from "react-hook-form";
 
 import s from './SearchForm.module.scss'
 import {fieldsSearchForm} from "../util/FormType";
 
-const SearchForm: React.FC = () => {
+const SearchForm: FC = () => {
     const {register, handleSubmit} = useForm<fieldsSearchForm>({
         mode: "all",
     });

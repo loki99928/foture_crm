@@ -1,9 +1,9 @@
-import React from "react";
+import React, {FC} from "react";
 import cn from "classnames";
 
 import s from "./Message.element.module.scss";
 
-const MessageElement: React.FC = () => {
+const MessageElement: FC = () => {
     return (
         <React.Fragment>
             <div className="">

@@ -1,8 +1,8 @@
 import cn from "classnames";
-import React from "react";
+import React, {FC} from "react";
 import s from "../util/Form.module.scss";
 
-export const FieldError: React.FC<any> = (props: any) => {
+export const FieldError: FC<any> = (props: any) => {
 
     const {message} = props
 

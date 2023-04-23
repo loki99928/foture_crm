@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, FC} from "react";
 import cn from "classnames"
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -23,7 +23,7 @@ const SignupSchema = Yup.object().shape({
     password: validate.password
 });
 
-const Register: React.FC = () => {
+const Register: FC = () => {
 
     useClearForm()
 

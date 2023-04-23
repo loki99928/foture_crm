@@ -1,9 +1,9 @@
-import React from "react";
+import React, {FC} from "react";
 import cn from "classnames"
 
 import s from "../util/Form.module.scss"
 
-const Input: React.FC<any> = props => {
+const Input: FC<any> = props => {
     const {handlers, errors, field, label, ...rest} = props
 
     const error = errors[props['field']]

@@ -1,9 +1,9 @@
-import React from "react"
+import React, {FC} from "react"
 import {Link} from "react-router-dom";
 
 import s from './Sidebar.module.scss'
 
-const Sidebar: React.FC = () => {
+const Sidebar: FC = () => {
     return (
         <aside className={s.sidebar}>
             <nav className={s.itemsMenu}>

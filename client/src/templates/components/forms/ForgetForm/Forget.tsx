@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, FC} from "react";
 import cn from "classnames";
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -22,7 +22,7 @@ const SignupSchema = Yup.object().shape({
     email: validate.email
 });
 
-const Forget: React.FC = () => {
+const Forget: FC = () => {
 
     useClearForm()
 
