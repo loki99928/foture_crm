@@ -75,11 +75,10 @@ export class AuthService {
                     arrUser.role = UserRole.SUPERADMIN
                 }
 
-                const user = this.UserRepository.create(arrUser);
-                user.avatar = image;
-                await this.UserRepository.save(user);
+                User = this.UserRepository.create(arrUser);
+                User.avatar = image;
+                await this.UserRepository.save(User);
             }
-
             this.eventEmitter.emit('registered.user', User);
 
             return {
