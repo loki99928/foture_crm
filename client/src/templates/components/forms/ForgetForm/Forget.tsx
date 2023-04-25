@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import s from "../util/Form.module.scss"
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 import bannerForm from "../../../assets/images/bg-head-form.jpg";
-import {fieldsForm} from "../util/FormType";
+import {fieldsFormForget} from "../util/FormType";
 import Input from "../FomControls/Input";
 import {validate} from "../util/Validate";
 import {FieldError} from "../FomControls/FeidError";
@@ -26,16 +26,21 @@ const Forget: FC = () => {
 
     useClearForm()
 
-    const {handleSubmit, formState: {errors, isValid}, ...handlers} = useForm<fieldsForm>({
-        mode: "all",
-        resolver: yupResolver(SignupSchema)
-    });
+    const {
+        handleSubmit,
+        formState: {errors, isValid},
+        ...handlers
+    } = useForm<fieldsFormForget>(
+        {
+            mode: "all",
+            resolver: yupResolver(SignupSchema)
+        });
 
     const dispatch = useDispatch()
     const message = useSelector(getMessage)
     const isLoad = useSelector(getIsLoad)
 
-    const onSubmit: SubmitHandler<fieldsForm> = (data: TUser) => {
+    const onSubmit: SubmitHandler<fieldsFormForget> = (data: TUser) => {
         dispatch(actionsAuth.forgetUserRequest(data))
     };
 

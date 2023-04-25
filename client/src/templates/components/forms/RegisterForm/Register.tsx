@@ -12,7 +12,7 @@ import s from "../util/Form.module.scss"
 import Input from "../FomControls/Input";
 import {FieldError} from "../FomControls/FeidError";
 import {Button} from "../FomControls/Button";
-import {fieldsForm} from "../util/FormType";
+import {fieldsFormRegister} from "../util/FormType";
 import {TUser} from "../../../../redux/reducer/auth/types";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {validate} from "../util/Validate";
@@ -27,11 +27,15 @@ const Register: FC = () => {
 
     useClearForm()
 
-    const {handleSubmit, formState: {errors, isValid}, ...handlers} = useForm<fieldsForm>({
-        defaultValues: {
-            email: 'loki99928@yandex.ru',
-            password: '123Qw@',
-        },
+    const {
+        handleSubmit,
+        formState: {errors, isValid},
+        ...handlers
+    } = useForm<fieldsFormRegister>({
+        // defaultValues: {
+        //     email: 'loki99928@yandex.ru',
+        //     password: '123Qw@',
+        // },
         mode: "all",
         resolver: yupResolver(SignupSchema)
     });
@@ -40,7 +44,7 @@ const Register: FC = () => {
     const message = useSelector(getMessage)
     const isLoad = useSelector(getIsLoad)
 
-    const onSubmit: SubmitHandler<fieldsForm> = (data: TUser) => {
+    const onSubmit: SubmitHandler<fieldsFormRegister> = (data: TUser) => {
         dispatch(actionsAuth.registerUserRequest(data))
     };
 

@@ -6,7 +6,10 @@ import s from './SearchForm.module.scss'
 import {fieldsSearchForm} from "../util/FormType";
 
 const SearchForm: FC = () => {
-    const {register, handleSubmit} = useForm<fieldsSearchForm>({
+    const {
+        register,
+        handleSubmit
+    } = useForm<fieldsSearchForm>({
         mode: "all",
     });
 

@@ -13,7 +13,7 @@ import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 import {useClearForm} from "../../../../hooks/useClearForm";
 import s from "../util/Form.module.scss"
 import bannerForm from "../../../assets/images/bg-head-form.jpg"
-import {fieldsForm} from "../util/FormType";
+import {fieldsFormAuth} from "../util/FormType";
 import Input from "../FomControls/Input";
 import {Button} from "../FomControls/Button";
 import {validate} from "../util/Validate";
@@ -28,7 +28,11 @@ const Auth: FC = () => {
 
     useClearForm()
 
-    const {handleSubmit, formState: {errors, isValid}, ...handlers} = useForm<fieldsForm>({
+    const {
+        handleSubmit,
+        formState: {errors, isValid},
+        ...handlers
+    } = useForm<fieldsFormAuth>({
         // defaultValues: {
         //     email: 'loki99928@yandex.ru',
         //     password: '123Qw@',
@@ -41,7 +45,7 @@ const Auth: FC = () => {
     const message = useSelector(getMessage)
     const isLoad = useSelector(getIsLoad)
 
-    const onSubmit: SubmitHandler<fieldsForm> = (data: TUser): void => {
+    const onSubmit: SubmitHandler<fieldsFormAuth> = (data: TUser): void => {
         dispatch(actionsAuth.authUserRequest(data))
     };
 

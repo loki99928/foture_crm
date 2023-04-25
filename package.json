@@ -16,8 +16,8 @@
     "concurrently": "^6.4.0",
     "cross-env": "^7.0.3"
   },
-  "devDependencies": {},
   "main": "index.js",
   "author": "Babanin_DV <loki99928@yandex.ru>",
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "yarn@3.5.0"
 }

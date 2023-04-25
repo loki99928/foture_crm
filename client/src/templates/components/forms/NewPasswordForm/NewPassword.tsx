@@ -13,7 +13,7 @@ import Input from "../FomControls/Input";
 import {validate} from "../util/Validate";
 import {FieldError} from "../FomControls/FeidError";
 import {Button} from "../FomControls/Button";
-import {fieldsForm} from "../util/FormType";
+import {fieldsFormNewPassword} from "../util/FormType";
 import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
 import {TUser} from "../../../../redux/reducer/auth/types";
 import {useClearForm} from "../../../../hooks/useClearForm";
@@ -27,7 +27,11 @@ const NewPassword: FC = () => {
 
     useClearForm()
 
-    const {handleSubmit, formState: {errors, isValid}, ...handlers} = useForm<fieldsForm>({
+    const {
+        handleSubmit,
+        formState: {errors, isValid},
+        ...handlers
+    } = useForm<fieldsFormNewPassword>({
         mode: "all",
         resolver: yupResolver(SignupSchema)
     });
@@ -36,7 +40,7 @@ const NewPassword: FC = () => {
     const message = useSelector(getMessage)
     const isLoad = useSelector(getIsLoad)
 
-    const onSubmit: SubmitHandler<fieldsForm> = (data: TUser) => {
+    const onSubmit: SubmitHandler<fieldsFormNewPassword> = (data: TUser) => {
         dispatch(actionsAuth.createNewPasswordResponse(data))
     };
     return (
