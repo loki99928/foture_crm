@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, {FC, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 import cn from "classnames"
@@ -27,6 +27,12 @@ const SignupSchema = Yup.object().shape({
 const Auth: FC = () => {
 
     useClearForm()
+
+    if (1) {
+        useEffect(() => {
+            console.log('TEST')
+        }, [])
+    }
 
     const {
         handleSubmit,
