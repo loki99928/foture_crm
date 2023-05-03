@@ -28,12 +28,6 @@ const Auth: FC = () => {
 
     useClearForm()
 
-    if (1) {
-        useEffect(() => {
-            console.log('TEST')
-        }, [])
-    }
-
     const {
         handleSubmit,
         formState: {errors, isValid},

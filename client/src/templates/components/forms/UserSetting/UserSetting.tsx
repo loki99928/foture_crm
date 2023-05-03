@@ -28,7 +28,7 @@ const UserSetting: FC = () => {
 
     useEffect(() => {
         let arr = handlers.watch()
-        console.log(arr.email)
+        // console.log(arr.email)
     })
 
     return (

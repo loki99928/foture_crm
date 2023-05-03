@@ -14,10 +14,10 @@ describe('NewPassword', (): void => {
             expect(screen.getByTestId('input_password')).toBeInTheDocument()
         })
 
-        it('validate', async (): Promise<void> => {
+        it('validate', async () => {
             renderWithRouter(<NewPassword/>)
-            const password: HTMLElement = screen.getByTestId('input_password')
-            await act(async (): Promise<void> => {
+            const password = screen.getByTestId('input_password')
+            await act(async () => {
                 fireEvent.change(password, {
                     target: {value: '123123aA@'}
                 })
@@ -25,10 +25,10 @@ describe('NewPassword', (): void => {
             expect(screen.queryByTestId("test_password")).toBeNull();
         })
 
-        it('too short', async (): Promise<void> => {
+        it('too short', async () => {
             renderWithRouter(<NewPassword/>)
-            const password: HTMLElement = screen.getByTestId('input_password')
-            await act(async (): Promise<void> => {
+            const password = screen.getByTestId('input_password')
+            await act(async () => {
                 fireEvent.change(password, {
                     target: {value: 'lk'}
                 })
@@ -36,10 +36,10 @@ describe('NewPassword', (): void => {
             expect(screen.queryByTestId("test_password")).toHaveTextContent(MESSAGE.PASSWORD_MIN_LENGTH);
         })
 
-        it('too long', async (): Promise<void> => {
+        it('too long', async () => {
             renderWithRouter(<NewPassword/>)
-            const password: HTMLElement = screen.getByTestId('input_password')
-            await act(async (): Promise<void> => {
+            const password = screen.getByTestId('input_password')
+            await act(async () => {
                 fireEvent.change(password, {
                     target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
@@ -55,16 +55,16 @@ describe('NewPassword', (): void => {
             expect(screen.getByTestId('input_double_password')).toBeInTheDocument()
         })
 
-        it('validate', async (): Promise<void> => {
+        it('validate', async () => {
             renderWithRouter(<NewPassword/>)
-            const password: HTMLElement = screen.getByTestId('input_password')
-            const double_password: HTMLElement = screen.getByTestId('input_double_password')
-            await act(async (): Promise<void> => {
+            const password = screen.getByTestId('input_password')
+            const double_password = screen.getByTestId('input_double_password')
+            await act(async () => {
                 fireEvent.change(password, {
                     target: {value: '123123aA@'}
                 })
             });
-            await act(async (): Promise<void> => {
+            await act(async () => {
                 fireEvent.change(double_password, {
                     target: {value: '123123aA@'}
                 })
@@ -73,11 +73,11 @@ describe('NewPassword', (): void => {
             expect(screen.queryByTestId("test_double_password")).toBeNull();
         })
 
-        it('different passwords', async (): Promise<void> => {
+        it('different passwords', async () => {
             renderWithRouter(<NewPassword/>)
-            const password: HTMLElement = screen.getByTestId('input_password')
-            const double_password: HTMLElement = screen.getByTestId('input_double_password')
-            await act(async (): Promise<void> => {
+            const password = screen.getByTestId('input_password')
+            const double_password = screen.getByTestId('input_double_password')
+            await act(async () => {
                 fireEvent.change(password, {
                     target: {value: '123123aA@'}
                 })
@@ -88,10 +88,10 @@ describe('NewPassword', (): void => {
             expect(screen.queryByTestId("test_double_password")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
 
-        it('too short', async (): Promise<void> => {
+        it('too short', async () => {
             renderWithRouter(<NewPassword/>)
-            const double_password: HTMLElement = screen.getByTestId('input_double_password')
-            await act(async (): Promise<void> => {
+            const double_password = screen.getByTestId('input_double_password')
+            await act(async () => {
                 fireEvent.change(double_password, {
                     target: {value: 'lk'}
                 })
@@ -99,10 +99,10 @@ describe('NewPassword', (): void => {
             expect(screen.queryByTestId("test_double_password")).toHaveTextContent(MESSAGE.PASSWORD_MISMATCH);
         })
 
-        it('too long', async (): Promise<void> => {
+        it('too long', async () => {
             renderWithRouter(<NewPassword/>)
-            const double_password: HTMLElement = screen.getByTestId('input_double_password')
-            await act(async (): Promise<void> => {
+            const double_password = screen.getByTestId('input_double_password')
+            await act(async () => {
                 fireEvent.change(double_password, {
                     target: {value: '1232133554756786788566345345345345456756878989008907890678'}
                 })
@@ -116,43 +116,43 @@ describe('NewPassword', (): void => {
             renderWithRouter(<NewPassword/>)
             expect(screen.getByRole('button', {name: /Send/i})).toBeInTheDocument()
         })
-        it('btn disabled after loaded page', async (): Promise<void> => {
+        it('btn disabled after loaded page', async () => {
             renderWithRouter(<NewPassword/>)
-            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
+            const btn = screen.getByRole('button', {name: /Send/i})
             expect(btn).toBeDisabled()
         })
-        it('disabled after error field of password', async (): Promise<void> => {
+        it('disabled after error field of password', async () => {
             renderWithRouter(<NewPassword/>)
-            const password: HTMLElement = screen.getByTestId('input_password')
-            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
-            await act(async (): Promise<void> => {
+            const password = screen.getByTestId('input_password')
+            const btn = screen.getByRole('button', {name: /Send/i})
+            await act(async () => {
                 fireEvent.blur(password)
             });
             expect(btn).toBeDisabled()
         })
-        it('disabled after error field of double password', async (): Promise<void> => {
+        it('disabled after error field of double password', async () => {
             renderWithRouter(<NewPassword/>)
-            const double_password: HTMLElement = screen.getByTestId('input_double_password')
-            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
-            await act(async (): Promise<void> => {
+            const double_password = screen.getByTestId('input_double_password')
+            const btn = screen.getByRole('button', {name: /Send/i})
+            await act(async () => {
                 fireEvent.blur(double_password)
             });
             expect(btn).toBeDisabled()
         })
-        it('not disabled after the error disappears', async (): Promise<void> => {
+        it('not disabled after the error disappears', async () => {
             renderWithRouter(<NewPassword/>)
-            const password: HTMLElement = screen.getByTestId('input_password')
-            const double_password: HTMLElement = screen.getByTestId('input_double_password')
-            const btn: HTMLElement = screen.getByRole('button', {name: /Send/i})
-            await act(async (): Promise<void> => {
+            const password = screen.getByTestId('input_password')
+            const double_password = screen.getByTestId('input_double_password')
+            const btn = screen.getByRole('button', {name: /Send/i})
+            await act(async () => {
                 fireEvent.blur(password)
             });
-            await act(async (): Promise<void> => {
+            await act(async () => {
                 fireEvent.change(password, {
                     target: {value: '123123aA@'}
                 })
             });
-            await act(async (): Promise<void> => {
+            await act(async () => {
                 fireEvent.change(double_password, {
                     target: {value: '123123aA@'}
                 })
