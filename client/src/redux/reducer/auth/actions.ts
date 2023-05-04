@@ -1,7 +1,8 @@
 import {InferActionTypes} from "../../store";
 import {initialStateAuth} from "./index";
 import {IResponseServer} from "../../../types/ApiUsersTypes";
-import {authEnum, TUser} from "./types";
+import {authEnum} from "./types";
+import {TUser} from "../user/types";
 
 export const actionsAuth = {
 

@@ -7,7 +7,6 @@ import * as Yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 
 
-import {TUser} from "../../../../redux/reducer/auth/types";
 import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
 import {useClearForm} from "../../../../hooks/useClearForm";
@@ -18,6 +17,7 @@ import Input from "../FomControls/Input";
 import {Button} from "../FomControls/Button";
 import {validate} from "../util/Validate";
 import {FieldError} from "../FomControls/FeidError";
+import {TUser} from "../../../../redux/reducer/user/types";
 
 const SignupSchema = Yup.object().shape({
     email: validate.email,

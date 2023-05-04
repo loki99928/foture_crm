@@ -15,8 +15,8 @@ import {FieldError} from "../FomControls/FeidError";
 import {Button} from "../FomControls/Button";
 import {fieldsFormNewPassword} from "../util/FormType";
 import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
-import {TUser} from "../../../../redux/reducer/auth/types";
 import {useClearForm} from "../../../../hooks/useClearForm";
+import {TUser} from "../../../../redux/reducer/user/types";
 
 const SignupSchema = Yup.object().shape({
     password: validate.password,

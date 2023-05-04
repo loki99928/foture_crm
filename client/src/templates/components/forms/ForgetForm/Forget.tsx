@@ -15,8 +15,8 @@ import {validate} from "../util/Validate";
 import {FieldError} from "../FomControls/FeidError";
 import {Button} from "../FomControls/Button";
 import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
-import {TUser} from "../../../../redux/reducer/auth/types";
 import {useClearForm} from "../../../../hooks/useClearForm";
+import {TUser} from "../../../../redux/reducer/user/types";
 
 const SignupSchema = Yup.object().shape({
     email: validate.email

@@ -11,7 +11,7 @@ const SignupSchema = Yup.object().shape({
     email: validate.email,
     password: validate.password,
     double_password: validate.double_password,
-    login: validate.double_password
+    login: validate.login
 });
 
 const UserSetting: FC = () => {

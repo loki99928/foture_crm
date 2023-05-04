@@ -13,10 +13,10 @@ import Input from "../FomControls/Input";
 import {FieldError} from "../FomControls/FeidError";
 import {Button} from "../FomControls/Button";
 import {fieldsFormRegister} from "../util/FormType";
-import {TUser} from "../../../../redux/reducer/auth/types";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {validate} from "../util/Validate";
 import {useClearForm} from "../../../../hooks/useClearForm";
+import {TUser} from "../../../../redux/reducer/user/types";
 
 const SignupSchema = Yup.object().shape({
     email: validate.email,

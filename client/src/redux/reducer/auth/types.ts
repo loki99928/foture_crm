@@ -1,3 +1,5 @@
+import {TUser} from "../user/types";
+
 export enum authEnum {
     AUTH_LOAD_FORM = 'CRM/AUTH/AUTH_LOAD_FORM',
     CHECK_AUTH_USER_REQUEST = 'CRM/AUTH/CHECK_AUTH_USER_REQUEST',
@@ -23,16 +25,6 @@ export enum authEnum {
     CREATE_NEW_PASSWORD_FAIL = 'CRM/AUTH/CREATE_NEW_PASSWORD_FAIL',
     LOGOUT_REQUEST = 'CRM/AUTH/LOGOUT_REQUEST',
     LOGOUT_SUCCESS = 'CRM/AUTH/LOGOUT_SUCCESS'
-}
-
-export type TUser = {
-    userId?: number
-    email?: string
-    password?: string
-    accessToken?: string
-    avatarUrl?: string
-    role?: string
-    login?: string
 }
 
 export type TInitialStateAuth = {

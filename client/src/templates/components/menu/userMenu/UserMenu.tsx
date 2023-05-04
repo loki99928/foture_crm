@@ -5,8 +5,8 @@ import {useDispatch, useSelector} from "react-redux";
 
 import s from "./UserMenu.module.scss";
 import {getUser} from "../../../../redux/reducer/auth/selectors";
-import {TUser} from "../../../../redux/reducer/auth/types";
 import {actionsAuth} from "../../../../redux/reducer/auth/actions";
+import {TUser} from "../../../../redux/reducer/user/types";
 
 const UserMenu = () => {
 

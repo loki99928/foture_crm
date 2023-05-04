@@ -1,6 +1,7 @@
 import {ActionTypeAuth, InitialStateType} from "./actions";
 import {ResultStatusCodeEnum} from "../../../types/ApiUsersTypes";
 import {authEnum, TInitialStateAuth} from "./types";
+import {initialStateUser} from "../user";
 
 export let initialStateAuth = {
     isLoad: false,
@@ -9,23 +10,18 @@ export let initialStateAuth = {
     status: undefined,
     typeRequest: undefined,
     hashUser: undefined,
-    user: {
-        userId: undefined,
-        email: undefined,
-        password: undefined,
-        accessToken: undefined,
-    }
+    user: initialStateUser
 } as TInitialStateAuth
 
 const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialStateType => {
     switch (action.type) {
         case authEnum.AUTH_LOAD_FORM:
-            return ({
+            return {
                 ...state,
                 status: undefined,
                 message: undefined,
                 user: undefined,
-            })
+            }
 
         // регистрация пользователя
         case authEnum.REGISTER_USER_REQUEST:
@@ -209,6 +205,7 @@ const AuthReducer = (state = initialStateAuth, action: ActionTypeAuth): InitialS
                 message: action.payload.message,
                 hashUser: undefined,
             }
+        // логаут пользователя
         case authEnum.LOGOUT_SUCCESS:
             return {
                 ...state,
