@@ -1,0 +1,27 @@
+.containerPopup {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.23);
+}
+
+.blockPopup {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 100px;
+}
+
+.boxPopup {
+  min-width: 300px;
+  min-height: 100px;
+  background: #fff;
+}
+
+.popupTitle {
+
+}

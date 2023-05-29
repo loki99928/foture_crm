@@ -10,6 +10,7 @@ import ForgetPasswordPage from "./templates/pages/Client/Auth/ForgetFormPage";
 import UserConfirmationPage from "./templates/pages/Client/Auth/UserConfirmationPage";
 import UserSettingPage from "./templates/pages/Admin/UserSettingPage";
 import NewPasswordPage from "./templates/pages/Client/Auth/NewPasswordPage";
+import WatermarkPage from "./templates/pages/Admin/WatermarkPage";
 
 export interface IRoute {
     id: string
@@ -65,6 +66,11 @@ export const privatesRouters: IRoute[] = [
         id: 'USER',
         path: '/crm/user',
         element: <UserSettingPage/>
+    },
+    {
+        id: 'WATERMARK',
+        path: '/crm/watermark',
+        element: <WatermarkPage/>
     },
     {
         id: 'ERROR',
