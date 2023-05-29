@@ -33,10 +33,10 @@ const Auth: FC = () => {
         formState: {errors, isValid},
         ...handlers
     } = useForm<fieldsFormAuth>({
-        // defaultValues: {
-        //     email: 'loki99928@yandex.ru',
-        //     password: '123Qw@',
-        // },
+        defaultValues: {
+            email: 'loki99928@yandex.ru',
+            password: '123Qw@',
+        },
         mode: "all",
         resolver: yupResolver(SignupSchema)
     });
