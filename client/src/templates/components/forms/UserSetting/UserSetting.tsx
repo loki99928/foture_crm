@@ -8,10 +8,10 @@ import * as Yup from "yup";
 import {validate} from "../util/Validate";
 
 const SignupSchema = Yup.object().shape({
+    login: validate.login,
     email: validate.email,
     password: validate.password,
     double_password: validate.double_password,
-    login: validate.login
 });
 
 const UserSetting: FC = () => {

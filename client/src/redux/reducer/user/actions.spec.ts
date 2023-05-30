@@ -9,4 +9,7 @@ describe('UserReduser', () => {
         store.clearActions();
     });
 
+    it('test', function () {
+
+    });
 })
