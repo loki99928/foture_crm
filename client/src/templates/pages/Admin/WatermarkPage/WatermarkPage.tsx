@@ -7,7 +7,7 @@ import PopupWatermark from "../../../components/popup/watermark";
 
 const WatermarkPage: FC = () => {
     return (
-        <React.Fragment>
+        <>
             <div className="wrapper container">
                 <Header/>
                 <div className="row">
@@ -18,7 +18,7 @@ const WatermarkPage: FC = () => {
                 </div>
                 <PopupWatermark title="Add Watermark"/>
             </div>
-        </React.Fragment>
+        </>
     )
 }
 export default WatermarkPage

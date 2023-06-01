@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 
 const SettingsMenu = () => {
     return (
-        <React.Fragment>
+        <>
             <div className={cn('containerMenuSelect', s.settings__Menu)}>
                 <svg className={cn(s.menuSvg, s.settingMenu)} viewBox="0 0 16 16">
                     <path
@@ -21,7 +21,7 @@ const SettingsMenu = () => {
                     </ul>
                 </nav>
             </div>
-        </React.Fragment>
+        </>
     )
 }
 

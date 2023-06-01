@@ -34,7 +34,9 @@ $bg-color: #726BB9;
   }
 
   .row {
-    @include row-flex()
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
   }
 
   .content {
@@ -44,6 +46,10 @@ $bg-color: #726BB9;
     padding: 20px 30px;
     box-sizing: border-box;
     background: #F1F0F5;
+    @include sm-block() {
+      width: 100%;
+      padding: 10px 15px;
+    }
   }
 
   .container {

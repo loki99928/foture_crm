@@ -1,0 +1,44 @@
+.ham {
+    display: none;
+    margin-left: 30px;
+    margin-bottom: 4px;
+    transition: transform 400ms;
+    cursor: pointer;
+    user-select: none;
+    @include sm-block() {
+        display: block;
+        margin-left: 10px;
+    }
+}
+
+.hamRotate.active {
+    transform: rotate(45deg);
+}
+
+.hamRotate180.active {
+    transform: rotate(180deg);
+}
+
+.line {
+    fill: none;
+    transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+    stroke: $bg-color;
+    stroke-width: 5.5;
+    stroke-linecap: round;
+}
+
+.ham4 .top {
+    stroke-dasharray: 40 121;
+}
+
+.ham4 .bottom {
+    stroke-dasharray: 40 121;
+}
+
+.ham4.active .top {
+    stroke-dashoffset: -68px;
+}
+
+.ham4.active .bottom {
+    stroke-dashoffset: -68px;
+}

@@ -10,6 +10,9 @@
 
 .menu__alarm {
     margin-left: 30px;
+    @include sm-block() {
+        margin-left: 15px;
+    }
 }
 
 .alarm_active {

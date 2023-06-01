@@ -4,7 +4,7 @@ import Header from "../../../components/header/default";
 
 const HomePage = () => {
     return (
-        <React.Fragment>
+        <>
             <div className="wrapper container">
                 <Header/>
                 <div className="row">
@@ -14,7 +14,7 @@ const HomePage = () => {
                     </main>
                 </div>
             </div>
-        </React.Fragment>
+        </>
     )
 }
 

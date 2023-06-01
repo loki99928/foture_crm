@@ -3,6 +3,18 @@
     align-items: center;
     flex: 1;
     padding: 0 30px;
+    @include sm-block() {
+        padding-right: 0;
+        padding-left: 10px;
+    }
+}
+
+.adaptiveMenu {
+    display: flex;
+    align-items: center;
+    @include sm-block() {
+        display: none;
+    }
 }
 
 .container__menu {

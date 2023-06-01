@@ -3,3 +3,9 @@
     stroke: $bg-color;
     stroke-width: 1.5px;
 }
+
+.alarmContainer {
+    @include sm-block() {
+        margin-left: auto;
+    }
+}

@@ -19,23 +19,21 @@ const UserMenu = () => {
     }
 
     return (
-        <React.Fragment>
-            <div className={cn('containerMenuSelect', s.menu__user)}>
+        <div className={cn('containerMenuSelect', s.menu__user)}>
                 <span className={cn(s.avatarMenu)}>
                     <img className={s.menuImg} src={user.avatarUrl} alt={user.login}/>
                 </span>
-                <nav className={cn('menuSelect', s.userMenu)}>
-                    <ul>
-                        <li className={'menuItem'}>
-                            <NavLink to="/crm/user">Settings user</NavLink>
-                        </li>
-                        <li className={'menuItem'}>
-                            <NavLink to="#" onClick={userLogout}>Logout</NavLink>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </React.Fragment>
+            <nav className={cn('menuSelect', s.userMenu)}>
+                <ul>
+                    <li className={'menuItem'}>
+                        <NavLink to="/crm/user">Settings user</NavLink>
+                    </li>
+                    <li className={'menuItem'}>
+                        <NavLink to="#" onClick={userLogout}>Logout</NavLink>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     )
 }
 

@@ -18,8 +18,8 @@ $offset_md_one_side: ($offset_md / 2);
 $offset_sm_one_side: ($offset_sm / 2);
 $offset_xs_one_side: ($offset_xs / 2);
 
-$fields: 5px;
-$fields_sm: 15px;
+$fields: 15px;
+$fields_sm: 7px;
 
 @mixin wrapper-full() {
     padding-left: $fields;

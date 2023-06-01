@@ -11,6 +11,10 @@
         margin-left: 15px;
         font-size: 30px;
         font-family: 'sono', serif;
+        @include sm-block() {
+            font-size: 20px;
+            font-weight: 600;
+        }
     }
 
     &:before {
@@ -22,9 +26,17 @@
         background: #F1F0F5;
         content: '';
     }
+
+    @include sm-block() {
+        width: 100px;
+    }
 }
 
 .logoImg {
     width: 40px;
     height: 40px;
+    @include sm-block() {
+        width: 25px;
+        height: 25px;
+    }
 }

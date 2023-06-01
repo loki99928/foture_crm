@@ -6,7 +6,7 @@ import UserSetting from "../../../components/forms/UserSetting";
 
 const UserSettingPage = () => {
     return (
-        <React.Fragment>
+        <>
             <div className="wrapper container">
                 <Header/>
                 <div className="row">
@@ -16,7 +16,7 @@ const UserSettingPage = () => {
                     </main>
                 </div>
             </div>
-        </React.Fragment>
+        </>
     )
 }
 
