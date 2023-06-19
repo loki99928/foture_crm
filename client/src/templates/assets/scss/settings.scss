@@ -71,14 +71,21 @@ $bg-color: #726BB9;
   }
 
   .menuSelect {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    min-width: 200px;
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(30px);
-    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.1);
+      position: absolute;
+      top: 100%;
+      right: 0;
+      min-width: 200px;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(30px);
+      box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.1);
+      @include sm-block() {
+          position: static;
+          transform: translateY(0px);
+          opacity: 1;
+          visibility: visible;
+          box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0);
+      }
   }
 
   .menuItem {

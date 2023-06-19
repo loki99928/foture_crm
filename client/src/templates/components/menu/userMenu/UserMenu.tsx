@@ -20,9 +20,10 @@ const UserMenu = () => {
 
     return (
         <div className={cn('containerMenuSelect', s.menu__user)}>
-                <span className={cn(s.avatarMenu)}>
-                    <img className={s.menuImg} src={user.avatarUrl} alt={user.login}/>
-                </span>
+            <span className={s.userMenuTitle}>User menu</span>
+            <span className={cn(s.avatarMenu)}>
+                <img className={s.menuImg} src={user.avatarUrl} alt={user.login}/>
+            </span>
             <nav className={cn('menuSelect', s.userMenu)}>
                 <ul>
                     <li className={'menuItem'}>

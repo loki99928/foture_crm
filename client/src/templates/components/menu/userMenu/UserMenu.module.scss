@@ -1,10 +1,31 @@
-.menu__user{
+.menu__user {
     margin-left: 30px;
-    img{
+
+    img {
         border-radius: 50%;
     }
+
+    @include sm-block() {
+        margin-left: 0;
+    }
 }
-.menuImg{
+
+.avatarMenu {
+    @include sm-block() {
+        display: none;
+    }
+}
+
+.menuImg {
     width: 40px;
     height: 40px;
+}
+
+.userMenuTitle {
+    font-size: 12px;
+    color: #666666;
+    display: none;
+    @include sm-block() {
+        display: inline-block;
+    }
 }

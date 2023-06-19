@@ -12,9 +12,33 @@
 .adaptiveMenu {
     display: flex;
     align-items: center;
+    transition: .3s;
     @include sm-block() {
-        display: none;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        z-index: 9;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        max-width: 360px;
+        width: 0;
+        padding: 45px 10px 10px 20px;
+        opacity: 0;
+        visibility: hidden;
+        box-sizing: border-box;
+        align-items: flex-start;
+        background: #fff;
     }
+    @include xs-block() {
+        max-width: 100%;
+    }
+}
+
+.adaptiveMenu.open {
+    opacity: 1;
+    width: 100%;
+    visibility: visible;
 }
 
 .container__menu {

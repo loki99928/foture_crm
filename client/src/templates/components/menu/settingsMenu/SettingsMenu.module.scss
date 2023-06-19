@@ -1,11 +1,31 @@
 .settings__Menu{
     margin-left: 30px;
+    @include sm-block() {
+        margin-left: 0;
+    }
 }
-.menuSvg{
+
+.menuSvg {
     width: 25px;
     height: 25px;
     padding: 7px 0;
-    path{
+
+    path {
         fill: $bg-color;
+    }
+}
+
+.settingMenu {
+    @include sm-block() {
+        display: none;
+    }
+}
+
+.settingMenuTitle {
+    font-size: 12px;
+    color: #666666;
+    display: none;
+    @include sm-block() {
+        display: inline-block;
     }
 }

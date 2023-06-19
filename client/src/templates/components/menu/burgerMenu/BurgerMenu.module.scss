@@ -1,5 +1,7 @@
 .ham {
     display: none;
+    position: relative;
+    z-index: 10;
     margin-left: 30px;
     margin-bottom: 4px;
     transition: transform 400ms;
