@@ -1,0 +1,18 @@
+.eye {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: 10px;
+    top: 9px;
+    background-size: contain;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.eye_open {
+    background-image: url('/templates/assets/images/icon/eye-open-svgrepo-com.svg');
+}
+
+.eye_closed {
+    background-image: url('/templates/assets/images/icon/eye-closed-svgrepo-com.svg');
+}

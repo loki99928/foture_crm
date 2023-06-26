@@ -15,12 +15,12 @@ describe('ForgetForm', (): void => {
         })
 
         it('required', async (): Promise<void> => {
-            const {getByTestId} = renderWithRouter(<Forget/>)
+            renderWithRouter(<Forget/>)
             const email: HTMLElement = screen.getByTestId('input_email')
             await act(async (): Promise<void> => {
                 fireEvent.blur(email)
             });
-            expect(getByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
+            expect(screen.getByTestId("test_email")).toHaveTextContent(MESSAGE.EMAIL_REQUIRED);
         })
 
         it('validate', async (): Promise<void> => {

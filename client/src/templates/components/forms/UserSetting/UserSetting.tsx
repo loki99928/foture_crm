@@ -1,11 +1,13 @@
-import React, {FC, useEffect} from "react";
+import React, {FC, useEffect, useLayoutEffect} from "react";
 import {useForm} from "react-hook-form";
 import {fieldsUserSettingsForm} from "../util/FormType";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Input from "../FomControls/Input";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import {validate} from "../util/Validate";
+import {Button} from "../FomControls/Button";
+import {getIsLoad, getMessage} from "../../../../redux/reducer/auth/selectors";
 
 const SignupSchema = Yup.object().shape({
     login: validate.login,
@@ -19,17 +21,15 @@ const UserSetting: FC = () => {
     const dispatch = useDispatch()
 
     const {
-        formState: {errors},
+        formState: {errors, isValid},
         ...handlers
     } = useForm<fieldsUserSettingsForm>({
         mode: "all",
         resolver: yupResolver(SignupSchema)
     });
 
-    useEffect(() => {
-        let arr = handlers.watch()
-        // console.log(arr.email)
-    })
+    const message = useSelector(getMessage)
+    const isLoad = useSelector(getIsLoad)
 
     return (
         <>
@@ -59,6 +59,7 @@ const UserSetting: FC = () => {
                        handlers={handlers}
                        type='password'
                        label='Password confirmation'/>
+                <Button disabled={isLoad || !isValid}/>
             </form>
         </>
     )

@@ -47,8 +47,8 @@ $bg-color: #726BB9;
     box-sizing: border-box;
     background: #F1F0F5;
     @include sm-block() {
-      width: 100%;
-      padding: 10px 15px;
+        width: 100%;
+        padding: 25px 15px 10px;
     }
   }
 

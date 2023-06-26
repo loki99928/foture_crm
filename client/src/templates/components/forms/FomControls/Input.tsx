@@ -1,14 +1,26 @@
-import React, {FC} from "react";
+import React, {FC, useEffect, useState} from "react";
 import cn from "classnames"
 
 import s from "../util/Form.module.scss"
+import Eye from "../../elements/eye";
 
 const Input: FC<any> = props => {
     const {handlers, errors, field, label, ...rest} = props
 
     const error = errors[props['field']]
-
     const value = handlers.watch(field)
+
+    const [showPassword, setShowPassword] = useState(false)
+
+    const changeShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
+
+    const typeField = rest.type
+
+    if (showPassword) {
+        rest.type = 'text'
+    }
 
     return (
         <div
@@ -19,6 +31,7 @@ const Input: FC<any> = props => {
                    autoComplete="on"
                    {...rest}
             />
+            {typeField === 'password' && <Eye showPassword={showPassword} eventClick={changeShowPassword}/>}
             {error && (
                 <div className={cn(s.formTextError, s.form__error)} data-testid={`test_${field}`}>
                     <div className={cn(s.formTextError, s.formServer__error)}>
