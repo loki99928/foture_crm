@@ -49,16 +49,6 @@ const UserSetting: FC = () => {
                        handlers={handlers}
                        type='phone'
                        label='Your phone'/>
-                <Input errors={errors}
-                       field='password'
-                       handlers={handlers}
-                       type='password'
-                       label='Your password'/>
-                <Input errors={errors}
-                       field='double_password'
-                       handlers={handlers}
-                       type='password'
-                       label='Password confirmation'/>
                 <Button disabled={isLoad || !isValid}/>
             </form>
         </>
